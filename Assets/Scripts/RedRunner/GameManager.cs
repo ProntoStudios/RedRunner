@@ -136,7 +136,10 @@ namespace RedRunner
 			{
 				RedCharacter.Local.IsDead.AddEventAndFire(UpdateDeathEvent, this);
 				m_StartScoreX = RedCharacter.Local.transform.position.x;
+			};
 
+			NetworkManager.OnConnected += () =>
+			{
 				StartGame();
 			};
 		}
@@ -186,7 +189,7 @@ namespace RedRunner
 
 		void Update()
 		{
-			if (m_GameRunning)
+			if (m_GameRunning && RedCharacter.Local != null)
 			{
 				if (RedCharacter.Local.transform.position.x > m_StartScoreX && RedCharacter.Local.transform.position.x > m_Score)
 				{

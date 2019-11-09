@@ -11,8 +11,13 @@ namespace RedRunner.Networking
 		[SerializeField]
 		private CameraController cameraController;
 
-		private static bool shouldHost = false;
+#if !SERVER
 		private static string host = "localhost";
+#endif
+
+		public delegate void NetworkEvent();
+
+		public static event NetworkEvent OnConnected;
 
 		public static bool IsConnected
 		{
@@ -22,11 +27,10 @@ namespace RedRunner.Networking
 			}
 		}
 
-		public static bool IsServer
-		{
+		public static bool IsServer {
 			get
 			{
-				return shouldHost && IsConnected;
+				return Application.isBatchMode && IsConnected;
 			}
 		}
 
@@ -36,6 +40,11 @@ namespace RedRunner.Networking
 
 		public override void Awake()
 		{
+			if (Instance != null)
+			{
+				Debug.LogError("Only a single NetworkManager should be active at a time");
+				return;
+			}
 			Instance = GetComponent<NetworkManager>();
 			base.Awake();
 
@@ -45,36 +54,44 @@ namespace RedRunner.Networking
 			};
 		}
 
-		// TODO(shane) get rid of this nasty hack when we have a proper dedicated server.
+		public override void Start()
+		{
+			if (Application.isBatchMode)
+			{
+				StartHost();
+
+				// TODO(shane) see if we can do this properly.
+				OnConnected();
+			}
+		}
+
+#if !SERVER
 		public void OnGUI()
 		{
 			if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
 			{
-				shouldHost = GUILayout.Toggle(shouldHost, "Host");
-				if (!shouldHost)
-				{
-					host = GUILayout.TextField(host);
-				}
+				host = GUILayout.TextField(host);
 			}
 		}
 
 		public void Connect()
 		{
-			if (shouldHost)
-			{
-				StartHost();
-			}
-			else
-			{
-				networkAddress = host;
-				StartClient();
-			}
+			networkAddress = host;
+			StartClient();
+
+			// TODO(shane) see if we can do this properly.
+			OnConnected();
 		}
+#endif
 
 		public override void OnServerAddPlayer(Mirror.NetworkConnection conn)
 		{
-			GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
-			Mirror.NetworkServer.AddPlayerForConnection(conn, player);
+			// Instantiate characters for clients only.
+			if (conn.connectionId != 0)
+			{
+				GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+				Mirror.NetworkServer.AddPlayerForConnection(conn, player);
+			}
 		}
 
 		public static void RegisterSpawnablePrefab(GameObject prefab)
