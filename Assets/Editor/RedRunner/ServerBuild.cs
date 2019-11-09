@@ -7,6 +7,7 @@ public class ServerBuild
 	[MenuItem("Server/Build")]
 	public static void BuildServer()
 	{
+		string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone);
 		try
 		{
 			string path = EditorUtility.SaveFolderPanel("Choose Build Directory", "", "Build");
@@ -20,7 +21,8 @@ public class ServerBuild
 				options = BuildOptions.EnableHeadlessMode | BuildOptions.Development
 			};
 
-			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "SERVER");
+			
+			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, defines + ";SERVER");
 
 			var report = BuildPipeline.BuildPlayer(options);
 			var summary = report.summary;
@@ -36,7 +38,7 @@ public class ServerBuild
 			}
 		} finally
 		{
-			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, "");
+			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, defines);
 		}
 		
 	}
