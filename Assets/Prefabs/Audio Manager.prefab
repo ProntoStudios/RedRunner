@@ -445,8 +445,13 @@ MonoBehaviour:
   m_WaterSplashSound: {fileID: 8300000, guid: da09767322df44d40b6d4f189f8c3c5c, type: 3}
   m_SpikeSound: {fileID: 8300000, guid: 5d613df8b8902c641a5536bb62c1ec65, type: 3}
   m_GroundedSounds:
-  - {fileID: 8300000, guid: 1ed1d265b82575d499a7fa7654937f67, type: 3}
-  - {fileID: 8300000, guid: 6a4de97e3c9f2cd4a8400d14e61f15df, type: 3}
+  - {fileID: 8300000, guid: fda12291e9f387a49bb105454632ce30, type: 3}
+  - {fileID: 8300000, guid: 22f8e9b371cd8544e8e14d87730a425d, type: 3}
+  - {fileID: 8300000, guid: 54d38b1ae0932fa4688c55bc8eb9868a, type: 3}
+  - {fileID: 8300000, guid: c8121fb72aa86004f9489bfe0abb4592, type: 3}
+  - {fileID: 8300000, guid: d799ab167e81fdd4b8a9fe527d877ab5, type: 3}
+  - {fileID: 8300000, guid: 952c10d0448337e4dba57c843f18514e, type: 3}
+  - {fileID: 8300000, guid: a57ff976bd3a58c459417e8145719139, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 55ea64a0b4c3068439385bbc1a37aebd, type: 3}
   m_FootstepSounds:
   - {fileID: 8300000, guid: e235f68c939c248469edf596d0004dab, type: 3}
