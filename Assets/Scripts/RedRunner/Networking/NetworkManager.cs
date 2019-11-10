@@ -10,8 +10,14 @@ namespace RedRunner.Networking
 		private Transform spawnPoint;
 		[SerializeField]
 		private CameraController cameraController;
+		[SerializeField]
+		private string hostAddress = "localhost";
 
-		private static string host = "localhost";
+		private static bool isHosting = false;
+
+#if DEBUG
+		private static bool shouldHost = false;
+#endif
 
 		public delegate void NetworkEvent();
 
@@ -28,7 +34,7 @@ namespace RedRunner.Networking
 		public static bool IsServer {
 			get
 			{
-				return Application.isBatchMode && IsConnected;
+				return IsConnected && isHosting;
 			}
 		}
 
@@ -56,25 +62,40 @@ namespace RedRunner.Networking
 		{
 			if (Application.isBatchMode)
 			{
-				StartHost();
-
-				// TODO(shane) see if we can do this properly.
-				OnConnected();
+				Connect(true);
 			}
 		}
 
+#if DEBUG
 		public void OnGUI()
 		{
 			if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
 			{
-				host = GUILayout.TextField(host);
+				shouldHost = GUILayout.Toggle(shouldHost, "Host");
+				if (!shouldHost)
+				{
+					hostAddress = GUILayout.TextField(hostAddress);
+				}
 			}
 		}
+#endif
 
-		public void Connect()
+		public void Connect(bool host = false)
 		{
-			networkAddress = host;
-			StartClient();
+			isHosting = host
+#if DEBUG
+				|| shouldHost
+#endif
+				;
+
+			if (isHosting)
+			{
+				StartHost();
+			} else
+			{
+				networkAddress = hostAddress;
+				StartClient();
+			}
 
 			// TODO(shane) see if we can do this properly.
 			OnConnected();
@@ -82,8 +103,7 @@ namespace RedRunner.Networking
 
 		public override void OnServerAddPlayer(Mirror.NetworkConnection conn)
 		{
-			// Instantiate characters for clients only.
-			if (conn.connectionId != 0)
+			if (!(Application.isBatchMode && conn.connectionId == 0))
 			{
 				GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
 				Mirror.NetworkServer.AddPlayerForConnection(conn, player);
