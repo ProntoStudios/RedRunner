@@ -80,7 +80,6 @@ namespace RedRunner.Characters
 		protected float m_CurrentSmoothVelocity = 0f;
 		protected int m_CurrentFootstepSoundIndex = 0;
 		protected Vector3 m_InitialScale;
-		protected Vector3 m_InitialPosition;
 
 		#endregion
 
@@ -270,7 +269,6 @@ namespace RedRunner.Characters
 
 		void Awake ()
 		{
-			m_InitialPosition = transform.position;
 			m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
 			m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
@@ -514,7 +512,6 @@ namespace RedRunner.Characters
 
 		void GameManager_OnReset ()
 		{
-			transform.position = m_InitialPosition;
 			Reset ();
 		}
 
