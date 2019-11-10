@@ -8,6 +8,8 @@ namespace RedRunner.TerrainGeneration
         [SerializeField]
         TerrainGenerationSettings settings;
         [SerializeField]
+        GameObject spawnerUIScreen;
+        [SerializeField]
         BitBenderGames.TouchInputController inputController;
         [SerializeField]
         BitBenderGames.MobileTouchCamera mobileTouchCamera;
@@ -32,7 +34,7 @@ namespace RedRunner.TerrainGeneration
             cameraController.enabled = true;
         }
 
-        void StartBlockPlacer(Block block)
+        public void StartBlockPlacer(Block block)
         {
             if (isActive)
             {
@@ -44,13 +46,22 @@ namespace RedRunner.TerrainGeneration
             isActive = true;
         }
 
-        void StartBlockPlacer()
+        public void FinishBlockPlacer()
+        {
+            spawnerUIScreen.SetActive(false);
+            DisableScrolling();
+            activeBlock = null;
+            isActive = false;
+        }
+
+        public void StartBlockPlacer()
         {
             if (isActive)
             {
                 Debug.LogError("Placer already running");
                 return;
             }
+            spawnerUIScreen.SetActive(true);
             Block blockPrefab = TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
             Block block = Instantiate(blockPrefab);
             StartBlockPlacer(block);
@@ -69,6 +80,7 @@ namespace RedRunner.TerrainGeneration
 
         private void Start()
         {
+            StartBlockPlacer();
         }
         // Update is called once per frame
         void FixedUpdate()
