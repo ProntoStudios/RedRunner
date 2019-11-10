@@ -80,7 +80,6 @@ namespace RedRunner.TerrainGeneration
 
         private void Start()
         {
-            StartBlockPlacer();
         }
         // Update is called once per frame
         void FixedUpdate()
