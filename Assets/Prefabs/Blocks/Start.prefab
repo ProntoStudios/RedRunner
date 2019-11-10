@@ -11913,16 +11913,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4315503056070384}
     m_Modifications:
-    - target: {fileID: 4702942137074318761, guid: b8c715426e8f043e695d7e3a065c9213,
-        type: 3}
-      propertyPath: m_Name
-      value: Start
-      objectReference: {fileID: 0}
-    - target: {fileID: 4702942137074318761, guid: b8c715426e8f043e695d7e3a065c9213,
-        type: 3}
-      propertyPath: m_TagString
-      value: Respawn
-      objectReference: {fileID: 0}
     - target: {fileID: 1625516471110394718, guid: b8c715426e8f043e695d7e3a065c9213,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11978,15 +11968,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6707992469114804002, guid: b8c715426e8f043e695d7e3a065c9213,
+    - target: {fileID: 4702942137074318761, guid: b8c715426e8f043e695d7e3a065c9213,
         type: 3}
-      propertyPath: m_DrawMode
-      value: 2
+      propertyPath: m_Name
+      value: Start
       objectReference: {fileID: 0}
-    - target: {fileID: 6707992469114804002, guid: b8c715426e8f043e695d7e3a065c9213,
+    - target: {fileID: 4702942137074318761, guid: b8c715426e8f043e695d7e3a065c9213,
         type: 3}
-      propertyPath: m_Size.x
-      value: 7.68
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 6056819232108847820, guid: b8c715426e8f043e695d7e3a065c9213,
         type: 3}
@@ -12004,6 +11994,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6056819232108847820, guid: b8c715426e8f043e695d7e3a065c9213,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 7.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707992469114804002, guid: b8c715426e8f043e695d7e3a065c9213,
+        type: 3}
+      propertyPath: m_DrawMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707992469114804002, guid: b8c715426e8f043e695d7e3a065c9213,
         type: 3}
       propertyPath: m_Size.x
       value: 7.68
