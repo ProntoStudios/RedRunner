@@ -11,9 +11,7 @@ namespace RedRunner.Networking
 		[SerializeField]
 		private CameraController cameraController;
 
-#if !SERVER
 		private static string host = "localhost";
-#endif
 
 		public delegate void NetworkEvent();
 
@@ -65,7 +63,6 @@ namespace RedRunner.Networking
 			}
 		}
 
-#if !SERVER
 		public void OnGUI()
 		{
 			if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
@@ -82,7 +79,6 @@ namespace RedRunner.Networking
 			// TODO(shane) see if we can do this properly.
 			OnConnected();
 		}
-#endif
 
 		public override void OnServerAddPlayer(Mirror.NetworkConnection conn)
 		{
