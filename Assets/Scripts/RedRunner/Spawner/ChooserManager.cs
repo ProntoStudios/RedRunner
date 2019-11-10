@@ -2,24 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using RedRunner.TerrainGeneration;
+using Mirror;
 namespace RedRunner.Networking
 {
     [RequireComponent(typeof(Mirror.NetworkIdentity))]
-    public class ChooserManager : NetworkBehaviour
+    public class ChooserManager : Mirror.NetworkBehaviour
     {
         [SerializeField]
         TerrainGenerationSettings settings;
         int size = 6;
         bool[] chosen;
-        public void Awake()
-        {
-            if (NetworkManager.IsServer)
-            {
-                NetworkManager.Spawn(gameObject);
-            }
-        }
+
         // must be called by the host to do anything
         public void InitiateChoosing()
         {
@@ -37,28 +31,35 @@ namespace RedRunner.Networking
             RpcGetChoices(arr);
         }
 
+        // receive block options on client
+        [Mirror.ClientRpc]
+        void RpcGetChoices(Block[] objects)
+        {
+            Debug.Log(objects.Length + " choices");
+        }
+
         // submit a selection to the server. Could fail if someone selected the item first.
-        public bool trySubmitChoice(int objectId)
+        public void trySubmitChoice(int objectId)
         {
             if (!isLocalPlayer)
             {
                 Debug.LogError("can only submit choice from local player");
-                return false;
+                return;
             }
-            return CmdSubmitChoice(objectId);
+            Debug.Log(CmdSubmitChoice(objectId));
         }
 
 
         // send choice to server
-        [Command]
+        [Mirror.Command]
         bool CmdSubmitChoice(int objectId)
         {
             return TargetSubmitChoice(connectionToClient, objectId);
         }
 
         // runs on server, but returns results to client
-        [TargetRpc]
-        public bool TargetSubmitChoice(NetworkConnection target, int objectId)
+        [Mirror.TargetRpc]
+        public bool TargetSubmitChoice(Mirror.NetworkConnection target, int objectId)
         {
             if(objectId < 0 || objectId >= chosen.Length)
             {
@@ -71,15 +72,8 @@ namespace RedRunner.Networking
             return true; 
         }
 
-        // receive block options on client
-        [ClientRpc]
-        void RpcGetChoices(Block[] objects)
-        {
-            Debug.Log(objects.Length + " choices");
-        }
-
         // server has told client that a block has been chosen
-        [ClientRpc]
+        [Mirror.ClientRpc]
         void RpcChoiceTaken(int objectId)
         {
             Debug.Log(objectId + " was claimed");
