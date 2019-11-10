@@ -532,7 +532,7 @@ namespace RedRunner.Characters
 			{
 				if (m_GroundCheck.IsGrounded)
 				{
-					ApplyJumpPhysics(m_DoubleJumpStrength);
+					ApplyJumpPhysics(m_JumpStrength);
 				}
 				else if (m_HasDoubleJump)
 				{
@@ -541,7 +541,8 @@ namespace RedRunner.Characters
 				}
 				else if (m_WallDetector.TouchingWall)
 				{
-					ApplyJumpPhysics(m_DoubleJumpStrength);
+					ApplyJumpPhysics(m_JumpStrength);
+					m_HasDoubleJump = false;
 				}
 			}
 		}
