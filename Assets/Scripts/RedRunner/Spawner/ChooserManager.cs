@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using RedRunner.TerrainGeneration;
 namespace RedRunner.Networking
 {
+    [RequireComponent(typeof(Mirror.NetworkIdentity))]
     public class ChooserManager : NetworkBehaviour
     {
         [SerializeField]
