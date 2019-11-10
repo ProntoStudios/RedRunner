@@ -12,9 +12,9 @@ public class ServerBuild
 		var options = new BuildPlayerOptions
 		{
 			scenes = new string[] { "Assets/Scenes/Play.unity" },
-			locationPathName = path + "/rr-server-linux",
+			locationPathName = path + "/rr-server",
 			targetGroup = BuildTargetGroup.Standalone,
-			target = BuildTarget.StandaloneWindows64,
+			target = BuildTarget.StandaloneLinux64,
 			options = BuildOptions.EnableHeadlessMode | BuildOptions.Development
 		};
 
