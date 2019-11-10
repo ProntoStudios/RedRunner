@@ -12,7 +12,7 @@ namespace RedRunner.Utilities
 
 		public event GroundedHandler OnGrounded;
 
-		public static readonly string[] GROUND_TAGS = { "Ground", "Respawn" };
+        public const string GROUND_TAG = "Ground";
 
         public const string GROUND_LAYER_NAME = "Ground";
 
@@ -62,14 +62,7 @@ namespace RedRunner.Utilities
 
         private bool IsGroundObject(RaycastHit2D hit)
         {
-            foreach (string groundTag in GROUND_TAGS)
-            {
-                if (hit.collider.CompareTag(groundTag))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return hit.collider.CompareTag(GROUND_TAG);
         }
 
 	}
