@@ -290,7 +290,7 @@ namespace RedRunner
             if (respawn != null)
             {
                 Vector3 position = respawn.transform.position;
-                position.y += 200.56f;
+                position.y += 2.56f;
                 float width = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
                 position.x -= width / 2;
                 position.x += UnityEngine.Random.Range(0, width);
