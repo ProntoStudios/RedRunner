@@ -97,7 +97,6 @@ namespace RedRunner.Networking
 				StartClient();
 			}
 
-			// TODO(shane) see if we can do this properly.
 			OnConnected();
 		}
 

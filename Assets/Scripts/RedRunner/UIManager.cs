@@ -70,23 +70,23 @@ namespace RedRunner
 
         public void Init()
         {
-			if (Application.isBatchMode)
-			{
-				return;
-			}
-			
-			var loadingScreen = GetUIScreen(UIScreenInfo.LOADING_SCREEN);
-			OpenScreen(loadingScreen);
+            if (Application.isBatchMode)
+            {
+                return;
+            }
+
+            var loadingScreen = GetUIScreen(UIScreenInfo.LOADING_SCREEN);
+            OpenScreen(loadingScreen);
         }
 
         void Update()
         {
-			if (Application.isBatchMode)
-			{
-				return;
-			}
+            if (Application.isBatchMode)
+            {
+                return;
+            }
 
-			if (Input.GetButtonDown("Cancel"))
+            if (Input.GetButtonDown("Cancel"))
             {
                 //Added enumeration to store screen info, aka type, so it will be easier to understand it
                 var pauseScreen = GetUIScreen(UIScreenInfo.PAUSE_SCREEN);
