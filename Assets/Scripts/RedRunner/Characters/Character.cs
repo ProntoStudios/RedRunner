@@ -56,7 +56,9 @@ namespace RedRunner.Characters
 
 		public virtual Property<bool> IsDead { get; set; }
 
-		public abstract bool ClosingEye { get; }
+        public virtual Property<bool> IsFinished { get; set; }
+
+        public abstract bool ClosingEye { get; }
 
 		public abstract bool Guard { get; }
 
@@ -72,7 +74,9 @@ namespace RedRunner.Characters
 
 		public abstract void Die(bool blood);
 
-		public abstract void EmitRunParticle();
+        public abstract void Finish();
+
+        public abstract void EmitRunParticle();
 
 		public abstract void Reset();
 
