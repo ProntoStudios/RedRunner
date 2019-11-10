@@ -569,8 +569,6 @@ namespace RedRunner.Characters
 		public override void Reset ()
 		{
 			IsDead.Value = false;
-			m_ClosingEye = false;
-            IsDead.Value = false;
             IsFinished.Value = false;
             m_ClosingEye = false;
 			m_Guard = false;
