@@ -7,39 +7,28 @@ public class ServerBuild
 	[MenuItem("Server/Build")]
 	public static void BuildServer()
 	{
-		string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone);
-		try
+		string path = EditorUtility.SaveFolderPanel("Choose Build Directory", "", "Build");
+
+		var options = new BuildPlayerOptions
 		{
-			string path = EditorUtility.SaveFolderPanel("Choose Build Directory", "", "Build");
+			scenes = new string[] { "Assets/Scenes/Play.unity" },
+			locationPathName = path + "/rr-server-linux",
+			targetGroup = BuildTargetGroup.Standalone,
+			target = BuildTarget.StandaloneWindows64,
+			options = BuildOptions.EnableHeadlessMode | BuildOptions.Development
+		};
 
-			var options = new BuildPlayerOptions
-			{
-				scenes = new string[] { "Assets/Scenes/Play.unity" },
-				locationPathName = path + "/rr-server.exe",
-				targetGroup = BuildTargetGroup.Standalone,
-				target = BuildTarget.StandaloneWindows64,
-				options = BuildOptions.EnableHeadlessMode | BuildOptions.Development
-			};
+		var report = BuildPipeline.BuildPlayer(options);
+		var summary = report.summary;
 
-			
-			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, defines + ";SERVER");
-
-			var report = BuildPipeline.BuildPlayer(options);
-			var summary = report.summary;
-
-			if (summary.result == BuildResult.Succeeded)
-			{
-				Debug.Print("Build succeeded: " + summary.totalSize + " bytes");
-			}
-
-			if (summary.result == BuildResult.Failed)
-			{
-				Debug.Print("Build failed");
-			}
-		} finally
+		if (summary.result == BuildResult.Succeeded)
 		{
-			PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, defines);
+			Debug.Print("Build succeeded: " + summary.totalSize + " bytes");
 		}
-		
+
+		if (summary.result == BuildResult.Failed)
+		{
+			Debug.Print("Build failed");
+		}
 	}
 }
