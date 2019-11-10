@@ -59406,6 +59406,7 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: 594767ce7306ebf43aa3e06528257f32, type: 2}
   inputController: {fileID: 26}
   mobileTouchCamera: {fileID: 22}
+  cameraController: {fileID: 254}
   cameraMain: {fileID: 111}
 --- !u!1 &2106406790
 GameObject:

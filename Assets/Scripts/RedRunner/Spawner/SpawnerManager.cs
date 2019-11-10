@@ -12,12 +12,15 @@ namespace RedRunner.TerrainGeneration
         [SerializeField]
         BitBenderGames.MobileTouchCamera mobileTouchCamera;
         [SerializeField]
+        Utilities.CameraController cameraController;
+        [SerializeField]
         Camera cameraMain;
         Block activeBlock;
         bool isActive = false;
 
         void EnableScrolling()
         {
+            cameraController.enabled = false;
             inputController.enabled = true;
             mobileTouchCamera.enabled = true;
         }
@@ -26,6 +29,7 @@ namespace RedRunner.TerrainGeneration
         {
             mobileTouchCamera.enabled = false;
             inputController.enabled = false;
+            cameraController.enabled = true;
         }
 
         void StartBlockPlacer(Block block)
