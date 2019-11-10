@@ -50005,7 +50005,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 32
+  m_Text: x 49
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -59403,8 +59403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c833002c948d94333abc7a5a06a93ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 594767ce7306ebf43aa3e06528257f32, type: 2}
   inputController: {fileID: 26}
   mobileTouchCamera: {fileID: 22}
+  cameraMain: {fileID: 111}
 --- !u!1 &2106406790
 GameObject:
   m_ObjectHideFlags: 0

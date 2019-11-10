@@ -23,7 +23,9 @@ namespace RedRunner.TerrainGeneration
 		protected Block[] m_MiddleBlocks;
 		[SerializeField]
 		protected Block[] m_EndBlocks;
-		[SerializeField]
+        [SerializeField]
+        protected Block[] m_SpawnBlocks;
+        [SerializeField]
 		protected BackgroundLayer[] m_BackgroundLayers;
 
 		public float LevelLength {
@@ -48,9 +50,9 @@ namespace RedRunner.TerrainGeneration
 			get {
 				return m_EndBlocksCount;
 			}
-		}
+        }
 
-		public Block[] StartBlocks {
+        public Block[] StartBlocks {
 			get {
 				return m_StartBlocks;
 			}
@@ -66,9 +68,17 @@ namespace RedRunner.TerrainGeneration
 			get {
 				return m_EndBlocks;
 			}
-		}
+        }
 
-		public BackgroundLayer[] BackgroundLayers {
+        public Block[] SpawnBlocks
+        {
+            get
+            {
+                return m_SpawnBlocks;
+            }
+        }
+
+        public BackgroundLayer[] BackgroundLayers {
 			get {
 				return m_BackgroundLayers;
 			}
