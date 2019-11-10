@@ -34,6 +34,11 @@ namespace RedRunner.TerrainGeneration
 
         void StartBlockPlacer(Block block)
         {
+            if (isActive)
+            {
+                Debug.LogError("Placer already running");
+                return;
+            }
             activeBlock = block;
             EnableScrolling();
             isActive = true;
@@ -41,6 +46,11 @@ namespace RedRunner.TerrainGeneration
 
         void StartBlockPlacer()
         {
+            if (isActive)
+            {
+                Debug.LogError("Placer already running");
+                return;
+            }
             Block blockPrefab = TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
             Block block = Instantiate(blockPrefab);
             StartBlockPlacer(block);
