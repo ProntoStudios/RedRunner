@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5927239086464420717}
   - component: {fileID: 5927239086464420719}
-  - component: {fileID: 5927239086464420716}
+  - component: {fileID: 8174141573513202826}
   m_Layer: 0
   m_Name: SpawnBlock_1
   m_TagString: Untagged
@@ -79,7 +79,7 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   m_SceneId: 0
---- !u!114 &5927239086464420716
+--- !u!114 &8174141573513202826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,11 +88,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5927239086464420722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 492bac9ee3503c44eb7bdac5861a7875, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ba4fb99ddb7a4fd49a7db80a84a73f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Width: 2.56
-  m_Probability: 1
 --- !u!1001 &5927239088129764519
 PrefabInstance:
   m_ObjectHideFlags: 0
