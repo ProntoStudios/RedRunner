@@ -13,11 +13,17 @@ namespace RedRunner.Networking
         TerrainGenerationSettings settings;
         int size = 6;
         bool[] chosen;
-
+        public void Awake()
+        {
+            if (NetworkManager.IsServer)
+            {
+                NetworkManager.Spawn(gameObject);
+            }
+        }
         // must be called by the host to do anything
         public void InitiateChoosing()
         {
-            if (!isServer)
+            if (!NetworkManager.IsServer)
             {
                 Debug.LogError("can only initialize block chooser from host");
                 return;
