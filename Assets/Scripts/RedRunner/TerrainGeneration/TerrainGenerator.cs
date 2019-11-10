@@ -343,20 +343,6 @@ namespace RedRunner.TerrainGeneration
 			return true;
 		}
 
-		public Block GetCharacterBlock ()
-		{
-			Block characterBlock = null;
-			foreach ( KeyValuePair<Vector3, Block> block in m_Blocks )
-			{
-				if ( block.Key.x <= RedCharacter.Local.transform.position.x && block.Key.x + block.Value.Width > RedCharacter.Local.transform.position.x )
-				{
-					characterBlock = block.Value;
-					break;
-				}
-			}
-			return characterBlock;
-		}
-
 		public static Block ChooseFrom ( Block[] blocks )
 		{
 			if ( blocks.Length <= 0 )
