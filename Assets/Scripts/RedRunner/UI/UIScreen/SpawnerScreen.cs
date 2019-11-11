@@ -11,6 +11,8 @@ namespace RedRunner.UI
     {
         [SerializeField]
         private GridLayoutGroup grid = default;
+        [SerializeField]
+        private GameObject buttonPrefab = default;
 
         private void Start()
         { 
@@ -44,8 +46,7 @@ namespace RedRunner.UI
 
         public void AddBlock(Block block)
         {
-            GameObject newBlock = new GameObject(block.name, typeof(RectTransform));
-            newBlock.transform.SetParent(grid.transform, false);
+            GameObject newBlock = Instantiate(buttonPrefab, grid.transform);
             DFSClone(block.transform, newBlock.transform);
             newBlock.transform.localScale = newBlock.transform.localScale * 15f;
         }

@@ -86,6 +86,8 @@ MonoBehaviour:
   m_Animator: {fileID: 9083997939099897349}
   m_CanvasGroup: {fileID: 4392082496574109059}
   grid: {fileID: 6365370417730958965}
+  buttonPrefab: {fileID: 2068887683878563010, guid: 231353e1fa43404448120d190a83fda6,
+    type: 3}
 --- !u!1 &888480172604925643
 GameObject:
   m_ObjectHideFlags: 0
