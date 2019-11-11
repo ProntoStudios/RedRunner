@@ -125,6 +125,7 @@ namespace RedRunner.Networking
         void RpcChoiceTaken(int objectId)
         {
             Debug.Log(objectId + " was claimed");
+            spawnerScreen?.DisableBlock(objectId);
         }
 
         // send block location to server

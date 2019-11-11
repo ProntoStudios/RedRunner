@@ -56,6 +56,7 @@ namespace RedRunner.UI
             {
                 GameObject.Destroy(child.gameObject);
             }
+            buttons.Clear();
         }
 
         public void DisableBlock(int id)
