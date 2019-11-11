@@ -22,6 +22,16 @@ namespace RedRunner.TerrainGeneration
         int blockId;
         bool isActive = false;
 
+        private static SpawnerManager _instance;
+
+        public static SpawnerManager Instance { get { return _instance; } }
+        void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+        }
         void EnableScrolling()
         {
             cameraController.enabled = false;
@@ -52,9 +62,10 @@ namespace RedRunner.TerrainGeneration
         {
             spawnerUIScreen.SetActive(false);
             DisableScrolling();
+            Vector3 pos = activeBlock.transform.position;
             activeBlock = null;
             isActive = false;
-            ChooserManager.Instance.SubmitPosition(blockId, activeBlock.transform.position);
+            ChooserManager.Local.SubmitPosition(blockId, pos);
         }
 
         public void StartBlockPlacer(int id)
@@ -88,9 +99,6 @@ namespace RedRunner.TerrainGeneration
             activeBlock.transform.position = new Vector3(cameraMain.transform.position.x, cameraMain.transform.position.y, activeBlock.transform.position.z);
         }
 
-        private void Start()
-        {
-        }
         // Update is called once per frame
         void FixedUpdate()
         {
