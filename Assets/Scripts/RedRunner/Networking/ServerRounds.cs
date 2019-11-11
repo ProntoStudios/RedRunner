@@ -26,7 +26,7 @@ namespace RedRunner.Networking
         }
         private void Update()
         {
-            if (Application.isBatchMode && round <= 0 && activePlayers > 0)
+            if (Application.isBatchMode && round <= 0 && NetworkManager.ClientCount > 0)
             {
                 Debug.Log("Player joined game,starting game");
                 ResetRound();
@@ -49,7 +49,9 @@ namespace RedRunner.Networking
             Debug.Log("resetting round");
             round++;
             activePlayers = NetworkManager.ClientCount;
-            RoundsManager.Instance.RpcResetRound();
+            if (activePlayers > 0) {
+                RoundsManager.Instance.RpcResetRound();
+            }
         }
 
     }
