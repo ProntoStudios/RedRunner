@@ -1,0 +1,21 @@
+---
+# Server Deployment
+-
+
+- name: copy server executable
+  copy:
+    src: ../../Build/{{ exe_name }}
+    dest: /home/{{ server_user }}/{{ exe_name }}
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: '0700'
+
+- name: synchronize server data
+  synchronize:
+    src: ../../Build/{{ exe_name }}_Data
+    dest: /home/{{ server_user }}/{{ exe_name }}_Data
+
+- name: set data ownership
+  command: chown -R {{ server_user }}:{{ server_user }} /home/{{ server_user }}/{{ exe_name }}_Data
+  args:
+    warn: no
