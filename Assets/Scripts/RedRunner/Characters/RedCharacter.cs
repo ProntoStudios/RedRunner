@@ -347,7 +347,7 @@ namespace RedRunner.Characters
 				{
 					StopWallSlide();
 					Jump();
-					ApplyHorizontalBoost(m_DoubleJumpStrength);
+					ApplyHorizontalBoost(m_DoubleJumpStrength/2.0f);
 				}
 			}
         }
