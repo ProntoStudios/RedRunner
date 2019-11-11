@@ -304,7 +304,6 @@ namespace RedRunner.Characters
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 			};
-
             m_RightEvent.RegisterAction(RightEvent);
             m_LeftEvent.RegisterAction(LeftEvent);
         }
@@ -601,7 +600,8 @@ namespace RedRunner.Characters
 					Destroy ( particle.gameObject, particle.main.duration );
 				}
 				CameraController.Singleton.fastMove = true;
-			}
+                RoundsManager.Local.CmdDeactivateSelf();
+            }
 		}
 
         public override void Finish()

@@ -144,10 +144,6 @@ namespace RedRunner
 				m_CameraController.Follow(RedCharacter.Local.transform);
 			};
 
-			NetworkManager.OnConnected += () =>
-			{
-				StartGame();
-			};
 		}
 
 		void UpdateDeathEvent(bool isDead)
@@ -177,8 +173,8 @@ namespace RedRunner
 			yield return new WaitForSecondsRealtime(1.5f);
 
 			EndGame();
-			var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
-			UIManager.Singleton.OpenScreen(endScreen);
+			//var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
+			//UIManager.Singleton.OpenScreen(endScreen);
 		}
 
 		private void Start()
@@ -261,8 +257,6 @@ namespace RedRunner
 		public void StartGame()
 		{
 			m_GameStarted = true;
-            PutCharacterOnStart(RedCharacter.Local);
-            m_StartScoreX = RedCharacter.Local.transform.position.x;
             ResumeGame();
 		}
 
@@ -281,7 +275,7 @@ namespace RedRunner
 		public void EndGame()
 		{
 			m_GameStarted = false;
-			StopGame();
+			//StopGame();
 		}
 
 		public void RespawnMainCharacter()
@@ -291,10 +285,12 @@ namespace RedRunner
 
 		public void RespawnCharacter(Character character)
         {
+            PutCharacterOnStart(RedCharacter.Local);
+            m_StartScoreX = RedCharacter.Local.transform.position.x;
             character.Reset();
         }
 
-        public void PutCharacterOnStart(Character character)
+        private void PutCharacterOnStart(Character character)
         {
             GameObject respawn = SpawnSingleton.instance;
             if (respawn != null)
