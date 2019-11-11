@@ -141,7 +141,7 @@ namespace RedRunner
 			{
 				RedCharacter.Local.IsDead.AddEventAndFire(UpdateDeathEvent, this);
 
-				m_CameraController.Follow(RedCharacter.Local.transform);
+				m_CameraController?.Follow(RedCharacter.Local.transform);
 			};
 
 		}
