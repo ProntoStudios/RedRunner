@@ -51214,6 +51214,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7946815444654684124, guid: f7fb38d6a0256d348bffbb1b80655283,
+        type: 3}
+      propertyPath: m_CameraController
+      value: 
+      objectReference: {fileID: 254}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7fb38d6a0256d348bffbb1b80655283, type: 3}
 --- !u!1 &237118725
@@ -51518,8 +51523,8 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 1824055877161594, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
-  spawnPoint: {fileID: 1966883456}
-  cameraController: {fileID: 254}
+  m_SpawnPoint: {fileID: 1966883456}
+  m_HostAddress: localhost
 --- !u!1 &313703411
 GameObject:
   m_ObjectHideFlags: 0
