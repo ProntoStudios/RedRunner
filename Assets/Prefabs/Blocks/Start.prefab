@@ -1975,6 +1975,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirtRight
       objectReference: {fileID: 0}
+    - target: {fileID: 1207765255136154, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4157354307600492, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2800026
@@ -2050,16 +2054,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4315503056070384}
     m_Modifications:
-    - target: {fileID: 4702942137074318761, guid: b8c715426e8f043e695d7e3a065c9213,
-        type: 3}
-      propertyPath: m_Name
-      value: Start
-      objectReference: {fileID: 0}
-    - target: {fileID: 4702942137074318761, guid: b8c715426e8f043e695d7e3a065c9213,
-        type: 3}
-      propertyPath: m_TagString
-      value: Ground
-      objectReference: {fileID: 0}
     - target: {fileID: 1625516471110394718, guid: b8c715426e8f043e695d7e3a065c9213,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2114,6 +2108,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4702942137074318761, guid: b8c715426e8f043e695d7e3a065c9213,
+        type: 3}
+      propertyPath: m_Name
+      value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 4702942137074318761, guid: b8c715426e8f043e695d7e3a065c9213,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 6056819232108847820, guid: b8c715426e8f043e695d7e3a065c9213,
         type: 3}
