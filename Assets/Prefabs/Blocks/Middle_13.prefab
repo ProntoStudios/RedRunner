@@ -6780,7 +6780,7 @@ GameObject:
   - component: {fileID: 61901275170579634}
   m_Layer: 0
   m_Name: DirtRight 1 (37)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7318,7 +7318,7 @@ GameObject:
   - component: {fileID: 61141695596538832}
   m_Layer: 0
   m_Name: Column 1 (12)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8842,7 +8842,7 @@ GameObject:
   - component: {fileID: 61264767268998314}
   m_Layer: 0
   m_Name: Column 1 (13)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24238,7 +24238,7 @@ GameObject:
   - component: {fileID: 61257197764371988}
   m_Layer: 0
   m_Name: DirtRight 1 (36)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
