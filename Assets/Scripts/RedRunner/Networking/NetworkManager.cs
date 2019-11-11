@@ -7,16 +7,14 @@ namespace RedRunner.Networking
 	public class NetworkManager : Mirror.NetworkManager
 	{
 		[SerializeField]
-		private Transform spawnPoint;
+		private Transform m_SpawnPoint;
 		[SerializeField]
-		private CameraController cameraController;
-		[SerializeField]
-		private string hostAddress = "localhost";
+		private string m_HostAddress = "localhost";
 
-		private static bool isHosting = false;
+		private static bool m_IsHosting = false;
 
 #if DEBUG
-		private static bool shouldHost = false;
+		private static bool m_ShouldHost = false;
 #endif
 
 		public delegate void NetworkEvent();
@@ -31,10 +29,11 @@ namespace RedRunner.Networking
 			}
 		}
 
-		public static bool IsServer {
+		public static bool IsServer
+		{
 			get
 			{
-				return IsConnected && isHosting;
+				return IsConnected && m_IsHosting;
 			}
 		}
 
@@ -51,11 +50,6 @@ namespace RedRunner.Networking
 			}
 			Instance = GetComponent<NetworkManager>();
 			base.Awake();
-
-			RedCharacter.LocalPlayerSpawned += () =>
-			{
-				cameraController.Follow(RedCharacter.Local.transform);
-			};
 		}
 
 		public override void Start()
@@ -71,10 +65,10 @@ namespace RedRunner.Networking
 		{
 			if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
 			{
-				shouldHost = GUILayout.Toggle(shouldHost, "Host");
-				if (!shouldHost)
+				m_ShouldHost = GUILayout.Toggle(m_ShouldHost, "Host");
+				if (!m_ShouldHost)
 				{
-					hostAddress = GUILayout.TextField(hostAddress);
+					m_HostAddress = GUILayout.TextField(m_HostAddress);
 				}
 			}
 		}
@@ -82,18 +76,19 @@ namespace RedRunner.Networking
 
 		public void Connect(bool host = false)
 		{
-			isHosting = host
+			m_IsHosting = host
 #if DEBUG
-				|| shouldHost
+				|| m_ShouldHost
 #endif
 				;
 
-			if (isHosting)
+			if (m_IsHosting)
 			{
 				StartHost();
-			} else
+			}
+			else
 			{
-				networkAddress = hostAddress;
+				networkAddress = m_HostAddress;
 				StartClient();
 			}
 
@@ -104,7 +99,7 @@ namespace RedRunner.Networking
 		{
 			if (!(Application.isBatchMode && conn.connectionId == 0))
 			{
-				GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+				GameObject player = Instantiate(playerPrefab, m_SpawnPoint.position, m_SpawnPoint.rotation);
 				Mirror.NetworkServer.AddPlayerForConnection(conn, player);
 			}
 		}
