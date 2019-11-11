@@ -434,7 +434,6 @@ namespace RedRunner.Characters
 			m_Animator.animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
 			m_Animator.animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
 			m_Animator.animator.SetBool ( "IsDead", IsDead.Value );
-            m_Animator.animator.SetBool ( "IsFinished", IsFinished.Value);
             m_Animator.animator.SetBool ( "Block", m_Block );
 			m_Animator.animator.SetBool ( "Guard", m_Guard );
 			if ( Input.GetButtonDown ( "Roll" ) )
