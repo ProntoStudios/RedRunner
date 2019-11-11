@@ -50024,7 +50024,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 60
+  m_Text: x 114
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -60084,6 +60084,32 @@ MonoBehaviour:
   mobileTouchCamera: {fileID: 22}
   cameraController: {fileID: 254}
   cameraMain: {fileID: 111}
+--- !u!114 &2096986957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096986954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7094326e1956490eb45b2ea44e2c542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 594767ce7306ebf43aa3e06528257f32, type: 2}
+  blockInstatiater: {fileID: 2096986958}
+--- !u!114 &2096986958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096986954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 359839c0a29044738b45df1db737ec33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2106406790
 GameObject:
   m_ObjectHideFlags: 0

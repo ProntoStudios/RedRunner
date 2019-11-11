@@ -6,7 +6,7 @@ public class TempClicker : MonoBehaviour
 {
     public void startSelection()
     {
-        ChooserManager.Local.InitiateChoosing();
+        ServerSpawner.Instance.InitiateChoosing();
     }
     public void sendSelection()
     {

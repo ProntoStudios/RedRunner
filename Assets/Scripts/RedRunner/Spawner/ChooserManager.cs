@@ -11,41 +11,31 @@ namespace RedRunner.Networking
     {
         [SerializeField]
         TerrainGenerationSettings settings;
-        [SerializeField]
-        BlockInstantiater blockInstatiater;
-        int size = 6;
-        bool[] chosen;
         private static ChooserManager _local;
+        private static ChooserManager _instance;
 
-        public static ChooserManager Local{get{return _local; }}
+        public static ChooserManager Local{get{return _local; } }
+        public static ChooserManager Instance { get {
+                if (_local != null) return _local;
+                return _instance;
+        } }
 
-
+        private void Awake()
+        {
+            if(_instance = null)
+            {
+                _instance = this;
+            }
+        }
         public override void OnStartLocalPlayer()
         {
             base.OnStartLocalPlayer();
             _local = this;
         }
 
-        // must be called by the host to do anything
-        public void InitiateChoosing()
-        {
-            if (!NetworkManager.IsServer)
-            {
-                Debug.LogError("can only initialize block chooser from host");
-                return;
-            }
-            int[] arr = new int[size];
-            chosen = new bool[size];
-            for(int i = 0; i < arr.Length; i++)
-            {
-                arr[i] = 1;//TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
-            }
-            RpcGetChoices(arr);
-        }
-
         // receive block options on client
         [Mirror.ClientRpc]
-        void RpcGetChoices(int[] objects)
+        public void RpcGetChoices(int[] objects)
         {
             Debug.Log(objects.Length + " choices");
         }
@@ -66,25 +56,9 @@ namespace RedRunner.Networking
         [Mirror.Command]
         void CmdSubmitChoice(int objectId)
         {
-            bool succeeded = Local.ReceiveChoice(objectId);
+            bool succeeded = ServerSpawner.Instance.ReceiveChoice(objectId);
             Debug.Log("grab " + succeeded);
             TargetSubmitChoice(connectionToClient, objectId, succeeded);
-        }
-
-        public bool ReceiveChoice(int objectId)
-        {
-            if (!NetworkManager.IsServer)
-            {
-                Debug.Log("not server");
-                return false;
-            }
-            if (chosen[objectId]){
-                Debug.Log("already chosen");
-                return false;
-            }
-            chosen[objectId] = true;
-            RpcChoiceTaken(objectId);
-            return true;
         }
 
         // runs on server, but returns results to client
@@ -101,7 +75,7 @@ namespace RedRunner.Networking
 
         // server has told client that a block has been chosen
         [Mirror.ClientRpc]
-        void RpcChoiceTaken(int objectId)
+        public void RpcChoiceTaken(int objectId)
         {
             Debug.Log(objectId + " was claimed");
         }
@@ -122,8 +96,7 @@ namespace RedRunner.Networking
         [Mirror.Command]
         void CmdSubmitPosition(int objectId, Vector3 pos)
         {
-            Block blockPrefab = settings.SpawnBlocks[objectId];
-            blockInstatiater.GenerateBlock(blockPrefab, pos);
+            ServerSpawner.Instance.SpawnBlock(objectId, pos);
         }
     }
 }
