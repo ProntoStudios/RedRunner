@@ -49863,7 +49863,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 73
+  m_Text: x 35
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -51503,7 +51503,7 @@ MonoBehaviour:
   onlineScene: 
   transport: {fileID: 266052187}
   networkAddress: localhost
-  maxConnections: 4
+  maxConnections: 16
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 1824055877161594, guid: 639fab1b9d4c44d44908b5a6ecaceafc,
     type: 3}
