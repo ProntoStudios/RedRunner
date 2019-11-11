@@ -66,23 +66,25 @@ namespace RedRunner.Networking
         [Mirror.Command]
         void CmdSubmitChoice(int objectId)
         {
-            //Debug.Log(chosen.Length);
-            bool succeeded = false;
-            if (NetworkManager.IsServer)
-            {
-                // TODO(wilson): fix this. I think the check is running client side or something, making this not work peroperly
-                /*
-                Debug.Log("is server submit");
-                if (!chosen[objectId])
-                {
-                    chosen[objectId] = true;
-                    RpcChoiceTaken(objectId);
-                    succeeded = true;
-                }
-                */
-                succeeded = true;
-            }
+            bool succeeded = Local.ReceiveChoice(objectId);
+            Debug.Log("grab " + succeeded);
             TargetSubmitChoice(connectionToClient, objectId, succeeded);
+        }
+
+        public bool ReceiveChoice(int objectId)
+        {
+            if (!NetworkManager.IsServer)
+            {
+                Debug.Log("not server");
+                return false;
+            }
+            if (chosen[objectId]){
+                Debug.Log("already chosen");
+                return false;
+            }
+            chosen[objectId] = true;
+            RpcChoiceTaken(objectId);
+            return true;
         }
 
         // runs on server, but returns results to client
