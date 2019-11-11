@@ -20,7 +20,7 @@ namespace RedRunner.Characters
 		[Header ( "Character Details" )]
 		[Space]
 		[SerializeField]
-		protected float m_MaxRunSpeed = 8f;
+		protected float m_TargetRunSpeed = 8f;
 		[SerializeField]
 		protected float m_RunSmoothTime = 5f;
 		[SerializeField]
@@ -105,7 +105,7 @@ namespace RedRunner.Characters
 		{
 			get
 			{
-				return m_MaxRunSpeed;
+				return m_TargetRunSpeed;
 			}
 		}
 
@@ -326,6 +326,7 @@ namespace RedRunner.Characters
 				{
 					StopWallSlide();
 					Jump();
+					ApplyHorizontalBoost(m_DoubleJumpStrength/2.0f);
 				}
             }
 		}
@@ -346,6 +347,7 @@ namespace RedRunner.Characters
 				{
 					StopWallSlide();
 					Jump();
+					ApplyHorizontalBoost(m_DoubleJumpStrength);
 				}
 			}
         }
@@ -366,14 +368,17 @@ namespace RedRunner.Characters
         private void UpdateMovement()
         {
              // Speed Calculations
-            if (m_CurrentRunSpeed < m_MaxRunSpeed)
+            if (m_CurrentRunSpeed < m_TargetRunSpeed)
             {
-                m_CurrentRunSpeed = Mathf.SmoothDamp(m_CurrentRunSpeed, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
-            }
+                m_CurrentRunSpeed = Mathf.SmoothDamp(m_CurrentRunSpeed, m_TargetRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
+            }else if (m_CurrentRunSpeed > m_TargetRunSpeed)
+			{
+				m_CurrentRunSpeed = Mathf.SmoothDamp(m_CurrentRunSpeed, m_TargetRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
+			}
 
-            // Input Processing
+			// Input Processing
 
-            switch (m_State)
+			switch (m_State)
             {
                 case CharacterState.Left:
                     Move(-1f);
@@ -556,6 +561,11 @@ namespace RedRunner.Characters
 			m_Animator.SetTrigger("Jump");
 			m_JumpParticleSystem.Play();
 			AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
+		}
+
+		private void ApplyHorizontalBoost(float boostStrength)
+		{
+			m_CurrentRunSpeed = boostStrength;
 		}
 
 		public void StartWallSlide()
