@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RedRunner.Networking;
 namespace RedRunner.TerrainGeneration
 {
     public class SpawnerManager : MonoBehaviour
@@ -18,6 +19,7 @@ namespace RedRunner.TerrainGeneration
         [SerializeField]
         Camera cameraMain;
         Block activeBlock;
+        int blockId;
         bool isActive = false;
 
         void EnableScrolling()
@@ -52,18 +54,26 @@ namespace RedRunner.TerrainGeneration
             DisableScrolling();
             activeBlock = null;
             isActive = false;
+            ChooserManager.Instance.SubmitPosition(blockId, activeBlock.transform.position);
         }
 
-        public void StartBlockPlacer()
+        public void StartBlockPlacer(int id)
         {
             if (isActive)
             {
                 Debug.LogError("Placer already running");
                 return;
             }
+            if(id < 0 || id > settings.SpawnBlocks.Length)
+            {
+                Debug.LogError("Placer id " + id + " inactive");
+                return;
+            }
+
             spawnerUIScreen.SetActive(true);
-            Block blockPrefab = TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
+            Block blockPrefab = settings.SpawnBlocks[id];
             Block block = Instantiate(blockPrefab);
+            blockId = id;
             StartBlockPlacer(block);
         }
 

@@ -13,8 +13,17 @@ namespace RedRunner.Networking
         TerrainGenerationSettings settings;
         int size = 6;
         bool[] chosen;
+        private static ChooserManager _instance;
 
-            // must be called by the host to do anything
+        public static ChooserManager Instance{get{return _instance;}}
+        void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+        }
+        // must be called by the host to do anything
         public void InitiateChoosing()
         {
             if (!NetworkManager.IsServer)
@@ -77,6 +86,24 @@ namespace RedRunner.Networking
         void RpcChoiceTaken(int objectId)
         {
             Debug.Log(objectId + " was claimed");
+        }
+
+        // send block location to server
+        public void SubmitPosition(int objectId, Vector3 pos)
+        {
+            if (!isLocalPlayer)
+            {
+                Debug.LogError("can only submit choice from local player");
+                return;
+            }
+            CmdSubmitPosition(objectId, pos);
+        }
+        // send block location to server
+        // TODO(wilson): taking in id is hacky, should be fixed so server knows based on client id.
+        [Mirror.Command]
+        void CmdSubmitPosition(int objectId, Vector3 pos)
+        {
+            Debug.Log("Creating object " + objectId + " at " + pos);
         }
     }
 }
