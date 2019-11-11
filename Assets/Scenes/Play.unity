@@ -49447,7 +49447,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -46.69995, y: -44.900024}
+  m_AnchoredPosition: {x: -46.699707, y: -44.899902}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &227
@@ -51421,6 +51421,7 @@ GameObject:
   - component: {fileID: 266052186}
   - component: {fileID: 266052188}
   - component: {fileID: 266052187}
+  - component: {fileID: 266052189}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -51513,6 +51514,18 @@ MonoBehaviour:
   - {fileID: 1824055877161594, guid: 639fab1b9d4c44d44908b5a6ecaceafc, type: 3}
   m_SpawnPoint: {fileID: 1966883456}
   m_HostAddress: localhost
+--- !u!114 &266052189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266052185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 409a82c16702c42bbbd15e9375bed82c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &313703411
 GameObject:
   m_ObjectHideFlags: 0
@@ -56376,7 +56389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: -0.00024414062}
+  m_AnchoredPosition: {x: -0.00048828125, y: -0.00024414062}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &438519022

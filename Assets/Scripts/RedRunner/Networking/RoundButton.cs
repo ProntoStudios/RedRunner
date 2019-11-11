@@ -18,7 +18,7 @@ public class RoundButton : MonoBehaviour
     {
         if (NetworkManager.IsServer)
         {
-            RoundsManager.Local.ResetRound();
+            ServerRounds.Instance.ResetRound();
         }
         gameObject.SetActive(false);
     }
