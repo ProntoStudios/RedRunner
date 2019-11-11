@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-using RedRunner.Characters;
 using RedRunner.Networking;
 
 namespace RedRunner.TerrainGeneration
@@ -41,6 +40,8 @@ namespace RedRunner.TerrainGeneration
 		protected BackgroundBlock m_LastBackgroundBlock;
 		protected float m_RemoveTime = 0f;
 		protected bool m_Reset = false;
+
+		private const float DEFAULT_TERRAIN_LENGTH = 2000;
 
 		public float PreviousX
 		{
@@ -170,12 +171,7 @@ namespace RedRunner.TerrainGeneration
                 newX = 0f;
             }
 
-            if (RedCharacter.Local == null)
-            {
-                return;
-            }
-
-            if (block != null && (m_LastBlock == null || newX < RedCharacter.Local.transform.position.x + m_GenerateRange))
+            if (block != null && (m_LastBlock == null || newX < DEFAULT_TERRAIN_LENGTH + m_GenerateRange))
             {
                 if (isStart)
                 {
@@ -222,7 +218,7 @@ namespace RedRunner.TerrainGeneration
                 {
                     newX = 0f;
                 }
-                if (block != null && (m_BackgroundLayers[i].LastBlock == null || newX < RedCharacter.Local.transform.position.x + m_BackgroundGenerateRange))
+                if (block != null && (m_BackgroundLayers[i].LastBlock == null || newX < DEFAULT_TERRAIN_LENGTH + m_BackgroundGenerateRange))
                 {
                     CreateBackgroundBlock(block, current, m_BackgroundLayers[i], i);
                 }
@@ -348,7 +344,7 @@ namespace RedRunner.TerrainGeneration
 			Block characterBlock = null;
 			foreach ( KeyValuePair<Vector3, Block> block in m_Blocks )
 			{
-				if ( block.Key.x <= RedCharacter.Local.transform.position.x && block.Key.x + block.Value.Width > RedCharacter.Local.transform.position.x )
+				if ( block.Key.x <= DEFAULT_TERRAIN_LENGTH && block.Key.x + block.Value.Width > DEFAULT_TERRAIN_LENGTH)
 				{
 					characterBlock = block.Value;
 					break;

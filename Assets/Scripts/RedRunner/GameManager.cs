@@ -11,6 +11,7 @@ using RedRunner.Characters;
 using RedRunner.Collectables;
 using RedRunner.TerrainGeneration;
 using RedRunner.Networking;
+using RedRunner.Utilities;
 
 namespace RedRunner
 {
@@ -54,6 +55,9 @@ namespace RedRunner
         private GameEvent leftEvent;
         [SerializeField]
         private GameEvent rightEvent;
+
+		[SerializeField]
+		private CameraController m_CameraController;
 
 		/// <summary>
 		/// This is my developed callbacks compoents, because callbacks are so dangerous to use we need something that automate the sub/unsub to functions
@@ -137,6 +141,11 @@ namespace RedRunner
 				RedCharacter.Local.IsDead.AddEventAndFire(UpdateDeathEvent, this);
 				m_StartScoreX = RedCharacter.Local.transform.position.x;
 
+				m_CameraController.Follow(RedCharacter.Local.transform);
+			};
+
+			NetworkManager.OnConnected += () =>
+			{
 				StartGame();
 			};
 		}
@@ -186,7 +195,7 @@ namespace RedRunner
 
 		void Update()
 		{
-			if (m_GameRunning)
+			if (m_GameRunning && RedCharacter.Local != null)
 			{
 				if (RedCharacter.Local.transform.position.x > m_StartScoreX && RedCharacter.Local.transform.position.x > m_Score)
 				{
