@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 61602967384936788}
   m_Layer: 0
   m_Name: DirtRightCorner 1 (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 61698224779553586}
   m_Layer: 0
   m_Name: DirtLeftCorner 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1117,7 +1117,7 @@ GameObject:
   - component: {fileID: 61333972301432056}
   m_Layer: 0
   m_Name: Column 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1472,7 +1472,7 @@ GameObject:
   - component: {fileID: 4068520079311182}
   m_Layer: 0
   m_Name: Dirt
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13041,7 +13041,7 @@ GameObject:
   - component: {fileID: 61694601261601622}
   m_Layer: 0
   m_Name: DirtDown 1 (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13290,7 +13290,7 @@ GameObject:
   - component: {fileID: 61583944222712618}
   m_Layer: 0
   m_Name: DirtRight 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18906,7 +18906,7 @@ GameObject:
   - component: {fileID: 61705787327393196}
   m_Layer: 0
   m_Name: DirtRightCorner 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19359,7 +19359,7 @@ GameObject:
   - component: {fileID: 61203446799976972}
   m_Layer: 0
   m_Name: DirtDown 1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
