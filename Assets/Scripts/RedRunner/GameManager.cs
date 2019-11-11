@@ -11,6 +11,7 @@ using RedRunner.Characters;
 using RedRunner.Collectables;
 using RedRunner.TerrainGeneration;
 using RedRunner.Networking;
+using RedRunner.Target;
 
 namespace RedRunner
 {
@@ -286,10 +287,11 @@ namespace RedRunner
 
         public void PutCharacterOnStart(Character character)
         {
-            GameObject respawn = GameObject.FindWithTag("Respawn");
+            GameObject respawn = SpawnSingleton.instance;
             if (respawn != null)
             {
                 Vector3 position = respawn.transform.position;
+                Debug.Log("Text: " + position);
                 position.y += 2.56f;
                 float width = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
                 position.x -= width / 2;

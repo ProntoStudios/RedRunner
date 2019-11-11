@@ -37,7 +37,9 @@ namespace RedRunner.TerrainGeneration
 		protected float m_GenerateRange = 100f;
 		[SerializeField]
 		protected float m_BackgroundGenerateRange = 200f;
-		protected Block m_LastBlock;
+        [SerializeField]
+        protected bool m_RegenerateEachReset = false;
+        protected Block m_LastBlock;
 		protected BackgroundBlock m_LastBackgroundBlock;
 		protected float m_RemoveTime = 0f;
 		protected bool m_Reset = false;
@@ -89,7 +91,7 @@ namespace RedRunner.TerrainGeneration
 
 		protected virtual void Reset ()
 		{
-			if (!NetworkManager.IsServer)
+			if (!NetworkManager.IsServer || !m_RegenerateEachReset)
 			{
 				return;
 			}
