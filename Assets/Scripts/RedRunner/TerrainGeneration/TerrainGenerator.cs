@@ -383,6 +383,11 @@ namespace RedRunner.TerrainGeneration
 				NetworkManager.RegisterSpawnablePrefab(block.gameObject);
 			}
 
+			foreach (var block in m_Settings.SpawnBlocks)
+			{
+				NetworkManager.RegisterSpawnablePrefab(block.gameObject);
+			}
+
 			foreach (var layer in m_BackgroundLayers)
 			{
 				foreach (var block in layer.Blocks)

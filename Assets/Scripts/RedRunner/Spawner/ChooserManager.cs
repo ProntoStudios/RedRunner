@@ -13,6 +13,8 @@ namespace RedRunner.Networking
     {
         [SerializeField]
         TerrainGenerationSettings settings;
+        [SerializeField]
+        BlockInstantiater blockInstatiater;
         int size = 6;
         bool[] chosen;
         private static ChooserManager _local;
@@ -22,7 +24,6 @@ namespace RedRunner.Networking
 
         public override void OnStartLocalPlayer()
         {
-            Debug.Log("local spawner");
             base.OnStartLocalPlayer();
             _local = this;
         }
@@ -37,8 +38,8 @@ namespace RedRunner.Networking
             }
             int[] arr = new int[size];
             chosen = new bool[size];
-            Debug.Log("created chosen");
-            for (int i = 0; i < arr.Length; i++)
+
+            for(int i = 0; i < arr.Length; i++)
             {
                 arr[i] = Random.Range(0, settings.SpawnBlocks.Length);
             }
@@ -75,7 +76,6 @@ namespace RedRunner.Networking
                 Debug.LogError("can only submit choice from local player");
                 return;
             }
-            Debug.Log("try submit");
             CmdSubmitChoice(objectId);
         }
 
@@ -84,38 +84,36 @@ namespace RedRunner.Networking
         [Mirror.Command]
         void CmdSubmitChoice(int objectId)
         {
-            Debug.Log("submit " + objectId);
-            //Debug.Log(chosen.Length);
-            bool succeeded = false;
-            if (NetworkManager.IsServer)
-            {
-                // TODO(wilson): fix this. I think the check is running client side or something, making this not work peroperly
-                /*
-                Debug.Log("is server submit");
-                if (!chosen[objectId])
-                {
-                    chosen[objectId] = true;
-                    RpcChoiceTaken(objectId);
-                    succeeded = true;
-                }
-                */
-                succeeded = true;
-            }
-            Debug.Log("finished submit logic");
+            bool succeeded = Local.ReceiveChoice(objectId);
+            Debug.Log("grab " + succeeded);
             TargetSubmitChoice(connectionToClient, objectId, succeeded);
+        }
+
+        public bool ReceiveChoice(int objectId)
+        {
+            if (!NetworkManager.IsServer)
+            {
+                Debug.Log("not server");
+                return false;
+            }
+            if (chosen[objectId]){
+                Debug.Log("already chosen");
+                return false;
+            }
+            chosen[objectId] = true;
+            RpcChoiceTaken(objectId);
+            return true;
         }
 
         // runs on server, but returns results to client
         [Mirror.TargetRpc]
         public void TargetSubmitChoice(Mirror.NetworkConnection target, int objectId, bool succeeded)
         {
-            Debug.Log("target submit");
             if (!succeeded)
             {
                 Debug.Log("Item grab did not succeed");
                 return;
             }
-            Debug.Log("Item grab succeeded");
             SpawnerManager.Instance.StartBlockPlacer(objectId);
         }
 
@@ -136,12 +134,14 @@ namespace RedRunner.Networking
             }
             CmdSubmitPosition(objectId, pos);
         }
+
         // send block location to server
         // TODO(wilson): taking in id is hacky, should be fixed so server knows based on client id.
         [Mirror.Command]
         void CmdSubmitPosition(int objectId, Vector3 pos)
         {
-            Debug.Log("Creating object " + objectId + " at " + pos);
+            Block blockPrefab = settings.SpawnBlocks[objectId];
+            blockInstatiater.GenerateBlock(blockPrefab, pos);
         }
     }
 }
