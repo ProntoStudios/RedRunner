@@ -25,6 +25,10 @@ MonoBehaviour:
   - {fileID: 5132410105568621745, guid: cc98a8ee8234c404490b3995506c19f3, type: 3}
   m_EndBlocks:
   - {fileID: 114470893495785418, guid: 2bd9d4a0322602d4fa4ae0a5d894bdc3, type: 3}
+  m_SpawnBlocks:
+  - {fileID: 8174141573513202826, guid: a1be21ee9b0bf49978b0a3f5daef55ce, type: 3}
+  - {fileID: 5384380331259051304, guid: 68387b969e01d47d59d22a6f93e63e2b, type: 3}
+  - {fileID: 6129485942322561740, guid: 59dc6e12e51e843af98467101478773c, type: 3}
   m_BackgroundLayers:
   - name: Far
     Blocks:
