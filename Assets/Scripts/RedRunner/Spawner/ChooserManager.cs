@@ -15,17 +15,16 @@ namespace RedRunner.Networking
         TerrainGenerationSettings settings;
         private static ChooserManager _local;
         private static ChooserManager _instance;
-        private SpawnerScreen spawnerScreen;
 
-        public static ChooserManager Local{get{return _local; } }
+        public static ChooserManager Local { get { return _local; } }
         public static ChooserManager Instance { get {
                 if (_local != null) return _local;
                 return _instance;
-        } }
+            } }
 
         private void Awake()
         {
-            if(_instance = null)
+            if (_instance = null)
             {
                 _instance = this;
             }
@@ -41,7 +40,7 @@ namespace RedRunner.Networking
         public void RpcGetChoices(int[] objects)
         {
             Debug.Log(objects.Length + " choices");
-            spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN) as SpawnerScreen;
+            SpawnerScreen spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN) as SpawnerScreen;
             UIManager.Singleton.OpenScreen(spawnerScreen);
             //GameManager.Singleton.StopGame();
 
@@ -49,8 +48,8 @@ namespace RedRunner.Networking
             for (int i = 0; i < objects.Length; ++i)
             {
                 var index = i; // to capture this instance
-                spawnerScreen.AddBlock(settings.SpawnBlocks[objects[i]], index, 
-                    () => 
+                spawnerScreen.AddBlock(settings.SpawnBlocks[objects[i]], index,
+                    () =>
                     {
                         Local.TrySubmitChoice(index, objects[index]);
                     }
@@ -88,6 +87,13 @@ namespace RedRunner.Networking
                 Debug.Log("Item grab did not succeed");
                 return;
             }
+
+            Local.SubmitChoice(type);
+        }
+
+        public void SubmitChoice(int type)
+        {
+            SpawnerScreen spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN) as SpawnerScreen;
             spawnerScreen.DestroyBlocks();
             UIManager.Singleton.CloseScreen(spawnerScreen);
             SpawnerManager.Instance.StartBlockPlacer(type);
@@ -98,6 +104,7 @@ namespace RedRunner.Networking
         public void RpcChoiceTaken(int objectId)
         {
             Debug.Log(objectId + " was claimed");
+            SpawnerScreen spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN) as SpawnerScreen;
             spawnerScreen?.DisableBlock(objectId);
         }
 
