@@ -13,16 +13,18 @@ namespace RedRunner.Networking
         TerrainGenerationSettings settings;
         int size = 6;
         bool[] chosen;
-        private static ChooserManager _instance;
+        private static ChooserManager _local;
 
-        public static ChooserManager Instance{get{return _instance;}}
-        void Awake()
+        public static ChooserManager Local{get{return Local;}}
+
+
+        public override void OnStartLocalPlayer()
         {
-            if (_instance == null)
-            {
-                _instance = this;
-            }
+            Debug.Log("local spawner");
+            base.OnStartLocalPlayer();
+            _local = this;
         }
+
         // must be called by the host to do anything
         public void InitiateChoosing()
         {
@@ -50,11 +52,13 @@ namespace RedRunner.Networking
         // submit a selection to the server. Could fail if someone selected the item first.
         public void trySubmitChoice(int objectId)
         {
+            /*
             if (!isLocalPlayer)
             {
                 Debug.LogError("can only submit choice from local player");
                 return;
             }
+            */
             CmdSubmitChoice(objectId);
         }
 

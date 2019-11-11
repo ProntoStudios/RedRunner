@@ -54,7 +54,7 @@ namespace RedRunner.TerrainGeneration
             DisableScrolling();
             activeBlock = null;
             isActive = false;
-            ChooserManager.Instance.SubmitPosition(blockId, activeBlock.transform.position);
+            ChooserManager.Local.SubmitPosition(blockId, activeBlock.transform.position);
         }
 
         public void StartBlockPlacer(int id)
@@ -88,9 +88,6 @@ namespace RedRunner.TerrainGeneration
             activeBlock.transform.position = new Vector3(cameraMain.transform.position.x, cameraMain.transform.position.y, activeBlock.transform.position.z);
         }
 
-        private void Start()
-        {
-        }
         // Update is called once per frame
         void FixedUpdate()
         {
