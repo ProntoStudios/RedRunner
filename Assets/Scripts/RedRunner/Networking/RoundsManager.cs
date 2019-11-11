@@ -46,7 +46,9 @@ namespace RedRunner.Networking
         {
             GameManager.Singleton.Reset();
             GameManager.Singleton.StartGame();
-            GameManager.Singleton.RespawnMainCharacter();
+            if (!Application.isBatchMode) {
+                GameManager.Singleton.RespawnMainCharacter();
+            }
         }
     }
 }
