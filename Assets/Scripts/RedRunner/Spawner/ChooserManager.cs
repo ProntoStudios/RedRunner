@@ -15,6 +15,7 @@ namespace RedRunner.Networking
         TerrainGenerationSettings settings;
         private static ChooserManager _local;
         private static ChooserManager _instance;
+        private SpawnerScreen spawnerScreen;
 
         public static ChooserManager Local{get{return _local; } }
         public static ChooserManager Instance { get {
