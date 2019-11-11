@@ -18,6 +18,7 @@ namespace RedRunner.Networking
         int size = 6;
         bool[] chosen;
         private static ChooserManager _local;
+        private SpawnerScreen spawnerScreen; 
 
         public static ChooserManager Local{get{return _local; }}
 
@@ -51,7 +52,7 @@ namespace RedRunner.Networking
         void RpcGetChoices(int[] objects)
         {
             Debug.Log(objects.Length + " choices");
-            SpawnerScreen spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN) as SpawnerScreen;
+            spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN) as SpawnerScreen;
             UIManager.Singleton.OpenScreen(spawnerScreen);
             //GameManager.Singleton.StopGame();
 
@@ -59,7 +60,7 @@ namespace RedRunner.Networking
             for (int i = 0; i < objects.Length; ++i)
             {
                 var index = i; // to capture this instance
-                spawnerScreen.AddBlock(settings.SpawnBlocks[objects[i]],
+                spawnerScreen.AddBlock(settings.SpawnBlocks[objects[i]], index, 
                     () => 
                     {
                         TrySubmitChoice(index);
@@ -114,6 +115,8 @@ namespace RedRunner.Networking
                 Debug.Log("Item grab did not succeed");
                 return;
             }
+            spawnerScreen.DestroyBlocks();
+            UIManager.Singleton.CloseScreen(spawnerScreen);
             SpawnerManager.Instance.StartBlockPlacer(objectId);
         }
 

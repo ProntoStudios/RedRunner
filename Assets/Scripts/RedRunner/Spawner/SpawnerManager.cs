@@ -9,7 +9,7 @@ namespace RedRunner.TerrainGeneration
         [SerializeField]
         TerrainGenerationSettings settings;
         [SerializeField]
-        GameObject spawnerUIScreen;
+        GameObject spawnerButton;
         [SerializeField]
         BitBenderGames.TouchInputController inputController;
         [SerializeField]
@@ -60,7 +60,7 @@ namespace RedRunner.TerrainGeneration
 
         public void FinishBlockPlacer()
         {
-            spawnerUIScreen.SetActive(false);
+            spawnerButton.SetActive(false);
             DisableScrolling();
             Vector3 pos = activeBlock.transform.position;
             Destroy(activeBlock);
@@ -82,7 +82,7 @@ namespace RedRunner.TerrainGeneration
                 return;
             }
 
-            spawnerUIScreen.SetActive(true);
+            spawnerButton.SetActive(true);
             Block blockPrefab = settings.SpawnBlocks[id];
             Block block = Instantiate(blockPrefab);
             blockId = id;

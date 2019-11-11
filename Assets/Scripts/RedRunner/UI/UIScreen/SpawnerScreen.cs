@@ -14,6 +14,8 @@ namespace RedRunner.UI
         private GridLayoutGroup grid = default;
         [SerializeField]
         private GameObject buttonPrefab = default;
+        private Dictionary<int, Button> buttons = new Dictionary<int, Button>();
+
 
         private void Start()
         { 
@@ -48,7 +50,23 @@ namespace RedRunner.UI
             }
         }
 
-        public void AddBlock(Block block, UnityAction callback)
+        public void DestroyBlocks()
+        {
+            foreach (Transform child in grid.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
+
+        public void DisableBlock(int id)
+        {
+            if (buttons.TryGetValue(id, out Button button))
+            {
+                button.interactable = false;
+            }
+        }
+
+        public void AddBlock(Block block, int id, UnityAction callback)
         {
             GameObject newButton = Instantiate(buttonPrefab, grid.transform);
             Button button = newButton.GetComponent<Button>();
@@ -62,6 +80,7 @@ namespace RedRunner.UI
             if (null != button)
             {
                 button.onClick.AddListener(callback);
+                buttons.Add(id, button);
             } else
             {
                 Debug.LogError("Cannot find button component in choosing element.");
