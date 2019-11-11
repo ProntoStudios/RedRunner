@@ -126,7 +126,7 @@ namespace RedRunner.Networking
         {
             base.OnServerDisconnect(conn);
             m_clientCount--;
-            RoundsManager.Local.DecrementPlayer();
+            ServerRounds.Instance.DecrementPlayer();
         }
     }
 }
