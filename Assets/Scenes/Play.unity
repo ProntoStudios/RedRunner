@@ -49891,7 +49891,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 43
+  m_Text: x 0
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -58507,7 +58507,7 @@ PrefabInstance:
     - target: {fileID: 6365370417730958965, guid: f1eb0488833f94425a6d14df7e177810,
         type: 3}
       propertyPath: m_Constraint
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6865763312489520088, guid: f1eb0488833f94425a6d14df7e177810, type: 3}
