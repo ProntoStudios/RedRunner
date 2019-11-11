@@ -31,7 +31,6 @@ namespace RedRunner.Networking
         {
             if (round <= 0) return;
             activePlayers--;
-            Debug.Log(activePlayers);
             if (activePlayers == 0)
             {
                 ResetRound();
