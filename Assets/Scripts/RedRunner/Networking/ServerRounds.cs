@@ -51,7 +51,8 @@ namespace RedRunner.Networking
             activePlayers = NetworkManager.ClientCount;
             if (activePlayers > 0) {
                 RoundsManager.Instance.RpcResetRound();
-            }
+				ServerSpawner.Instance.InitiateChoosing();
+			}
         }
 
     }
