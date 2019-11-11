@@ -17,6 +17,7 @@ namespace RedRunner.Networking
         BlockInstantiater blockInstatiater;
         int size = 6;
         bool[] chosen;
+        
         private static ChooserManager _local;
         private SpawnerScreen spawnerScreen; 
 
@@ -63,31 +64,31 @@ namespace RedRunner.Networking
                 spawnerScreen.AddBlock(settings.SpawnBlocks[objects[i]], index, 
                     () => 
                     {
-                        TrySubmitChoice(index);
+                        TrySubmitChoice(index, objects[index]);
                     }
                     );
             }
         }
 
         // submit a selection to the server. Could fail if someone selected the item first.
-        public void TrySubmitChoice(int objectId)
+        public void TrySubmitChoice(int objectId, int type)
         {
             if (!isLocalPlayer)
             {
                 Debug.LogError("can only submit choice from local player");
                 return;
             }
-            CmdSubmitChoice(objectId);
+            CmdSubmitChoice(objectId, type);
         }
 
 
         // send choice to server
         [Mirror.Command]
-        void CmdSubmitChoice(int objectId)
+        void CmdSubmitChoice(int objectId, int type)
         {
             bool succeeded = Local.ReceiveChoice(objectId);
             Debug.Log("grab " + succeeded);
-            TargetSubmitChoice(connectionToClient, objectId, succeeded);
+            TargetSubmitChoice(connectionToClient, type, succeeded);
         }
 
         public bool ReceiveChoice(int objectId)
@@ -108,7 +109,7 @@ namespace RedRunner.Networking
 
         // runs on server, but returns results to client
         [Mirror.TargetRpc]
-        public void TargetSubmitChoice(Mirror.NetworkConnection target, int objectId, bool succeeded)
+        public void TargetSubmitChoice(Mirror.NetworkConnection target, int type, bool succeeded)
         {
             if (!succeeded)
             {
@@ -117,7 +118,7 @@ namespace RedRunner.Networking
             }
             spawnerScreen.DestroyBlocks();
             UIManager.Singleton.CloseScreen(spawnerScreen);
-            SpawnerManager.Instance.StartBlockPlacer(objectId);
+            SpawnerManager.Instance.StartBlockPlacer(type);
         }
 
         // server has told client that a block has been chosen

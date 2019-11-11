@@ -10,6 +10,6 @@ public class TempClicker : MonoBehaviour
     }
     public void sendSelection()
     {
-        ChooserManager.Local.TrySubmitChoice(2);
+        ChooserManager.Local.TrySubmitChoice(0, 2);
     }
 }
