@@ -1758,7 +1758,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.06
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -50306,38 +50306,24 @@ MonoBehaviour:
   m_DieAudioSource: {fileID: 139}
   m_MaceSlamAudioSource: {fileID: 138}
   m_UIAudioSource: {fileID: 141}
-  m_MusicClip: {fileID: 0}
+  m_MusicClip: {fileID: 8300000, guid: 862c2e42b365938439e6cd6ba57dab45, type: 3}
   m_CoinSound: {fileID: 8300000, guid: 5151f6de3fc24bc43a3c6daf0eb5ae1a, type: 3}
   m_ChestSound: {fileID: 8300000, guid: 293824e0375012e46b4805afef444a03, type: 3}
   m_WaterSplashSound: {fileID: 8300000, guid: da09767322df44d40b6d4f189f8c3c5c, type: 3}
   m_SpikeSound: {fileID: 8300000, guid: 5d613df8b8902c641a5536bb62c1ec65, type: 3}
   m_GroundedSounds:
-  - {fileID: 8300000, guid: 1ed1d265b82575d499a7fa7654937f67, type: 3}
-  - {fileID: 8300000, guid: 6a4de97e3c9f2cd4a8400d14e61f15df, type: 3}
+  - {fileID: 8300000, guid: fda12291e9f387a49bb105454632ce30, type: 3}
+  - {fileID: 8300000, guid: c8121fb72aa86004f9489bfe0abb4592, type: 3}
+  - {fileID: 8300000, guid: a57ff976bd3a58c459417e8145719139, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 55ea64a0b4c3068439385bbc1a37aebd, type: 3}
   m_FootstepSounds:
-  - {fileID: 8300000, guid: 701f4fd2ed05a6e47a664dbe700d74b8, type: 3}
-  - {fileID: 8300000, guid: 80fdce88cf5da0646a1efdd69a03fd12, type: 3}
-  - {fileID: 8300000, guid: 2049ddefbd478cb4297b30a821e9f540, type: 3}
-  - {fileID: 8300000, guid: ff8c9ffb719ee8043ab01048ed240e8b, type: 3}
-  - {fileID: 8300000, guid: 25906f917595d554c83679ef59578c69, type: 3}
-  - {fileID: 8300000, guid: d115bceb97468d04c9e64479a3bf9613, type: 3}
-  - {fileID: 8300000, guid: f76e719771b33ea44a4bc4804ef82808, type: 3}
-  - {fileID: 8300000, guid: 3613b3401de5136448cba685202abb1c, type: 3}
-  - {fileID: 8300000, guid: 41aceb20f5421534094b6bccd77a3879, type: 3}
-  - {fileID: 8300000, guid: 652bd32a03bca67458cd5885714f8aaf, type: 3}
-  - {fileID: 8300000, guid: 49825c7ad209f77469f476459b52206a, type: 3}
-  - {fileID: 8300000, guid: d086b8c76c6d3ce4d8b15074da8722f3, type: 3}
-  - {fileID: 8300000, guid: 943f543f104057e41ae7b1d36b04dcfc, type: 3}
-  - {fileID: 8300000, guid: cd9d8e92ae133954c83c70a611be7ba0, type: 3}
-  - {fileID: 8300000, guid: 5e4f08795f2d41d44b75934d652f5778, type: 3}
-  - {fileID: 8300000, guid: 626b8ca60ed3d4c49b8f0367735264c5, type: 3}
-  - {fileID: 8300000, guid: 8bb77c1740d52c147b5284beb1932431, type: 3}
-  - {fileID: 8300000, guid: 7ec52203dea23084e9930e986a7ce65c, type: 3}
-  - {fileID: 8300000, guid: 0c4fc1537aa49e845b9742a828f3babd, type: 3}
-  - {fileID: 8300000, guid: 499c9c4363f91594f8db341022d2ff9d, type: 3}
+  - {fileID: 8300000, guid: 33a7daec6f002984ebfdf61f32357b45, type: 3}
+  - {fileID: 8300000, guid: 8bfcdbd0beec9184d8b638dbc16eff9a, type: 3}
+  - {fileID: 8300000, guid: 192ee697ded95584ca45c462e1dbe206, type: 3}
+  - {fileID: 8300000, guid: 1275aa1456230b74eaefdfc9665fe0f4, type: 3}
+  - {fileID: 8300000, guid: 89cdbb09aa02da74b86db82802573ca4, type: 3}
   m_MaceSlamSound: {fileID: 8300000, guid: 2e20c06a65e531e47ba6de492cceb345, type: 3}
-  m_ButtonClickSound: {fileID: 8300000, guid: a180fc841f3fbdc4d83b7d2993ca8693, type: 3}
+  m_ButtonClickSound: {fileID: 8300000, guid: df5150e3bf07eed439eb4c6f390f9813, type: 3}
 --- !u!114 &275
 MonoBehaviour:
   m_ObjectHideFlags: 0
