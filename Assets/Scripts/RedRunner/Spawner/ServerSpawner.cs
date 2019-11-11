@@ -38,7 +38,7 @@ namespace RedRunner.Networking
             {
                 arr[i] = Random.Range(0, settings.SpawnBlocks.Length);
             }
-            ChooserManager.Local.RpcGetChoices(arr);
+            ChooserManager.Instance.RpcGetChoices(arr);
         }
 
 
@@ -55,7 +55,7 @@ namespace RedRunner.Networking
                 return false;
             }
             chosen[objectId] = true;
-            ChooserManager.Local.RpcChoiceTaken(objectId);
+            ChooserManager.Instance.RpcChoiceTaken(objectId);
             return true;
         }
 

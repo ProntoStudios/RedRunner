@@ -280,13 +280,13 @@ namespace RedRunner
 
 		public void RespawnMainCharacter()
 		{
-			RespawnCharacter(RedCharacter.Local);
+				RespawnCharacter(RedCharacter.Local);
 		}
 
 		public void RespawnCharacter(Character character)
         {
-            PutCharacterOnStart(RedCharacter.Local);
-            m_StartScoreX = RedCharacter.Local.transform.position.x;
+            PutCharacterOnStart(character);
+            m_StartScoreX = character.transform.position.x;
             character.Reset();
         }
 
