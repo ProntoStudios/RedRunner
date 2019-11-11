@@ -81,8 +81,6 @@ namespace RedRunner.Characters
         public abstract void EmitRunParticle();
 
 		public abstract void Reset();
-
-        public Action OnInactive;
 	}
 
 }

@@ -304,7 +304,6 @@ namespace RedRunner.Characters
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 			};
-
             m_RightEvent.RegisterAction(RightEvent);
             m_LeftEvent.RegisterAction(LeftEvent);
         }
@@ -584,9 +583,9 @@ namespace RedRunner.Characters
 
 		public override void Die ( bool blood )
 		{
-            if (IsActive() && OnInactive != null)
+            if (IsActive())
             {
-                OnInactive.Invoke();
+                OnInactive();
             }
             if ( !IsDead.Value )
 			{
@@ -601,14 +600,14 @@ namespace RedRunner.Characters
 					Destroy ( particle.gameObject, particle.main.duration );
 				}
 				CameraController.Singleton.fastMove = true;
-			}
+            }
 		}
 
         public override void Finish()
         {
-            if (IsActive() && OnInactive != null)
+            if (IsActive())
             {
-                OnInactive.Invoke();
+                OnInactive();
             }
             if ( !IsFinished.Value )
             {
@@ -622,6 +621,11 @@ namespace RedRunner.Characters
         private bool IsActive()
         {
             return !IsDead.Value && !IsFinished.Value;
+        }
+
+        private void OnInactive()
+        {
+            RoundsManager.Local.CmdDeactivateSelf();
         }
 
         public override void EmitRunParticle ()
@@ -645,6 +649,7 @@ namespace RedRunner.Characters
 			m_Skeleton.SetActive ( false, m_Rigidbody2D.velocity );
             m_State = CharacterState.Stopped;
 			m_WallDetector.Reset();
+			StopWallSlide();
 		}
 
 		#endregion

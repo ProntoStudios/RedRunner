@@ -1,0 +1,7 @@
+---
+
+- name: Deploy all hosts
+  gather_facts: false
+  hosts: all
+  roles:
+    - deploy

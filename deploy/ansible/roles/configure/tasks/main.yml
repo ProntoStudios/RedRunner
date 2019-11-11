@@ -1,0 +1,13 @@
+---
+# Server Configuration
+-
+
+- name: copy harvard service
+  template:
+    src: harvard.service
+    dest: /lib/systemd/system/harvard.service
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+  notify:
+  - reload systemctl daemon
+  - restart harvard

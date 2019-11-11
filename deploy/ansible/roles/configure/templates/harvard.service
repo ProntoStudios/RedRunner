@@ -1,0 +1,27 @@
+[Unit]
+Description=pronto harvard server
+ConditionPathExists=/home/{{ server_user }}/{{ exe_name }}
+After=network.target
+ 
+[Service]
+Type=simple
+User={{ server_user }}
+Group={{ server_user }}
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+
+WorkingDirectory=/home/{{ server_user }}
+ExecStart=/home/{{ server_user }}/{{ exe_name }}
+
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/log/{{ exe_name }}
+ExecStartPre=/bin/chown syslog:adm /var/log/{{ exe_name }}
+ExecStartPre=/bin/chmod 755 /var/log/{{ exe_name }}
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier={{ exe_name }}
+ 
+[Install]
+WantedBy=multi-user.target

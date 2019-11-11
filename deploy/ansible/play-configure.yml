@@ -1,0 +1,7 @@
+---
+
+- name: Configure all hosts
+  gather_facts: false
+  hosts: all
+  roles:
+    - configure

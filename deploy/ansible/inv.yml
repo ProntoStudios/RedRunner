@@ -1,0 +1,7 @@
+all:
+  hosts:
+    138.197.142.37:
+  vars:
+    ansible_connection: ssh
+    ansible_user: root
+    ansible_port: 22
