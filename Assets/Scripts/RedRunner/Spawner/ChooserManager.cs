@@ -57,11 +57,11 @@ namespace RedRunner.Networking
             Block[] blocks = new Block[objects.Length];
             for (int i = 0; i < objects.Length; ++i)
             {
+                var index = i; // to capture this instance
                 spawnerScreen.AddBlock(settings.SpawnBlocks[objects[i]],
-                    delegate 
+                    () => 
                     {
-                        Debug.Log(i);
-                        TrySubmitChoice(i);
+                        TrySubmitChoice(index);
                     }
                     );
             }
