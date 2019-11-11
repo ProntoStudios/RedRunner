@@ -1,0 +1,11 @@
+---
+# Configuration Handlers
+-
+
+- name: reload systemctl daemon
+  command: systemctl daemon-reload
+
+- name: restart harvard
+  service:
+    name: harvard
+    state: restarted

@@ -6070,7 +6070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  m_MaxRunSpeed: 10
+  m_TargetRunSpeed: 8
   m_RunSmoothTime: 0.5
   m_RunSpeed: 2
   m_WalkSpeed: 5

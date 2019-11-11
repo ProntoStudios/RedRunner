@@ -33,3 +33,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Build.app
+# Ansible metadata
+*.retry

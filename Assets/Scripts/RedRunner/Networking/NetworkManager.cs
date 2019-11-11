@@ -4,12 +4,14 @@ using RedRunner.Utilities;
 
 namespace RedRunner.Networking
 {
-	public class NetworkManager : Mirror.NetworkManager
-	{
-		[SerializeField]
-		private Transform m_SpawnPoint;
-		[SerializeField]
-		private string m_HostAddress = "localhost";
+    public class NetworkManager : Mirror.NetworkManager
+    {
+        [SerializeField]
+        private Transform m_SpawnPoint;
+        [SerializeField]
+        private string m_HostAddress = "localhost";
+        private static int m_clientCount = 0;
+        public static int ClientCount{get{return m_clientCount;} }
 
 		private static bool m_IsHosting = false;
 
@@ -92,8 +94,8 @@ namespace RedRunner.Networking
 				StartClient();
 			}
 
-			OnConnected();
-		}
+            OnConnected?.Invoke();
+        }
 
 		public override void OnServerAddPlayer(Mirror.NetworkConnection conn)
 		{
@@ -104,7 +106,7 @@ namespace RedRunner.Networking
 			}
 		}
 
-		public static void RegisterSpawnablePrefab(GameObject prefab)
+        public static void RegisterSpawnablePrefab(GameObject prefab)
 		{
 			Mirror.ClientScene.RegisterPrefab(prefab);
 		}
@@ -112,6 +114,19 @@ namespace RedRunner.Networking
 		public static void Spawn(GameObject gameObject)
 		{
 			Mirror.NetworkServer.Spawn(gameObject);
-		}
-	}
+        }
+
+        public override void OnServerConnect(Mirror.NetworkConnection conn)
+        {
+            base.OnServerConnect(conn);
+            m_clientCount++;
+        }
+
+        public override void OnServerDisconnect(Mirror.NetworkConnection conn)
+        {
+            base.OnServerDisconnect(conn);
+            m_clientCount--;
+            RoundsManager.Local.DecrementPlayer();
+        }
+    }
 }
