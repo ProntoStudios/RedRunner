@@ -22,6 +22,7 @@ namespace RedRunner.UI
                 var ingameScreen = UIManager.Singleton.GetUIScreen(UIScreenInfo.IN_GAME_SCREEN);
                 UIManager.Singleton.OpenScreen(ingameScreen);
                 GameManager.Singleton.StartGame();
+                GameManager.Singleton.RespawnMainCharacter();
             });
         }
 

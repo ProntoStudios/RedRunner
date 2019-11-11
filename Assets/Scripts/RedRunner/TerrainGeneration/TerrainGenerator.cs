@@ -36,7 +36,9 @@ namespace RedRunner.TerrainGeneration
 		protected float m_GenerateRange = 100f;
 		[SerializeField]
 		protected float m_BackgroundGenerateRange = 200f;
-		protected Block m_LastBlock;
+        [SerializeField]
+        protected bool m_RegenerateEachReset = false;
+        protected Block m_LastBlock;
 		protected BackgroundBlock m_LastBackgroundBlock;
 		protected float m_RemoveTime = 0f;
 		protected bool m_Reset = false;
@@ -90,7 +92,7 @@ namespace RedRunner.TerrainGeneration
 
 		protected virtual void Reset ()
 		{
-			if (!NetworkManager.IsServer)
+			if (!NetworkManager.IsServer || !m_RegenerateEachReset)
 			{
 				return;
 			}
@@ -337,20 +339,6 @@ namespace RedRunner.TerrainGeneration
 				m_FathestBackgroundX = m_BackgroundLayers [ layerIndex ].CurrentX;
 			}
 			return true;
-		}
-
-		public Block GetCharacterBlock ()
-		{
-			Block characterBlock = null;
-			foreach ( KeyValuePair<Vector3, Block> block in m_Blocks )
-			{
-				if ( block.Key.x <= DEFAULT_TERRAIN_LENGTH && block.Key.x + block.Value.Width > DEFAULT_TERRAIN_LENGTH)
-				{
-					characterBlock = block.Value;
-					break;
-				}
-			}
-			return characterBlock;
 		}
 
 		public static Block ChooseFrom ( Block[] blocks )

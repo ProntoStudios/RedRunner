@@ -11,6 +11,7 @@ using RedRunner.Characters;
 using RedRunner.Collectables;
 using RedRunner.TerrainGeneration;
 using RedRunner.Networking;
+using RedRunner.Target;
 using RedRunner.Utilities;
 
 namespace RedRunner
@@ -139,7 +140,6 @@ namespace RedRunner
 			RedCharacter.LocalPlayerSpawned += () =>
 			{
 				RedCharacter.Local.IsDead.AddEventAndFire(UpdateDeathEvent, this);
-				m_StartScoreX = RedCharacter.Local.transform.position.x;
 
 				m_CameraController.Follow(RedCharacter.Local.transform);
 			};
@@ -261,7 +261,9 @@ namespace RedRunner
 		public void StartGame()
 		{
 			m_GameStarted = true;
-			ResumeGame();
+            PutCharacterOnStart(RedCharacter.Local);
+            m_StartScoreX = RedCharacter.Local.transform.position.x;
+            ResumeGame();
 		}
 
 		public void StopGame()
@@ -288,19 +290,26 @@ namespace RedRunner
 		}
 
 		public void RespawnCharacter(Character character)
-		{
-			Block block = TerrainGenerator.Singleton.GetCharacterBlock();
-			if (block != null)
-			{
-				Vector3 position = block.transform.position;
-				position.y += 2.56f;
-				position.x += 1.28f;
-				character.transform.position = position;
-				character.Reset();
-			}
-		}
+        {
+            character.Reset();
+        }
 
-		public void Reset()
+        public void PutCharacterOnStart(Character character)
+        {
+            GameObject respawn = SpawnSingleton.instance;
+            if (respawn != null)
+            {
+                Vector3 position = respawn.transform.position;
+                Debug.Log("Text: " + position);
+                position.y += 2.56f;
+                float width = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
+                position.x -= width / 2;
+                position.x += UnityEngine.Random.Range(0, width);
+                character.transform.position = position;
+            }
+        }
+
+        public void Reset()
 		{
 			m_Score = 0f;
 			if (OnReset != null)
