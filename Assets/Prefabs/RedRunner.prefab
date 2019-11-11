@@ -6026,6 +6026,7 @@ GameObject:
   - component: {fileID: 1081473167}
   - component: {fileID: 2643171340727631060}
   - component: {fileID: 7761888325247821747}
+  - component: {fileID: 6452554716753630853}
   m_Layer: 10
   m_Name: RedRunner
   m_TagString: Player
@@ -6254,6 +6255,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359839c0a29044738b45df1db737ec33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6452554716753630853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824055877161594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0284ea6667ee4760962488829ea3537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &1863000636641838
 GameObject:
   m_ObjectHideFlags: 0
