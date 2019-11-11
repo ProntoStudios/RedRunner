@@ -2,6 +2,11 @@
 # Server Deployment
 -
 
+- name: stop harvard
+  service:
+    name: harvard
+    state: stopped 
+
 - name: copy server executable
   copy:
     src: ../../Build/{{ exe_name }}
@@ -9,11 +14,17 @@
     owner: "{{ server_user }}"
     group: "{{ server_user }}"
     mode: '0700'
+  notify:
+    - reload systemctl daemon
+    - restart harvard
 
 - name: synchronize server data
   synchronize:
     src: ../../Build/{{ exe_name }}_Data
     dest: /home/{{ server_user }}/{{ exe_name }}_Data
+  notify:
+    - reload systemctl daemon
+    - restart harvard
 
 - name: set data ownership
   command: chown -R {{ server_user }}:{{ server_user }} /home/{{ server_user }}/{{ exe_name }}_Data
