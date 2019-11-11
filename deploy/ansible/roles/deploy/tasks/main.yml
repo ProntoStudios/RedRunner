@@ -21,7 +21,8 @@
 - name: synchronize server data
   synchronize:
     src: ../../Build/{{ exe_name }}_Data
-    dest: /home/{{ server_user }}/{{ exe_name }}_Data
+    dest: /home/{{ server_user }}/
+    delete: yes
   notify:
     - reload systemctl daemon
     - restart harvard
