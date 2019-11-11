@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using RedRunner.Utilities;
+using System;
 
 namespace RedRunner.Characters
 {
@@ -81,6 +82,7 @@ namespace RedRunner.Characters
 
 		public abstract void Reset();
 
+        public Action OnInactive;
 	}
 
 }

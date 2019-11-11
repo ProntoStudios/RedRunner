@@ -525,7 +525,11 @@ namespace RedRunner.Characters
 
 		public override void Die ( bool blood )
 		{
-			if ( !IsDead.Value )
+            if (IsActive() && OnInactive != null)
+            {
+                OnInactive.Invoke();
+            }
+            if ( !IsDead.Value )
 			{
 				IsDead.Value = true;
 				m_Skeleton.SetActive ( true, m_Rigidbody2D.velocity );
@@ -543,6 +547,10 @@ namespace RedRunner.Characters
 
         public override void Finish()
         {
+            if (IsActive() && OnInactive != null)
+            {
+                OnInactive.Invoke();
+            }
             if ( !IsFinished.Value )
             {
                 IsFinished.Value = true;
