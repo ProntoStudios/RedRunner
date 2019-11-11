@@ -644,6 +644,7 @@ namespace RedRunner.Characters
 			m_Rigidbody2D.velocity = Vector2.zero;
 			m_Skeleton.SetActive ( false, m_Rigidbody2D.velocity );
             m_State = CharacterState.Stopped;
+			m_WallDetector.Reset();
 		}
 
 		#endregion

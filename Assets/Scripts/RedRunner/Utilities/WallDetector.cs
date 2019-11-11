@@ -24,6 +24,12 @@ namespace RedRunner.Utilities
 			m_TouchingWall = false;
 		}
 
+		public void Reset()
+		{
+			m_TouchingWall = false;
+			m_ClippedWalls = 0;
+		}
+
 		private void OnTriggerEnter2D(Collider2D collider)
 		{
 			if (collider.gameObject.tag == WALL_TAG_NAME)
