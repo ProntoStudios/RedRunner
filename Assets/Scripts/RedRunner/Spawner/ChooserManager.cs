@@ -52,7 +52,7 @@ namespace RedRunner.Networking
                 spawnerScreen.AddBlock(settings.SpawnBlocks[objects[i]], index, 
                     () => 
                     {
-                        TrySubmitChoice(index, objects[index]);
+                        Local.TrySubmitChoice(index, objects[index]);
                     }
                     );
             }
