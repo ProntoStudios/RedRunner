@@ -11,7 +11,14 @@ namespace RedRunner.Networking
 
         private static RoundsManager _local;
         public static RoundsManager Local { get { return _local; } }
-
+        private void Update()
+        {
+            if(Application.isBatchMode && round <= 0 && activePlayers>0)
+            {
+                Debug.Log("Player joined game,starting game");
+                ResetRound();
+            }
+        }
 
         public override void OnStartLocalPlayer()
         {
@@ -21,6 +28,7 @@ namespace RedRunner.Networking
 
         public void ResetRound()
         {
+            Debug.Log("resetting round");
             round++;
             activePlayers = NetworkManager.ClientCount;
             RpcResetRound();
