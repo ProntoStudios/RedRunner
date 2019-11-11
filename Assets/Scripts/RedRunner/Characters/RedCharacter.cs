@@ -306,10 +306,6 @@ namespace RedRunner.Characters
 			};
             m_RightEvent.RegisterAction(RightEvent);
             m_LeftEvent.RegisterAction(LeftEvent);
-            OnInactive += () =>
-            {
-                RoundsManager.Local.CmdDeactivateSelf();
-            };
         }
         
         private void LeftEvent()
@@ -604,7 +600,8 @@ namespace RedRunner.Characters
 					Destroy ( particle.gameObject, particle.main.duration );
 				}
 				CameraController.Singleton.fastMove = true;
-			}
+                RoundsManager.Local.CmdDeactivateSelf();
+            }
 		}
 
         public override void Finish()

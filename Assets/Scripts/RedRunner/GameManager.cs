@@ -173,8 +173,8 @@ namespace RedRunner
 			yield return new WaitForSecondsRealtime(1.5f);
 
 			EndGame();
-			var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
-			UIManager.Singleton.OpenScreen(endScreen);
+			//var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
+			//UIManager.Singleton.OpenScreen(endScreen);
 		}
 
 		private void Start()
@@ -275,7 +275,7 @@ namespace RedRunner
 		public void EndGame()
 		{
 			m_GameStarted = false;
-			StopGame();
+			//StopGame();
 		}
 
 		public void RespawnMainCharacter()

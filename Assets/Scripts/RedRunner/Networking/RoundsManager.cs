@@ -31,6 +31,7 @@ namespace RedRunner.Networking
         {
             if (round <= 0) return;
             activePlayers--;
+            Debug.Log(activePlayers);
             if (activePlayers == 0)
             {
                 ResetRound();
@@ -41,7 +42,7 @@ namespace RedRunner.Networking
         [Mirror.Command]
         public void CmdDeactivateSelf()
         {
-            DecrementPlayer();
+            Local.DecrementPlayer();
         }
 
         // receive on client to reset round
