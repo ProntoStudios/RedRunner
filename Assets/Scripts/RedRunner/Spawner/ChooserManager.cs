@@ -48,6 +48,9 @@ namespace RedRunner.Networking
         void RpcGetChoices(int[] objects)
         {
             Debug.Log(objects.Length + " choices");
+            var spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN);
+            UIManager.Singleton.OpenScreen(spawnerScreen);
+            GameManager.Singleton.StopGame();
         }
 
         // submit a selection to the server. Could fail if someone selected the item first.
