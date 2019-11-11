@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using RedRunner.TerrainGeneration;
 using Mirror;
+using RedRunner.UI;
+
 namespace RedRunner.Networking
 {
     [RequireComponent(typeof(Mirror.NetworkIdentity))]
@@ -36,9 +38,9 @@ namespace RedRunner.Networking
             int[] arr = new int[size];
             chosen = new bool[size];
             Debug.Log("created chosen");
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                arr[i] = 1;//TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
+                arr[i] = Random.Range(0, settings.SpawnBlocks.Length);
             }
             RpcGetChoices(arr);
         }
@@ -48,9 +50,15 @@ namespace RedRunner.Networking
         void RpcGetChoices(int[] objects)
         {
             Debug.Log(objects.Length + " choices");
-            var spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN);
+            SpawnerScreen spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN) as SpawnerScreen;
             UIManager.Singleton.OpenScreen(spawnerScreen);
-            GameManager.Singleton.StopGame();
+            //GameManager.Singleton.StopGame();
+
+            Block[] blocks = new Block[objects.Length];
+            for (int i = 0; i < objects.Length; ++i)
+            {
+                spawnerScreen.AddBlock(settings.SpawnBlocks[objects[i]]);
+            }
         }
 
         // submit a selection to the server. Could fail if someone selected the item first.
