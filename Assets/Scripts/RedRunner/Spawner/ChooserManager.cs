@@ -11,6 +11,8 @@ namespace RedRunner.Networking
     {
         [SerializeField]
         TerrainGenerationSettings settings;
+        [SerializeField]
+        BlockInstantiater blockInstatiater;
         int size = 6;
         bool[] chosen;
         private static ChooserManager _local;
@@ -20,7 +22,6 @@ namespace RedRunner.Networking
 
         public override void OnStartLocalPlayer()
         {
-            Debug.Log("local spawner");
             base.OnStartLocalPlayer();
             _local = this;
         }
@@ -35,7 +36,6 @@ namespace RedRunner.Networking
             }
             int[] arr = new int[size];
             chosen = new bool[size];
-            Debug.Log("created chosen");
             for(int i = 0; i < arr.Length; i++)
             {
                 arr[i] = 1;//TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
@@ -58,7 +58,6 @@ namespace RedRunner.Networking
                 Debug.LogError("can only submit choice from local player");
                 return;
             }
-            Debug.Log("try submit");
             CmdSubmitChoice(objectId);
         }
 
@@ -67,7 +66,6 @@ namespace RedRunner.Networking
         [Mirror.Command]
         void CmdSubmitChoice(int objectId)
         {
-            Debug.Log("submit " + objectId);
             //Debug.Log(chosen.Length);
             bool succeeded = false;
             if (NetworkManager.IsServer)
@@ -84,7 +82,6 @@ namespace RedRunner.Networking
                 */
                 succeeded = true;
             }
-            Debug.Log("finished submit logic");
             TargetSubmitChoice(connectionToClient, objectId, succeeded);
         }
 
@@ -92,13 +89,11 @@ namespace RedRunner.Networking
         [Mirror.TargetRpc]
         public void TargetSubmitChoice(Mirror.NetworkConnection target, int objectId, bool succeeded)
         {
-            Debug.Log("target submit");
             if (!succeeded)
             {
                 Debug.Log("Item grab did not succeed");
                 return;
             }
-            Debug.Log("Item grab succeeded");
             SpawnerManager.Instance.StartBlockPlacer(objectId);
         }
 
@@ -125,9 +120,8 @@ namespace RedRunner.Networking
         [Mirror.Command]
         void CmdSubmitPosition(int objectId, Vector3 pos)
         {
-            Debug.Log("Creating object " + objectId + " at " + pos);
             Block blockPrefab = settings.SpawnBlocks[objectId];
-            NetworkManager.RegisterSpawnablePrefab(blockPrefab.gameObject);
+            blockInstatiater.GenerateBlock(blockPrefab, pos);
         }
     }
 }
