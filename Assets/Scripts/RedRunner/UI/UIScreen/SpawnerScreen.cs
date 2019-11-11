@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using RedRunner.Utilities;
+using UnityEngine.Events;
 
 namespace RedRunner.UI
 {
@@ -29,10 +30,13 @@ namespace RedRunner.UI
             dest.localScale = source.localScale;
             dest.localPosition = source.localPosition;
             dest.localRotation = source.localRotation;
+            dest.gameObject.layer = 5; // UI_LAYER
+
             SpriteRenderer spriteRenderer = source.GetComponent<SpriteRenderer>();
             if (null != spriteRenderer)
             {
                 dest.gameObject.AddComponent<SpriteRenderer>(spriteRenderer); // copy params with reflection
+                dest.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Overlay";
             }
             
             for (int i = 0; i < source.childCount; ++i)
@@ -44,11 +48,24 @@ namespace RedRunner.UI
             }
         }
 
-        public void AddBlock(Block block)
+        public void AddBlock(Block block, UnityAction callback)
         {
-            GameObject newBlock = Instantiate(buttonPrefab, grid.transform);
+            GameObject newButton = Instantiate(buttonPrefab, grid.transform);
+            Button button = newButton.GetComponent<Button>();
+
+            GameObject newBlock = new GameObject(block.name, typeof(RectTransform));
+            newBlock.transform.SetParent(newButton.transform);
+
             DFSClone(block.transform, newBlock.transform);
-            newBlock.transform.localScale = newBlock.transform.localScale * 15f;
+            newBlock.transform.localScale = newBlock.transform.localScale * 10f;
+
+            if (null != button)
+            {
+                button.onClick.AddListener(callback);
+            } else
+            {
+                Debug.LogError("Cannot find button component in choosing element.");
+            }
         }
     }
 }
