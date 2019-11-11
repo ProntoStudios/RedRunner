@@ -492,6 +492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2199744899063048959}
   - component: {fileID: 2051416940304805679}
+  - component: {fileID: 5323559233837172140}
   m_Layer: 9
   m_Name: DirtRight
   m_TagString: Ground
@@ -562,6 +563,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &5323559233837172140
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201590851435858185}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 2.56, y: 12.8}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 2
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.56, y: 12.8}
+  m_EdgeRadius: 0
 --- !u!1 &3540040632387079478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,7 +1258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492bac9ee3503c44eb7bdac5861a7875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Width: 186.88
+  m_Width: 79.36
   m_Probability: 1
 --- !u!114 &649396112326817411
 MonoBehaviour:
@@ -8205,7 +8232,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3540780839802405558}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -103.6852, y: -4.16, z: 0}
+  m_LocalPosition: {x: -103.6779, y: -4.16, z: 0}
   m_LocalScale: {x: 1.1574938, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3542184752592531562}
@@ -8254,7 +8281,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 48.64885, y: 2.56}
+  m_Size: {x: 48.661533, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -8278,7 +8305,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 2.56}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2.56, y: 2.56}
-    newSize: {x: 48.64885, y: 2.56}
+    newSize: {x: 48.661533, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
@@ -14776,6 +14803,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6620108589351062820}
   - component: {fileID: 6422222325818525940}
+  - component: {fileID: 1992270801621842712}
   m_Layer: 9
   m_Name: DirtRight (1)
   m_TagString: Ground
@@ -14846,6 +14874,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1992270801621842712
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6617431400553164498}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 2.56, y: 38.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 2
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.56, y: 38.4}
+  m_EdgeRadius: 0
 --- !u!1 &7870601729059429644
 GameObject:
   m_ObjectHideFlags: 0
