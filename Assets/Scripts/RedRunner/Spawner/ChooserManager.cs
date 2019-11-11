@@ -15,7 +15,7 @@ namespace RedRunner.Networking
         bool[] chosen;
         private static ChooserManager _local;
 
-        public static ChooserManager Local{get{return Local;}}
+        public static ChooserManager Local{get{return _local; }}
 
 
         public override void OnStartLocalPlayer()
@@ -37,7 +37,7 @@ namespace RedRunner.Networking
             chosen = new bool[size];
             for(int i = 0; i < arr.Length; i++)
             {
-                arr[i] = 5;//TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
+                arr[i] = 1;//TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
             }
             RpcGetChoices(arr);
         }
@@ -50,15 +50,14 @@ namespace RedRunner.Networking
         }
 
         // submit a selection to the server. Could fail if someone selected the item first.
-        public void trySubmitChoice(int objectId)
+        public void TrySubmitChoice(int objectId)
         {
-            /*
             if (!isLocalPlayer)
             {
                 Debug.LogError("can only submit choice from local player");
                 return;
             }
-            */
+            Debug.Log("try submit");
             CmdSubmitChoice(objectId);
         }
 
@@ -67,6 +66,7 @@ namespace RedRunner.Networking
         [Mirror.Command]
         void CmdSubmitChoice(int objectId)
         {
+            Debug.Log("submit");
             TargetSubmitChoice(connectionToClient, objectId);
         }
 
@@ -74,7 +74,8 @@ namespace RedRunner.Networking
         [Mirror.TargetRpc]
         public void TargetSubmitChoice(Mirror.NetworkConnection target, int objectId)
         {
-            if(objectId < 0 || objectId >= chosen.Length)
+            Debug.Log("target submit");
+            if (objectId < 0 || objectId >= chosen.Length)
             {
                 Debug.LogError("Object id invalid");
                 return;
@@ -83,6 +84,7 @@ namespace RedRunner.Networking
             chosen[objectId] = true;
             RpcChoiceTaken(objectId);
             Debug.Log("got type");
+            SpawnerManager.Instance.StartBlockPlacer(objectId);
         }
 
         // server has told client that a block has been chosen

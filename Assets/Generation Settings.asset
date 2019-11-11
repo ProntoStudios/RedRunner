@@ -38,7 +38,7 @@ MonoBehaviour:
   m_EndBlocks:
   - {fileID: 114470893495785418, guid: 9a775b549d469f74196fb38cb84acf0b, type: 3}
   m_SpawnBlocks:
-  - {fileID: 5927239086464420716, guid: a1be21ee9b0bf49978b0a3f5daef55ce, type: 3}
+  - {fileID: 8174141573513202826, guid: a1be21ee9b0bf49978b0a3f5daef55ce, type: 3}
   - {fileID: 5384380331259051304, guid: 68387b969e01d47d59d22a6f93e63e2b, type: 3}
   - {fileID: 6129485942322561740, guid: 59dc6e12e51e843af98467101478773c, type: 3}
   m_BackgroundLayers:
