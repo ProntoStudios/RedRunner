@@ -116,15 +116,14 @@ namespace RedRunner.TerrainGeneration
 		{
 			m_Singleton = null;
 		}
-
-		protected virtual void Update ()
+        protected virtual void Update ()
 		{
 			if (!NetworkManager.IsServer)
 			{
 				return;
-			}
+            }
 
-			if ( m_Reset )
+            if ( m_Reset )
 			{
 				return;
 			}

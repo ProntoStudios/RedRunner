@@ -14,7 +14,7 @@ namespace RedRunner.Networking
         int size = 6;
         bool[] chosen;
 
-        // must be called by the host to do anything
+            // must be called by the host to do anything
         public void InitiateChoosing()
         {
             if (!NetworkManager.IsServer)
@@ -22,18 +22,18 @@ namespace RedRunner.Networking
                 Debug.LogError("can only initialize block chooser from host");
                 return;
             }
-            Block[] arr = new Block[size];
+            int[] arr = new int[size];
             chosen = new bool[size];
             for(int i = 0; i < arr.Length; i++)
             {
-                arr[i] = TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
+                arr[i] = 5;//TerrainGenerator.ChooseFrom(settings.SpawnBlocks);
             }
             RpcGetChoices(arr);
         }
 
         // receive block options on client
         [Mirror.ClientRpc]
-        void RpcGetChoices(Block[] objects)
+        void RpcGetChoices(int[] objects)
         {
             Debug.Log(objects.Length + " choices");
         }
@@ -46,30 +46,30 @@ namespace RedRunner.Networking
                 Debug.LogError("can only submit choice from local player");
                 return;
             }
-            Debug.Log(CmdSubmitChoice(objectId));
+            CmdSubmitChoice(objectId);
         }
 
 
         // send choice to server
         [Mirror.Command]
-        bool CmdSubmitChoice(int objectId)
+        void CmdSubmitChoice(int objectId)
         {
-            return TargetSubmitChoice(connectionToClient, objectId);
+            TargetSubmitChoice(connectionToClient, objectId);
         }
 
         // runs on server, but returns results to client
         [Mirror.TargetRpc]
-        public bool TargetSubmitChoice(Mirror.NetworkConnection target, int objectId)
+        public void TargetSubmitChoice(Mirror.NetworkConnection target, int objectId)
         {
             if(objectId < 0 || objectId >= chosen.Length)
             {
                 Debug.LogError("Object id invalid");
-                return false;
+                return;
             }
-            if (chosen[objectId]) return false;
+            if (chosen[objectId]) return;
             chosen[objectId] = true;
             RpcChoiceTaken(objectId);
-            return true; 
+            Debug.Log("got type");
         }
 
         // server has told client that a block has been chosen
