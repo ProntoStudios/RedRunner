@@ -63,6 +63,7 @@ namespace RedRunner.TerrainGeneration
             spawnerUIScreen.SetActive(false);
             DisableScrolling();
             Vector3 pos = activeBlock.transform.position;
+            Destroy(activeBlock);
             activeBlock = null;
             isActive = false;
             ChooserManager.Local.SubmitPosition(blockId, pos);

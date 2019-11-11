@@ -119,12 +119,15 @@ namespace RedRunner.Networking
             }
             CmdSubmitPosition(objectId, pos);
         }
+
         // send block location to server
         // TODO(wilson): taking in id is hacky, should be fixed so server knows based on client id.
         [Mirror.Command]
         void CmdSubmitPosition(int objectId, Vector3 pos)
         {
             Debug.Log("Creating object " + objectId + " at " + pos);
+            Block blockPrefab = settings.SpawnBlocks[objectId];
+            NetworkManager.RegisterSpawnablePrefab(blockPrefab.gameObject);
         }
     }
 }
