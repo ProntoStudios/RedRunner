@@ -10,7 +10,7 @@ namespace RedRunner.Utilities
 		public Action OnWallEnter;
 		public Action OnWallExit;
 
-		public const string WALL_LAYER_NAME = "Ground";
+		public const string WALL_TAG_NAME = "Ground";
 		private int m_ClippedWalls = 0;
 
 		[SerializeField]
@@ -26,7 +26,7 @@ namespace RedRunner.Utilities
 
 		private void OnTriggerEnter2D(Collider2D collider)
 		{
-			if (LayerMask.LayerToName(collider.gameObject.layer) == WALL_LAYER_NAME)
+			if (collider.gameObject.tag == WALL_TAG_NAME)
 			{
 				m_ClippedWalls++;
 				UpdateWallStatus();
@@ -35,7 +35,7 @@ namespace RedRunner.Utilities
 
 		private void OnTriggerExit2D(Collider2D collider)
 		{
-			if (LayerMask.LayerToName(collider.gameObject.layer) == WALL_LAYER_NAME)
+			if (collider.gameObject.tag == WALL_TAG_NAME)
 			{
 				m_ClippedWalls--;
 				UpdateWallStatus();
