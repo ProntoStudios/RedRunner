@@ -307,6 +307,10 @@ namespace RedRunner.Characters
 
             m_RightEvent.RegisterAction(RightEvent);
             m_LeftEvent.RegisterAction(LeftEvent);
+            OnInactive += () =>
+            {
+                RoundsManager.Local.CmdDeactivateSelf();
+            };
         }
         
         private void LeftEvent()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RedRunner.Characters;
 namespace RedRunner.Networking
 {
     public class RoundsManager : Mirror.NetworkBehaviour
@@ -43,11 +44,13 @@ namespace RedRunner.Networking
             DecrementPlayer();
         }
 
-        // receive on client to reset rount
+        // receive on client to reset round
         [Mirror.ClientRpc]
         void RpcResetRound()
         {
-            Debug.Log("received rpc to reset round");
+            GameManager.Singleton.Reset();
+            GameManager.Singleton.StartGame();
+            GameManager.Singleton.RespawnMainCharacter();
         }
     }
 }

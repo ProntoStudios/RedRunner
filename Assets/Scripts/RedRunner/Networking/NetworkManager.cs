@@ -94,8 +94,8 @@ namespace RedRunner.Networking
 				StartClient();
 			}
 
-			OnConnected();
-		}
+            OnConnected?.Invoke();
+        }
 
 		public override void OnServerAddPlayer(Mirror.NetworkConnection conn)
 		{
