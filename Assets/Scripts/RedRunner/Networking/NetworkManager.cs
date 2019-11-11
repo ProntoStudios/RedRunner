@@ -4,15 +4,24 @@ using RedRunner.Utilities;
 
 namespace RedRunner.Networking
 {
-	public class NetworkManager : Mirror.NetworkManager
-	{
-		[SerializeField]
-		private Transform spawnPoint;
-		[SerializeField]
-		private CameraController cameraController;
+    public class NetworkManager : Mirror.NetworkManager
+    {
+        [SerializeField]
+        private Transform m_SpawnPoint;
+        [SerializeField]
+        private string m_HostAddress = "localhost";
+        private static int m_clientCount = 0;
+        public static int ClientCount{get{return m_clientCount;} }
 
-		private static bool shouldHost = false;
-		private static string host = "localhost";
+		private static bool m_IsHosting = false;
+
+#if DEBUG
+		private static bool m_ShouldHost = false;
+#endif
+
+		public delegate void NetworkEvent();
+
+		public static event NetworkEvent OnConnected;
 
 		public static bool IsConnected
 		{
@@ -26,7 +35,7 @@ namespace RedRunner.Networking
 		{
 			get
 			{
-				return shouldHost && IsConnected;
+				return IsConnected && m_IsHosting;
 			}
 		}
 
@@ -36,48 +45,68 @@ namespace RedRunner.Networking
 
 		public override void Awake()
 		{
+			if (Instance != null)
+			{
+				Debug.LogError("Only a single NetworkManager should be active at a time");
+				return;
+			}
 			Instance = GetComponent<NetworkManager>();
 			base.Awake();
-
-			RedCharacter.LocalPlayerSpawned += () =>
-			{
-				cameraController.Follow(RedCharacter.Local.transform);
-			};
 		}
 
-		// TODO(shane) get rid of this nasty hack when we have a proper dedicated server.
+		public override void Start()
+		{
+			if (Application.isBatchMode)
+			{
+				Connect(true);
+			}
+		}
+
+#if DEBUG
 		public void OnGUI()
 		{
 			if (!Mirror.NetworkClient.isConnected && !Mirror.NetworkServer.active && !Mirror.NetworkClient.active)
 			{
-				shouldHost = GUILayout.Toggle(shouldHost, "Host");
-				if (!shouldHost)
+				m_ShouldHost = GUILayout.Toggle(m_ShouldHost, "Host");
+				if (!m_ShouldHost)
 				{
-					host = GUILayout.TextField(host);
+					m_HostAddress = GUILayout.TextField(m_HostAddress);
 				}
 			}
 		}
+#endif
 
-		public void Connect()
+		public void Connect(bool host = false)
 		{
-			if (shouldHost)
+			m_IsHosting = host
+#if DEBUG
+				|| m_ShouldHost
+#endif
+				;
+
+			if (m_IsHosting)
 			{
 				StartHost();
 			}
 			else
 			{
-				networkAddress = host;
+				networkAddress = m_HostAddress;
 				StartClient();
 			}
-		}
+
+            OnConnected?.Invoke();
+        }
 
 		public override void OnServerAddPlayer(Mirror.NetworkConnection conn)
 		{
-			GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
-			Mirror.NetworkServer.AddPlayerForConnection(conn, player);
+			if (!(Application.isBatchMode && conn.connectionId == 0))
+			{
+				GameObject player = Instantiate(playerPrefab, m_SpawnPoint.position, m_SpawnPoint.rotation);
+				Mirror.NetworkServer.AddPlayerForConnection(conn, player);
+			}
 		}
 
-		public static void RegisterSpawnablePrefab(GameObject prefab)
+        public static void RegisterSpawnablePrefab(GameObject prefab)
 		{
 			Mirror.ClientScene.RegisterPrefab(prefab);
 		}
@@ -85,6 +114,19 @@ namespace RedRunner.Networking
 		public static void Spawn(GameObject gameObject)
 		{
 			Mirror.NetworkServer.Spawn(gameObject);
-		}
-	}
+        }
+
+        public override void OnServerConnect(Mirror.NetworkConnection conn)
+        {
+            base.OnServerConnect(conn);
+            m_clientCount++;
+        }
+
+        public override void OnServerDisconnect(Mirror.NetworkConnection conn)
+        {
+            base.OnServerDisconnect(conn);
+            m_clientCount--;
+            RoundsManager.Local.DecrementPlayer();
+        }
+    }
 }

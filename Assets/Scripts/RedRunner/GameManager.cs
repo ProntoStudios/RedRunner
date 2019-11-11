@@ -11,6 +11,8 @@ using RedRunner.Characters;
 using RedRunner.Collectables;
 using RedRunner.TerrainGeneration;
 using RedRunner.Networking;
+using RedRunner.Target;
+using RedRunner.Utilities;
 
 namespace RedRunner
 {
@@ -54,6 +56,9 @@ namespace RedRunner
         private GameEvent leftEvent;
         [SerializeField]
         private GameEvent rightEvent;
+
+		[SerializeField]
+		private CameraController m_CameraController;
 
 		/// <summary>
 		/// This is my developed callbacks compoents, because callbacks are so dangerous to use we need something that automate the sub/unsub to functions
@@ -135,10 +140,10 @@ namespace RedRunner
 			RedCharacter.LocalPlayerSpawned += () =>
 			{
 				RedCharacter.Local.IsDead.AddEventAndFire(UpdateDeathEvent, this);
-				m_StartScoreX = RedCharacter.Local.transform.position.x;
 
-				StartGame();
+				m_CameraController.Follow(RedCharacter.Local.transform);
 			};
+
 		}
 
 		void UpdateDeathEvent(bool isDead)
@@ -168,8 +173,8 @@ namespace RedRunner
 			yield return new WaitForSecondsRealtime(1.5f);
 
 			EndGame();
-			var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
-			UIManager.Singleton.OpenScreen(endScreen);
+			//var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
+			//UIManager.Singleton.OpenScreen(endScreen);
 		}
 
 		private void Start()
@@ -186,7 +191,7 @@ namespace RedRunner
 
 		void Update()
 		{
-			if (m_GameRunning)
+			if (m_GameRunning && RedCharacter.Local != null)
 			{
 				if (RedCharacter.Local.transform.position.x > m_StartScoreX && RedCharacter.Local.transform.position.x > m_Score)
 				{
@@ -252,7 +257,7 @@ namespace RedRunner
 		public void StartGame()
 		{
 			m_GameStarted = true;
-			ResumeGame();
+            ResumeGame();
 		}
 
 		public void StopGame()
@@ -270,7 +275,7 @@ namespace RedRunner
 		public void EndGame()
 		{
 			m_GameStarted = false;
-			StopGame();
+			//StopGame();
 		}
 
 		public void RespawnMainCharacter()
@@ -279,19 +284,28 @@ namespace RedRunner
 		}
 
 		public void RespawnCharacter(Character character)
-		{
-			Block block = TerrainGenerator.Singleton.GetCharacterBlock();
-			if (block != null)
-			{
-				Vector3 position = block.transform.position;
-				position.y += 2.56f;
-				position.x += 1.28f;
-				character.transform.position = position;
-				character.Reset();
-			}
-		}
+        {
+            PutCharacterOnStart(RedCharacter.Local);
+            m_StartScoreX = RedCharacter.Local.transform.position.x;
+            character.Reset();
+        }
 
-		public void Reset()
+        private void PutCharacterOnStart(Character character)
+        {
+            GameObject respawn = SpawnSingleton.instance;
+            if (respawn != null)
+            {
+                Vector3 position = respawn.transform.position;
+                Debug.Log("Text: " + position);
+                position.y += 2.56f;
+                float width = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
+                position.x -= width / 2;
+                position.x += UnityEngine.Random.Range(0, width);
+                character.transform.position = position;
+            }
+        }
+
+        public void Reset()
 		{
 			m_Score = 0f;
 			if (OnReset != null)

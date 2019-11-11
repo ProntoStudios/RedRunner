@@ -12,8 +12,9 @@ namespace RedRunner.Utilities
 
 		public event GroundedHandler OnGrounded;
 
-		public const string GROUND_TAG = "Ground";
-		public const string GROUND_LAYER_NAME = "Ground";
+        public const string GROUND_TAG = "Ground";
+
+        public const string GROUND_LAYER_NAME = "Ground";
 
 		[SerializeField]
 		private Collider2D m_Collider2D;
@@ -38,15 +39,15 @@ namespace RedRunner.Utilities
 		
 			RaycastHit2D hit1 = Physics2D.Raycast (left, new Vector2 (0f, -1f), m_RayDistance, LayerMask.GetMask (GROUND_LAYER_NAME));
 			Debug.DrawRay (left, new Vector2 (0f, -m_RayDistance));
-			bool grounded1 = hit1 != null && hit1.collider != null && hit1.collider.CompareTag (GROUND_TAG);
+			bool grounded1 = hit1 != null && hit1.collider != null && IsGroundObject(hit1);
 		
 			RaycastHit2D hit2 = Physics2D.Raycast (center, new Vector2 (0f, -1f), m_RayDistance, LayerMask.GetMask (GROUND_LAYER_NAME));
 			Debug.DrawRay (center, new Vector2 (0f, -m_RayDistance));
-			bool grounded2 = hit2 != null && hit2.collider != null && hit2.collider.CompareTag (GROUND_TAG);
+			bool grounded2 = hit2 != null && hit2.collider != null && IsGroundObject(hit2);
 		
 			RaycastHit2D hit3 = Physics2D.Raycast (right, new Vector2 (0f, -1f), m_RayDistance, LayerMask.GetMask (GROUND_LAYER_NAME));
 			Debug.DrawRay (right, new Vector2 (0f, -m_RayDistance));
-			bool grounded3 = hit3 != null && hit3.collider != null && hit3.collider.CompareTag (GROUND_TAG);
+			bool grounded3 = hit3 != null && hit3.collider != null && IsGroundObject(hit3);
 
 			bool grounded = grounded1 || grounded2 || grounded3;
 		
@@ -58,6 +59,11 @@ namespace RedRunner.Utilities
 
 			m_IsGrounded = grounded;
 		}
+
+        private bool IsGroundObject(RaycastHit2D hit)
+        {
+            return hit.collider.CompareTag(GROUND_TAG);
+        }
 
 	}
 

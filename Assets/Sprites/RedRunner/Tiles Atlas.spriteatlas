@@ -43,7 +43,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 32d6f2d3d6e132542aec16cb1b600c84, type: 3}
-    totalSpriteSurfaceArea: 2228224
+    totalSpriteSurfaceArea: 2359296
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
@@ -67,8 +67,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4b578158698326c49ab3aaba3e998ba5, type: 3}
   - {fileID: 21300000, guid: c7b41d58f40da8a46ad415692420599b, type: 3}
   - {fileID: 21300000, guid: a314c0d8a3b6f5249bd36d65fe2d18a5, type: 3}
+  - {fileID: 21300000, guid: e29691e8c55f745948561960703e79e2, type: 3}
   - {fileID: 21300000, guid: 82a9c919cdbbeb64bbf13fd44bb27c8e, type: 3}
   - {fileID: 21300000, guid: 6d51a3f96399504459696f71537520f3, type: 3}
+  - {fileID: 21300000, guid: dbf16b1a3aabd49c29e690b5fb18c242, type: 3}
   - {fileID: 21300000, guid: eaa62d6ae5ff91842996526f22cf0118, type: 3}
   - {fileID: 21300000, guid: c5122c7ad681de94b87a7bbcda1bd4f4, type: 3}
   - {fileID: 21300000, guid: e56def9a942bbbf41bf7912f57df2e1e, type: 3}
@@ -102,8 +104,10 @@ SpriteAtlas:
   - Dirt
   - GrassCliffRight
   - Column
+  - Finish
   - GrassMid
   - column_down
+  - Start
   - GrassJoinHillLeft
   - GrassHillRight2
   - Asset 40

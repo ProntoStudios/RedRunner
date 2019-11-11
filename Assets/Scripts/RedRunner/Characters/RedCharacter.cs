@@ -20,7 +20,7 @@ namespace RedRunner.Characters
 		[Header ( "Character Details" )]
 		[Space]
 		[SerializeField]
-		protected float m_MaxRunSpeed = 8f;
+		protected float m_TargetRunSpeed = 8f;
 		[SerializeField]
 		protected float m_RunSmoothTime = 5f;
 		[SerializeField]
@@ -30,7 +30,9 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected float m_JumpStrength = 10f;
 		[SerializeField]
-		protected int m_AllowedJumps = 2;
+		protected float m_DoubleJumpStrength = 8f;
+		[SerializeField]
+		protected float m_WallSlideDrag = 10f;
 		[SerializeField]
 		protected string[] m_Actions = new string[0];
 		[SerializeField]
@@ -46,6 +48,8 @@ namespace RedRunner.Characters
 		protected Mirror.NetworkAnimator m_Animator;
 		[SerializeField]
 		protected GroundCheck m_GroundCheck;
+		[SerializeField]
+		protected WallDetector m_WallDetector;
 		[SerializeField]
 		protected ParticleSystem m_RunParticleSystem;
 		[SerializeField]
@@ -84,12 +88,11 @@ namespace RedRunner.Characters
 		protected float m_CurrentSmoothVelocity = 0f;
 		protected int m_CurrentFootstepSoundIndex = 0;
 		protected Vector3 m_InitialScale;
-		protected Vector3 m_InitialPosition;
         [SerializeField]
         private GameEvent m_LeftEvent;
         [SerializeField]
         private GameEvent m_RightEvent;
-		protected int m_JumpsSoFar = 0;
+		protected bool m_HasDoubleJump = false;
 
 		#endregion
 
@@ -101,7 +104,7 @@ namespace RedRunner.Characters
 		{
 			get
 			{
-				return m_MaxRunSpeed;
+				return m_TargetRunSpeed;
 			}
 		}
 
@@ -279,12 +282,14 @@ namespace RedRunner.Characters
 
 		void Awake ()
 		{
-			m_InitialPosition = transform.position;
 			m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
+			m_WallDetector.OnWallEnter += StartWallSlide;
+			m_WallDetector.OnWallExit += StopWallSlide;
 			m_Skeleton.OnActiveChanged += Skeleton_OnActiveChanged;
 			IsDead = new Property<bool>(false);
-			m_ClosingEye = false;
+            IsFinished = new Property<bool>(false);
+            m_ClosingEye = false;
 			m_Guard = false;
 			m_Block = false;
 			m_CurrentFootstepSoundIndex = 0;
@@ -299,7 +304,6 @@ namespace RedRunner.Characters
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 			};
-
             m_RightEvent.RegisterAction(RightEvent);
             m_LeftEvent.RegisterAction(LeftEvent);
         }
@@ -307,26 +311,43 @@ namespace RedRunner.Characters
         private void LeftEvent()
         {
             if (m_State == CharacterState.Left)
-            {
-                Jump();
-            }
-            else
-            {
+			{
+				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded || m_HasDoubleJump)
+				{
+					Jump();
+				}
+			}
+			else{
                 m_State = CharacterState.Left;
                 ResetMovement();
+				if (m_WallDetector.TouchingWall && !GroundCheck.IsGrounded)
+				{
+					StopWallSlide();
+					Jump();
+					ApplyHorizontalBoost(m_DoubleJumpStrength/2.0f);
+				}
             }
-        }
+		}
         private void RightEvent()
         {
             if (m_State == CharacterState.Right)
-            {
-                Jump();
-            }
-            else
-            {
-                m_State = CharacterState.Right;
-                ResetMovement();
-            }
+			{
+				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded || m_HasDoubleJump)
+				{
+					Jump();
+				}
+			}
+			else
+			{
+				m_State = CharacterState.Right;
+				ResetMovement();
+				if (m_WallDetector.TouchingWall && !GroundCheck.IsGrounded)
+				{
+					StopWallSlide();
+					Jump();
+					ApplyHorizontalBoost(m_DoubleJumpStrength/2.0f);
+				}
+			}
         }
 
         private void ResetMovement()
@@ -345,14 +366,17 @@ namespace RedRunner.Characters
         private void UpdateMovement()
         {
              // Speed Calculations
-            if (m_CurrentRunSpeed < m_MaxRunSpeed)
+            if (m_CurrentRunSpeed < m_TargetRunSpeed)
             {
-                m_CurrentRunSpeed = Mathf.SmoothDamp(m_CurrentRunSpeed, m_MaxRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
-            }
+                m_CurrentRunSpeed = Mathf.SmoothDamp(m_CurrentRunSpeed, m_TargetRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
+            }else if (m_CurrentRunSpeed > m_TargetRunSpeed)
+			{
+				m_CurrentRunSpeed = Mathf.SmoothDamp(m_CurrentRunSpeed, m_TargetRunSpeed, ref m_CurrentSmoothVelocity, m_RunSmoothTime);
+			}
 
-            // Input Processing
+			// Input Processing
 
-            switch (m_State)
+			switch (m_State)
             {
                 case CharacterState.Left:
                     Move(-1f);
@@ -436,7 +460,7 @@ namespace RedRunner.Characters
 			m_Animator.animator.SetFloat ( "VelocityY", m_Rigidbody2D.velocity.y );
 			m_Animator.animator.SetBool ( "IsGrounded", m_GroundCheck.IsGrounded );
 			m_Animator.animator.SetBool ( "IsDead", IsDead.Value );
-			m_Animator.animator.SetBool ( "Block", m_Block );
+            m_Animator.animator.SetBool ( "Block", m_Block );
 			m_Animator.animator.SetBool ( "Guard", m_Guard );
 			if ( Input.GetButtonDown ( "Roll" ) )
 			{
@@ -484,7 +508,7 @@ namespace RedRunner.Characters
 
 		public override void Move ( float horizontalAxis )
 		{
-			if ( !IsDead.Value )
+			if ( IsActive() )
 			{
 				float speed = m_CurrentRunSpeed;
 				Vector2 velocity = m_Rigidbody2D.velocity;
@@ -507,17 +531,49 @@ namespace RedRunner.Characters
 
 		public override void Jump ()
 		{
-			if ( !IsDead.Value && m_JumpsSoFar < m_AllowedJumps)
+			if (IsActive())
 			{
-				m_JumpsSoFar++;
-				Vector2 velocity = m_Rigidbody2D.velocity;
-				velocity.y = m_JumpStrength;
-				m_Rigidbody2D.velocity = velocity;
-				m_Animator.animator.ResetTrigger ( "Jump" );
-				m_Animator.SetTrigger ( "Jump" );
-				m_JumpParticleSystem.Play ();
-				AudioManager.Singleton.PlayJumpSound ( m_JumpAndGroundedAudioSource );
+				if (m_GroundCheck.IsGrounded)
+				{
+					ApplyJumpPhysics(m_JumpStrength);
+				}
+				else if (m_HasDoubleJump)
+				{
+					ApplyJumpPhysics(m_DoubleJumpStrength);
+					m_HasDoubleJump = false;
+				}
+				else if (m_WallDetector.TouchingWall)
+				{
+					ApplyJumpPhysics(m_JumpStrength);
+					m_HasDoubleJump = false;
+				}
 			}
+		}
+
+		private void ApplyJumpPhysics(float jumpStrength)
+		{
+			Vector2 velocity = m_Rigidbody2D.velocity;
+			velocity.y = jumpStrength;
+			m_Rigidbody2D.velocity = velocity;
+			m_Animator.animator.ResetTrigger("Jump");
+			m_Animator.SetTrigger("Jump");
+			m_JumpParticleSystem.Play();
+			AudioManager.Singleton.PlayJumpSound(m_JumpAndGroundedAudioSource);
+		}
+
+		private void ApplyHorizontalBoost(float boostStrength)
+		{
+			m_CurrentRunSpeed = boostStrength;
+		}
+
+		public void StartWallSlide()
+		{
+			m_Rigidbody2D.drag = m_WallSlideDrag;
+		}
+
+		public void StopWallSlide()
+		{
+			m_Rigidbody2D.drag = 0;
 		}
 
 		public override void Die ()
@@ -527,7 +583,11 @@ namespace RedRunner.Characters
 
 		public override void Die ( bool blood )
 		{
-			if ( !IsDead.Value )
+            if (IsActive())
+            {
+                OnInactive();
+            }
+            if ( !IsDead.Value )
 			{
 				IsDead.Value = true;
 				m_Skeleton.SetActive ( true, m_Rigidbody2D.velocity );
@@ -540,12 +600,37 @@ namespace RedRunner.Characters
 					Destroy ( particle.gameObject, particle.main.duration );
 				}
 				CameraController.Singleton.fastMove = true;
-			}
+            }
 		}
 
-		public override void EmitRunParticle ()
+        public override void Finish()
+        {
+            if (IsActive())
+            {
+                OnInactive();
+            }
+            if ( !IsFinished.Value )
+            {
+                IsFinished.Value = true;
+                m_Skeleton.SetActive( true, m_Rigidbody2D.velocity );
+                // TODO dance?
+                CameraController.Singleton.fastMove = true;
+            }
+        }
+
+        private bool IsActive()
+        {
+            return !IsDead.Value && !IsFinished.Value;
+        }
+
+        private void OnInactive()
+        {
+            RoundsManager.Local.CmdDeactivateSelf();
+        }
+
+        public override void EmitRunParticle ()
 		{
-			if ( !IsDead.Value )
+			if ( IsActive() )
 			{
 				m_RunParticleSystem.Emit ( 1 );
 			}
@@ -554,7 +639,8 @@ namespace RedRunner.Characters
 		public override void Reset ()
 		{
 			IsDead.Value = false;
-			m_ClosingEye = false;
+            IsFinished.Value = false;
+            m_ClosingEye = false;
 			m_Guard = false;
 			m_Block = false;
 			m_CurrentFootstepSoundIndex = 0;
@@ -562,6 +648,8 @@ namespace RedRunner.Characters
 			m_Rigidbody2D.velocity = Vector2.zero;
 			m_Skeleton.SetActive ( false, m_Rigidbody2D.velocity );
             m_State = CharacterState.Stopped;
+			m_WallDetector.Reset();
+			StopWallSlide();
 		}
 
 		#endregion
@@ -570,7 +658,6 @@ namespace RedRunner.Characters
 
 		void GameManager_OnReset ()
 		{
-			transform.position = m_InitialPosition;
 			Reset ();
 		}
 
@@ -583,11 +670,11 @@ namespace RedRunner.Characters
 
 		void GroundCheck_OnGrounded ()
 		{
-			if ( !IsDead.Value )
+			if ( IsActive() )
 			{
 				m_JumpParticleSystem.Play ();
 				AudioManager.Singleton.PlayGroundedSound ( m_JumpAndGroundedAudioSource );
-				m_JumpsSoFar = 0;
+				m_HasDoubleJump = true;
 			}
 		}
 
