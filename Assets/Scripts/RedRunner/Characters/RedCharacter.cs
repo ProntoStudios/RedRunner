@@ -303,13 +303,18 @@ namespace RedRunner.Characters
 			{
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+				m_RightEvent.RegisterAction(RightEvent);
+				m_LeftEvent.RegisterAction(LeftEvent);
 			};
-            m_RightEvent.RegisterAction(RightEvent);
-            m_LeftEvent.RegisterAction(LeftEvent);
-        }
+		}
         
         private void LeftEvent()
         {
+            if (Local != this)
+            {
+                return;
+            }
+
             if (m_State == CharacterState.Left)
 			{
 				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded || m_HasDoubleJump)
@@ -330,6 +335,11 @@ namespace RedRunner.Characters
 		}
         private void RightEvent()
         {
+            if (Local != this)
+            {
+                return;
+            }
+
             if (m_State == CharacterState.Right)
 			{
 				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded || m_HasDoubleJump)
