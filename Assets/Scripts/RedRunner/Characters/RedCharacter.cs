@@ -585,7 +585,7 @@ namespace RedRunner.Characters
 		{
             if (IsActive())
             {
-                OnInactive();
+                OnInactive(false);
             }
             if ( !IsDead.Value )
 			{
@@ -607,7 +607,7 @@ namespace RedRunner.Characters
         {
             if (IsActive())
             {
-                OnInactive();
+                OnInactive(true);
             }
             if ( !IsFinished.Value )
             {
@@ -623,10 +623,10 @@ namespace RedRunner.Characters
             return !IsDead.Value && !IsFinished.Value;
         }
 
-        private void OnInactive()
+        private void OnInactive(bool reachedFinish)
         {
 					if (Local == this) {
-						RoundsManager.Local.CmdDeactivateSelf();
+						RoundsManager.Local.CmdDeactivateSelf(reachedFinish);
 					}
         }
 

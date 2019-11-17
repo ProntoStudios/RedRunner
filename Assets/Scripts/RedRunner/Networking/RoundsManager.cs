@@ -34,10 +34,12 @@ namespace RedRunner.Networking
         }
 
         // send command to server to mark player as inactive
+        // finished: true if player reached final flag
         [Mirror.Command]
-        public void CmdDeactivateSelf()
+        public void CmdDeactivateSelf(bool reachedEnd)
         {
             ServerRounds.Instance.DecrementPlayer();
+            ScoreManager.Instance.PlayerFinished(connectionToClient.connectionId, reachedEnd);
         }
 
         // receive on client to reset round

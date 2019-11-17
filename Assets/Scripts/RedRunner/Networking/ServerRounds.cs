@@ -44,6 +44,11 @@ namespace RedRunner.Networking
             }
         }
 
+        public void StartGame()
+        {
+            ResetRound();
+        }
+
         public void ResetRound()
         {
             Debug.Log("resetting round");
