@@ -290,6 +290,16 @@ namespace RedRunner
             character.Reset();
         }
 
+        public void LockCharacterToStart()
+        {
+
+        }
+
+        public void UnlockCharacterFromStart()
+        {
+
+        }
+
         private void PutCharacterOnStart(Character character)
         {
             GameObject respawn = SpawnSingleton.instance;

@@ -6242,7 +6242,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   settings: {fileID: 11400000, guid: 594767ce7306ebf43aa3e06528257f32, type: 2}
-  blockInstatiater: {fileID: 7761888325247821747}
 --- !u!114 &7761888325247821747
 MonoBehaviour:
   m_ObjectHideFlags: 0
