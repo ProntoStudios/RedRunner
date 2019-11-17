@@ -628,7 +628,9 @@ namespace RedRunner.Characters
 
         private void OnInactive()
         {
-            RoundsManager.Local.CmdDeactivateSelf();
+					if (Local == this) {
+						RoundsManager.Local.CmdDeactivateSelf();
+					}
         }
 
         public override void EmitRunParticle ()

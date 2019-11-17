@@ -19,24 +19,18 @@ MonoBehaviour:
   m_StartBlocks:
   - {fileID: 114470893495785418, guid: 9a775b549d469f74196fb38cb84acf0b, type: 3}
   m_MiddleBlocks:
-  - {fileID: 114259622553350070, guid: c07f66edcdd541d40b0e601dcce20742, type: 3}
-  - {fileID: 114634210047326798, guid: d6f19279df1a14b45a881bf136d25d2a, type: 3}
-  - {fileID: 114362099631458554, guid: b57aef71f258b074c9241d85be4936fb, type: 3}
-  - {fileID: 114787008004763082, guid: 2313e32de9b2f0c4fbf0d5d7fa7478b6, type: 3}
-  - {fileID: 114140439695782052, guid: d89492603b5ef0b44968fe7cbb6529be, type: 3}
-  - {fileID: 114546030562783916, guid: 5f0424de7d9fa9342a23732f3e037378, type: 3}
-  - {fileID: 114855586137282916, guid: 2d64712e7f51a2044b6538986806f5a7, type: 3}
-  - {fileID: 114581418709128076, guid: ae3df9c829e154046a799ed392b65a5a, type: 3}
-  - {fileID: 114469388096941680, guid: abc78284c3cce8d45be7b2d19bad3105, type: 3}
-  - {fileID: 114653847625888598, guid: 670fa9c695aab9c40a089656eaac35bf, type: 3}
-  - {fileID: 114837835571553444, guid: fe7e388630682094a9a1cd39c9169ff9, type: 3}
-  - {fileID: 114203244265761476, guid: 976413338dc4e794a87aa9910ce3a4e5, type: 3}
-  - {fileID: 114471952902856602, guid: 28b5a8028cc1b464dbf625ec31f00e5a, type: 3}
-  - {fileID: 114620694829996460, guid: 0983e63aa3847904aad91fb0009b7cdf, type: 3}
-  - {fileID: 114490593543241952, guid: 5febe23f5b0e58046be8b965ae251e23, type: 3}
-  - {fileID: 114601894619822566, guid: e3e2f45933978fb46bc321b3062cfe3b, type: 3}
+  - {fileID: 5132410105568621745, guid: 1ee4116d1547b76498f9f4f10c4190de, type: 3}
+  - {fileID: 5132410105568621745, guid: fe3d72fda750d2a4fac16070ccede3da, type: 3}
+  - {fileID: 3512764280804779126, guid: e8c09934c540152458a6bc5debd15597, type: 3}
+  - {fileID: 5132410105568621745, guid: cc98a8ee8234c404490b3995506c19f3, type: 3}
   m_EndBlocks:
-  - {fileID: 114470893495785418, guid: 9a775b549d469f74196fb38cb84acf0b, type: 3}
+  - {fileID: 114470893495785418, guid: 2bd9d4a0322602d4fa4ae0a5d894bdc3, type: 3}
+  m_SpawnBlocks:
+  - {fileID: 8174141573513202826, guid: a1be21ee9b0bf49978b0a3f5daef55ce, type: 3}
+  - {fileID: 5384380331259051304, guid: 68387b969e01d47d59d22a6f93e63e2b, type: 3}
+  - {fileID: 6129485942322561740, guid: 59dc6e12e51e843af98467101478773c, type: 3}
+  - {fileID: 6614234219820641674, guid: 8a99d8a967b9e41a2b1e8a76d99cb96c, type: 3}
+  - {fileID: 4680044566254337785, guid: 6ec93aee2ed614089885a868779da7b0, type: 3}
   m_BackgroundLayers:
   - name: Far
     Blocks:

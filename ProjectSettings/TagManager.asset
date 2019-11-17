@@ -79,3 +79,6 @@ TagManager:
   - name: Weather
     uniqueID: 2547606433
     locked: 0
+  - name: Overlay
+    uniqueID: 638823443
+    locked: 0

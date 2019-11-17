@@ -10,8 +10,13 @@ namespace RedRunner.Networking
         private Transform m_SpawnPoint;
         [SerializeField]
         private string m_HostAddress = "localhost";
-        private static int m_clientCount = 0;
-        public static int ClientCount{get{return m_clientCount;} }
+        private static int m_ClientCount = 0;
+
+				public static int ClientCount {
+					get {
+						return m_ClientCount;
+					}
+				}
 
 		private static bool m_IsHosting = false;
 
@@ -58,6 +63,7 @@ namespace RedRunner.Networking
 		{
 			if (Application.isBatchMode)
 			{
+				--m_ClientCount;
 				Connect(true);
 			}
 		}
@@ -119,14 +125,14 @@ namespace RedRunner.Networking
         public override void OnServerConnect(Mirror.NetworkConnection conn)
         {
             base.OnServerConnect(conn);
-            m_clientCount++;
+            m_ClientCount++;
         }
 
         public override void OnServerDisconnect(Mirror.NetworkConnection conn)
         {
             base.OnServerDisconnect(conn);
-            m_clientCount--;
-            RoundsManager.Local.DecrementPlayer();
+            m_ClientCount--;
+            ServerRounds.Instance.DecrementPlayer();
         }
     }
 }

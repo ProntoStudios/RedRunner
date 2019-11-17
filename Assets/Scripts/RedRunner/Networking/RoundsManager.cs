@@ -6,17 +6,24 @@ namespace RedRunner.Networking
 {
     public class RoundsManager : Mirror.NetworkBehaviour
     {
-        int round = 0;
-        int activePlayers = 0;
 
         private static RoundsManager _local;
         public static RoundsManager Local { get { return _local; } }
-        private void Update()
+        private static RoundsManager _instance;
+        public static RoundsManager Instance
         {
-            if(Application.isBatchMode && round <= 0 && activePlayers>0)
+            get
             {
-                Debug.Log("Player joined game,starting game");
-                ResetRound();
+                if (_local != null) return _local;
+                return _instance;
+            }
+        }
+
+        public void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
             }
         }
 
@@ -26,39 +33,22 @@ namespace RedRunner.Networking
             _local = this;
         }
 
-        public void ResetRound()
-        {
-            Debug.Log("resetting round");
-            round++;
-            activePlayers = NetworkManager.ClientCount;
-            RpcResetRound();
-        }
-
-        // trigers round reset if not round 0 and no players alive
-        public void DecrementPlayer()
-        {
-            if (round <= 0) return;
-            activePlayers--;
-            if (activePlayers == 0)
-            {
-                ResetRound();
-            }
-        }
-
         // send command to server to mark player as inactive
         [Mirror.Command]
         public void CmdDeactivateSelf()
         {
-            Local.DecrementPlayer();
+            ServerRounds.Instance.DecrementPlayer();
         }
 
         // receive on client to reset round
         [Mirror.ClientRpc]
-        void RpcResetRound()
+        public void RpcResetRound()
         {
             GameManager.Singleton.Reset();
             GameManager.Singleton.StartGame();
-            GameManager.Singleton.RespawnMainCharacter();
+            if (!Application.isBatchMode) {
+                GameManager.Singleton.RespawnMainCharacter();
+            }
         }
     }
 }
