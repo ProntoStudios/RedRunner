@@ -374,8 +374,8 @@ MonoBehaviour:
   camZoomMax: 13
   camOverzoomMargin: 1
   camOverdragMargin: 5
-  boundaryMin: {x: -1000, y: -1000}
-  boundaryMax: {x: 1000, y: 1000}
+  boundaryMin: {x: 0, y: -10}
+  boundaryMax: {x: 200, y: 80}
   camFollowFactor: 15
   autoScrollDampMode: 0
   autoScrollDamp: 300
@@ -49995,7 +49995,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 115
+  m_Text: x 136
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -51713,7 +51713,7 @@ PrefabInstance:
     - target: {fileID: 6455399851606697704, guid: cc3d8fc7337c8dd449b67cc2307d9b19,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6455399851606697704, guid: cc3d8fc7337c8dd449b67cc2307d9b19,
         type: 3}
@@ -59007,7 +59007,7 @@ PrefabInstance:
     - target: {fileID: 561938980463352420, guid: f1eb0488833f94425a6d14df7e177810,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 561938980463352420, guid: f1eb0488833f94425a6d14df7e177810,
         type: 3}
