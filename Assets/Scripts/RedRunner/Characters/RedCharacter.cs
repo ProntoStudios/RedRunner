@@ -301,12 +301,12 @@ namespace RedRunner.Characters
 
 			LocalPlayerSpawned += () =>
 			{
-                // Once we find out we are the local player, simulate our rigidbody.
-                Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-                m_RightEvent.RegisterAction(RightEvent);
-                m_LeftEvent.RegisterAction(LeftEvent);
-            };
-        }
+				// Once we find out we are the local player, simulate our rigidbody.
+				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+				m_RightEvent.RegisterAction(RightEvent);
+				m_LeftEvent.RegisterAction(LeftEvent);
+			};
+		}
         
         private void LeftEvent()
         {
