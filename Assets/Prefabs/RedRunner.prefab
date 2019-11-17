@@ -6025,6 +6025,7 @@ GameObject:
   - component: {fileID: -8569562308554010601}
   - component: {fileID: 1081473167}
   - component: {fileID: 2374382768229438216}
+  - component: {fileID: 3119589128553598321}
   m_Layer: 10
   m_Name: RedRunner
   m_TagString: Player
@@ -6095,6 +6096,7 @@ MonoBehaviour:
   m_BloodParticleSystem: {fileID: 198332193062908510, guid: c4c2c19b9dda4cb41bcf201a9b421c11,
     type: 3}
   m_Skeleton: {fileID: 114564310135457314}
+  m_Colourer: {fileID: 3119589128553598321}
   m_RollForce: 10
   m_MainAudioSource: {fileID: 82060983664169858}
   m_FootstepAudioSource: {fileID: 82936932590503182}
@@ -6237,6 +6239,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0284ea6667ee4760962488829ea3537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+--- !u!114 &3119589128553598321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824055877161594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d331ed61c6234422e989c4202cbbe251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Body: {fileID: 212819857377901476}
+  m_RightFoot: {fileID: 212323351276764324}
+  m_LeftFoot: {fileID: 212416243826787326}
+  m_RightHand: {fileID: 212390540942293780}
+  m_LeftHand: {fileID: 212422977757214142}
+  m_RightArm: {fileID: 212606733658112188}
+  m_LeftArm: {fileID: 212360704894532606}
+  m_LeftEye: {fileID: 212391639560715984}
+  m_RightEye: {fileID: 212063087462184346}
 --- !u!1 &1863000636641838
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,7 +60,9 @@ namespace RedRunner.Characters
 		protected ParticleSystem m_BloodParticleSystem;
 		[SerializeField]
 		protected Skeleton m_Skeleton;
-		[SerializeField]
+        [SerializeField]
+        protected Colourer m_Colourer;
+        [SerializeField]
 		protected float m_RollForce = 10f;
 
 		[Header ( "Character Audio" )]
@@ -282,7 +284,8 @@ namespace RedRunner.Characters
 
 		void Awake ()
 		{
-			m_InitialScale = transform.localScale;
+            m_Colourer.SetColor(m_Colourer.RndRunnerColor()); // TODO: have server assign color
+            m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
 			m_WallDetector.OnWallEnter += StartWallSlide;
 			m_WallDetector.OnWallExit += StopWallSlide;
