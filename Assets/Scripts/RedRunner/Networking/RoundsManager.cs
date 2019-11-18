@@ -44,8 +44,8 @@ namespace RedRunner.Networking
         [Mirror.ClientRpc]
         public void RpcResetRound()
         {
-            GameManager.Singleton.Reset();
             GameManager.Singleton.StartGame();
+            GameManager.Singleton.Reset();
             if (!Application.isBatchMode) {
                 GameManager.Singleton.RespawnMainCharacter();
             }

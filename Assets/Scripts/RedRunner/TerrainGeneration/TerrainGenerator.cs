@@ -93,10 +93,15 @@ namespace RedRunner.TerrainGeneration
 
 		protected virtual void Reset ()
 		{
-			if (!NetworkManager.IsServer || !m_RegenerateOnReset)
+			if (!NetworkManager.IsServer)
 			{
 				return;
 			}
+
+            if (m_GeneratedLobbyBlocksCount == 0 && !m_RegenerateOnReset)
+            {
+                return;
+            }
 
             m_RegenerateOnReset = false;
             m_Reset = true;
@@ -114,7 +119,11 @@ namespace RedRunner.TerrainGeneration
 			m_GeneratedStartBlocksCount = 0;
 			m_GeneratedMiddleBlocksCount = 0;
 			m_GeneratedEndBlocksCount = 0;
-            m_GeneratedLobbyBlocksCount = 0;
+            if (m_GeneratedLobbyBlocksCount > 0)
+            {
+                m_GeneratedLobbyBlocksCount = 0;
+                Generate(); // need new spawn immediately
+            }
             m_Reset = false;
 		}
 
@@ -242,11 +251,6 @@ namespace RedRunner.TerrainGeneration
 		{
             if (GameManager.Singleton.gameStarted)
             {
-                if (m_GeneratedLobbyBlocksCount > 0)
-                {
-                    m_RegenerateOnReset = true;
-                    Reset();
-                }
                 GenerateForeground();
             }
             else
