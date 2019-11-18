@@ -25,9 +25,15 @@ namespace RedRunner.Networking
             }
         }
 
+        // trigers round reset if not round 0 and no players alive
         public void DecrementPlayer()
         {
+            if (round <= 0) return;
             activePlayers--;
+            if (activePlayers == 0)
+            {
+                ResetRound();
+            }
         }
 
         public void ResetRound()

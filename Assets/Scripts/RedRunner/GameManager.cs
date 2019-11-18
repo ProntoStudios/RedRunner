@@ -142,7 +142,7 @@ namespace RedRunner
 				RedCharacter.Local.IsDead.AddEventAndFire(UpdateDeathEvent, this);
 
 				m_CameraController?.Follow(RedCharacter.Local.transform);
-                GameManager.Singleton.RespawnMainCharacter();
+                RespawnMainCharacter();
             };
 
 		}
