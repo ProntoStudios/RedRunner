@@ -15,6 +15,15 @@ namespace RedRunner.UI
         private GameObject sliderPrefab;
         private Dictionary<int, UIScoreBar> scoreBars = new Dictionary<int, UIScoreBar>();
 
+        public void DestroyScoreBars()
+        {
+            foreach (KeyValuePair<int, UIScoreBar> bar in scoreBars)
+            {
+                Destroy(bar.Value.gameObject);
+            }
+            scoreBars.Clear();
+        }
+
         public void SetVisible(bool visible)
         {
             layout.gameObject.SetActive(visible);

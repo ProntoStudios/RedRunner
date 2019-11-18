@@ -49996,7 +49996,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 0
+  m_Text: x 1
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -60454,11 +60454,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreScreen
       objectReference: {fileID: 0}
-    - target: {fileID: 2377188571768085375, guid: b268dd1b4998a4c02b82f3ab2800d698,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -60563,10 +60558,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 526304127, guid: b268dd1b4998a4c02b82f3ab2800d698, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b268dd1b4998a4c02b82f3ab2800d698, type: 3}

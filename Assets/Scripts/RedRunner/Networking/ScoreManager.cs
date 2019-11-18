@@ -73,7 +73,9 @@ namespace RedRunner.Networking
         public void ResetScore()
         {
             score.Clear();
-        }
+			ScoreScreen.Instance.DestroyScoreBars();
+
+		}
 
     }
 }
