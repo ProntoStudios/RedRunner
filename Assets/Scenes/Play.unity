@@ -49995,7 +49995,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 136
+  m_Text: x 0
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -50776,7 +50776,7 @@ MonoBehaviour:
   m_DestroyRange: 100
   m_GenerateRange: 400
   m_BackgroundGenerateRange: 600
-  m_RegenerateEachReset: 0
+  m_RegenerateOnReset: 0
 --- !u!114 &290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58964,11 +58964,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 228}
     m_Modifications:
-    - target: {fileID: 561938980463352421, guid: f1eb0488833f94425a6d14df7e177810,
-        type: 3}
-      propertyPath: m_Name
-      value: SpawnerScreen
-      objectReference: {fileID: 0}
     - target: {fileID: 561938980463352420, guid: f1eb0488833f94425a6d14df7e177810,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -59079,6 +59074,11 @@ PrefabInstance:
       propertyPath: m_Animator
       value: 
       objectReference: {fileID: 1213296047}
+    - target: {fileID: 561938980463352421, guid: f1eb0488833f94425a6d14df7e177810,
+        type: 3}
+      propertyPath: m_Name
+      value: SpawnerScreen
+      objectReference: {fileID: 0}
     - target: {fileID: 6552160305723280227, guid: f1eb0488833f94425a6d14df7e177810,
         type: 3}
       propertyPath: m_SizeDelta.x
