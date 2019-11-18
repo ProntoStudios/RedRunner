@@ -122,6 +122,11 @@ namespace RedRunner.Networking
 			Mirror.NetworkServer.Spawn(gameObject);
         }
 
+		public static void Destroy(GameObject gameObject)
+		{
+			Mirror.NetworkServer.Destroy(gameObject);
+        }
+
         public override void OnServerConnect(Mirror.NetworkConnection conn)
         {
             base.OnServerConnect(conn);

@@ -63,7 +63,10 @@ namespace RedRunner.Networking
         public void SpawnBlock(int objectId, Vector3 pos)
         {
             Block blockPrefab = settings.SpawnBlocks[objectId];
-            blockInstatiater.GenerateBlock(blockPrefab, pos);
+            Block blockPrefabInstance = blockInstatiater.GenerateBlock(blockPrefab, pos);
+            
+            BombExplosion bomb = blockPrefabInstance.GetComponent(typeof(BombExplosion)) as BombExplosion;
+            bomb?.Explode();
         }
     }
 }

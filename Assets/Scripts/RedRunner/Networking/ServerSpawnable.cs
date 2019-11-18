@@ -15,5 +15,13 @@ namespace RedRunner.Networking
 				NetworkManager.Spawn(gameObject);
 			}
 		}
+
+        public void OnDestroy()
+        {
+            if(NetworkManager.IsServer)
+            {
+                NetworkManager.Destroy(gameObject);
+            }
+        }
 	}
 }
