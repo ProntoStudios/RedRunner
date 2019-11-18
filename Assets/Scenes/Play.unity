@@ -60521,32 +60521,32 @@ PrefabInstance:
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
@@ -60558,6 +60558,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7215738628303225132, guid: b268dd1b4998a4c02b82f3ab2800d698,
+        type: 3}
+      propertyPath: sliderPrefab
+      value: 
+      objectReference: {fileID: 4558672165183121339, guid: 9061515a325894d70a28f66e93ae7c57,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b268dd1b4998a4c02b82f3ab2800d698, type: 3}
 --- !u!1001 &2840980196178759001
