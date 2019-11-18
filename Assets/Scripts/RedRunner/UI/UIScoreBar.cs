@@ -2,15 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class UIScoreBar : MonoBehaviour
-{
-    [SerializeField]
-    Slider slider;
-
-    // set a number in range [0,1]
-    public void SetPercentage(float val)
+namespace RedRunner.UI {
+    public class UIScoreBar : MonoBehaviour
     {
-        slider.value = val;
+        [SerializeField]
+        Slider slider;
+        [SerializeField]
+        Text textBox;
+
+        public void SetId(int id)
+        {
+            string text = "Player " + id;
+            if (RedRunner.Networking.NetworkManager.connectionId == id)
+            {
+                text = "YOU";
+            }
+            textBox.text = text;
+    }
+        // set a number in range [0,1]
+        public void SetPercentage(float val)
+        {
+            slider.value = val;
+        }
     }
 }

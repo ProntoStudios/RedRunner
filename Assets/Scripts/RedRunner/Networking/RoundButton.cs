@@ -14,11 +14,12 @@ public class RoundButton : MonoBehaviour
             }
         };
     }
+
     public void StartRound()
     {
         if (NetworkManager.IsServer)
         {
-            ServerRounds.Instance.StartGame();
+            ServerRounds.Instance.ResetRound();
         }
         gameObject.SetActive(false);
     }

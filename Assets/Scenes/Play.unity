@@ -57176,6 +57176,7 @@ MonoBehaviour:
   - {fileID: 60}
   - {fileID: 13}
   - {fileID: 1213296046}
+  - {fileID: 0}
   m_CursorDefaultTexture: {fileID: 2800000, guid: cbfe3832983b29649b1ad726614a58d7,
     type: 3}
   m_CursorClickTexture: {fileID: 2800000, guid: 91f17ffccb9a97847999382edb5bbcff,
@@ -60453,6 +60454,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 2377188571768085375, guid: b268dd1b4998a4c02b82f3ab2800d698,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -60571,6 +60577,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840980195482668801, guid: a124a1dcfeae8dd49a7e2fbd7690c0e2,
+        type: 3}
+      propertyPath: m_Screens.Array.size
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2840980195482668801, guid: a124a1dcfeae8dd49a7e2fbd7690c0e2,
         type: 3}

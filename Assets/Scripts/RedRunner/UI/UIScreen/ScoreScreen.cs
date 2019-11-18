@@ -23,6 +23,9 @@ namespace RedRunner.UI
             {
                 _instance = this;
             }
+        }
+        public void Temp()
+        {
             for (int i = 0; i < 5; i++)
             {
                 CreateScoreBar(i);
@@ -39,9 +42,20 @@ namespace RedRunner.UI
         public void CreateScoreBar(int id)
         {
             GameObject scoreObject = Instantiate(sliderPrefab, layout.transform);
-
-            scoreBars[id] = scoreObject.GetComponent<UIScoreBar>();
+            UIScoreBar score = scoreObject.GetComponent<UIScoreBar>();
+            score.SetId(id);
+            scoreBars[id] = score;
         }
+
+
+        /*
+        public void StartRound()
+        {
+            RedRunner.UI.ScoreScreen scoreScreen = RedRunner.UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == RedRunner.UIScreenInfo.SCORE_SCREEN) as RedRunner.UI.ScoreScreen;
+            RedRunner.UIManager.Singleton.OpenScreen(scoreScreen);
+            scoreScreen.Temp();
+        }
+        */
 
     }
 }
