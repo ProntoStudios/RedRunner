@@ -31,13 +31,6 @@ namespace RedRunner.Networking
         public delegate void NetworkClientEvent(Mirror.NetworkConnection conn);
         public static event NetworkClientEvent OnClientConnected;
 
-        public static int ConnectionId
-        {
-            get
-            {
-                return Mirror.NetworkClient.connection.connectionId;
-            }
-        }
 		public static bool IsConnected
 		{
 			get

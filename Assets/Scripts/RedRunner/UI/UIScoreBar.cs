@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using RedRunner.Characters;
 namespace RedRunner.UI {
     public class UIScoreBar : MonoBehaviour
     {
@@ -13,7 +14,7 @@ namespace RedRunner.UI {
         public void SetId(int id)
         {
             string text = "Player " + id;
-            if (RedRunner.Networking.NetworkManager.ConnectionId == id)
+            if (RedCharacter.Local.netId == id)
             {
                 text = "YOU";
             }
