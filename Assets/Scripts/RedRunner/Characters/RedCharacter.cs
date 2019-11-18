@@ -101,6 +101,9 @@ namespace RedRunner.Characters
 		protected bool m_HasDoubleJump = false;
 		protected bool m_IsWallSliding = false;
 
+		[Mirror.SyncVar]
+		public bool IsActiveSync = true;
+
 		#endregion
 
 		#region Properties
@@ -330,6 +333,14 @@ namespace RedRunner.Characters
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 				m_RightEvent.RegisterAction(RightEvent);
 				m_LeftEvent.RegisterAction(LeftEvent);
+
+				Local.IsDead.AddEventAndFire((_) => {
+					IsActiveSync = !IsDead.Value && !IsFinished.Value;
+				}, this);
+
+				Local.IsFinished.AddEventAndFire((_) => {
+					IsActiveSync = !IsDead.Value && !IsFinished.Value;
+				}, this);
 			};
 		}
         
@@ -521,15 +532,15 @@ namespace RedRunner.Characters
 				return;
 			}
 
-			if (!Local.IsDead.Value && !Local.IsFinished.Value)
+			if (Local.IsActive())
 			{
 				Target = Local;
-			} else if (!IsDead.Value && !IsFinished.Value)
+			}
+			else if (IsActiveSync)
 			{
 				if (Target == null ||
-					Target.IsDead.Value ||
-					Target.IsFinished.Value ||
-					transform.position.x > Target.transform.position.x + FURTHEST_PLAYER_OVERSHOOT)
+						!Target.IsActiveSync ||
+						transform.position.x > Target.transform.position.x + FURTHEST_PLAYER_OVERSHOOT)
 				{
 					Target = this;
 				}
@@ -680,7 +691,7 @@ namespace RedRunner.Characters
         private void OnInactive()
         {
 			if (Local == this) {
-				RoundsManager.Local.CmdDeactivateSelf((int)Local.netId, IsFinished.Value);
+				RoundsManager.Local.CmdDeactivateSelf(netId, IsFinished.Value);
 			}
         }
 
