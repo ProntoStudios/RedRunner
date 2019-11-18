@@ -17,6 +17,8 @@ namespace RedRunner.Characters
 
 		#region Fields
 
+		private static float FURTHEST_PLAYER_OVERSHOOT = 5f;
+
 		[Header ( "Character Details" )]
 		[Space]
 		[SerializeField]
@@ -32,7 +34,7 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected float m_DoubleJumpStrength = 8f;
 		[SerializeField]
-		protected float m_WallSlideDrag = 10f;
+		protected float m_WallSlideSlowdown = 0.75f;
 		[SerializeField]
 		protected string[] m_Actions = new string[0];
 		[SerializeField]
@@ -60,7 +62,9 @@ namespace RedRunner.Characters
 		protected ParticleSystem m_BloodParticleSystem;
 		[SerializeField]
 		protected Skeleton m_Skeleton;
-		[SerializeField]
+        [SerializeField]
+        protected Colourer m_Colourer;
+        [SerializeField]
 		protected float m_RollForce = 10f;
 
 		[Header ( "Character Audio" )]
@@ -75,6 +79,8 @@ namespace RedRunner.Characters
 		public delegate void PlayerEvent();
 
 		public static event PlayerEvent LocalPlayerSpawned;
+
+		public static event PlayerEvent OnTargetChanged;
 
         #endregion
 
@@ -93,12 +99,30 @@ namespace RedRunner.Characters
         [SerializeField]
         private GameEvent m_RightEvent;
 		protected bool m_HasDoubleJump = false;
+		protected bool m_IsWallSliding = false;
 
 		#endregion
 
 		#region Properties
 
 		public static RedCharacter Local { get; private set; }
+
+		private static RedCharacter m_Target = null;
+		public static RedCharacter Target
+		{
+			get
+			{
+				return m_Target;
+			}
+
+			private set
+			{
+				if (m_Target != value) {
+					m_Target = value;
+					OnTargetChanged();
+				}
+			}
+		}
 
 		public override float MaxRunSpeed
 		{
@@ -282,7 +306,8 @@ namespace RedRunner.Characters
 
 		void Awake ()
 		{
-			m_InitialScale = transform.localScale;
+            m_Colourer.SetColor(m_Colourer.RndRunnerColor()); // TODO: have server assign color
+            m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
 			m_WallDetector.OnWallEnter += StartWallSlide;
 			m_WallDetector.OnWallExit += StopWallSlide;
@@ -303,13 +328,18 @@ namespace RedRunner.Characters
 			{
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+				m_RightEvent.RegisterAction(RightEvent);
+				m_LeftEvent.RegisterAction(LeftEvent);
 			};
-            m_RightEvent.RegisterAction(RightEvent);
-            m_LeftEvent.RegisterAction(LeftEvent);
-        }
+		}
         
         private void LeftEvent()
         {
+            if (Local != this)
+            {
+                return;
+            }
+
             if (m_State == CharacterState.Left)
 			{
 				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded || m_HasDoubleJump)
@@ -330,6 +360,11 @@ namespace RedRunner.Characters
 		}
         private void RightEvent()
         {
+            if (Local != this)
+            {
+                return;
+            }
+
             if (m_State == CharacterState.Right)
 			{
 				if (!m_WallDetector.TouchingWall || GroundCheck.IsGrounded || m_HasDoubleJump)
@@ -397,6 +432,8 @@ namespace RedRunner.Characters
 
         void Update ()
 		{
+			ComputeTarget();
+
 			if (Local != this)
 			{
 				return;
@@ -405,6 +442,13 @@ namespace RedRunner.Characters
 			if ( transform.position.y < 0f )
 			{
 				Die ();
+			}
+
+			if ( m_Rigidbody2D.velocity.y < 0f && m_IsWallSliding)
+			{
+				Vector2 velocity = m_Rigidbody2D.velocity;
+				velocity.y *= m_WallSlideSlowdown;
+				m_Rigidbody2D.velocity = velocity;
 			}
 
             UpdateMovement();
@@ -471,6 +515,26 @@ namespace RedRunner.Characters
 		#endregion
 
 		#region Private Methods
+
+		private void ComputeTarget() {
+			if (Local == null) {
+				return;
+			}
+
+			if (!Local.IsDead.Value && !Local.IsFinished.Value)
+			{
+				Target = Local;
+			} else if (!IsDead.Value && !IsFinished.Value)
+			{
+				if (Target == null ||
+					Target.IsDead.Value ||
+					Target.IsFinished.Value ||
+					transform.position.x > Target.transform.position.x + FURTHEST_PLAYER_OVERSHOOT)
+				{
+					Target = this;
+				}
+			}
+		}
 
 		IEnumerator CloseEye ()
 		{
@@ -568,12 +632,12 @@ namespace RedRunner.Characters
 
 		public void StartWallSlide()
 		{
-			m_Rigidbody2D.drag = m_WallSlideDrag;
+			m_IsWallSliding = true;
 		}
 
 		public void StopWallSlide()
 		{
-			m_Rigidbody2D.drag = 0;
+			m_IsWallSliding = false;
 		}
 
 		public override void Die ()
@@ -582,40 +646,30 @@ namespace RedRunner.Characters
 		}
 
 		public override void Die ( bool blood )
-		{
-            if (IsActive())
+        {
+            if (IsDead.Value) return;
+            IsDead.Value = true;
+            m_Skeleton.SetActive(true, m_Rigidbody2D.velocity);
+            if (blood)
             {
-                OnInactive();
+                ParticleSystem particle = Instantiate<ParticleSystem>(
+                                                m_BloodParticleSystem,
+                                                transform.position,
+                                                Quaternion.identity);
+                Destroy(particle.gameObject, particle.main.duration);
             }
-            if ( !IsDead.Value )
-			{
-				IsDead.Value = true;
-				m_Skeleton.SetActive ( true, m_Rigidbody2D.velocity );
-				if ( blood )
-				{
-					ParticleSystem particle = Instantiate<ParticleSystem> ( 
-													m_BloodParticleSystem,
-													transform.position,
-													Quaternion.identity );
-					Destroy ( particle.gameObject, particle.main.duration );
-				}
-				CameraController.Singleton.fastMove = true;
-            }
-		}
+            CameraController.Singleton.fastMove = true;
+            OnInactive();
+        }
 
         public override void Finish()
         {
-            if (IsActive())
-            {
-                OnInactive();
-            }
-            if ( !IsFinished.Value )
-            {
-                IsFinished.Value = true;
-                m_Skeleton.SetActive( true, m_Rigidbody2D.velocity );
-                // TODO dance?
-                CameraController.Singleton.fastMove = true;
-            }
+            if (IsFinished.Value) return;
+            IsFinished.Value = true;
+            m_Skeleton.SetActive( true, m_Rigidbody2D.velocity );
+            // TODO dance?
+            CameraController.Singleton.fastMove = true;
+            OnInactive();
         }
 
         private bool IsActive()
@@ -625,9 +679,9 @@ namespace RedRunner.Characters
 
         private void OnInactive()
         {
-					if (Local == this) {
-						RoundsManager.Local.CmdDeactivateSelf(IsFinished.Value);
-					}
+			if (Local == this) {
+				RoundsManager.Local.CmdDeactivateSelf(IsFinished.Value);
+			}
         }
 
         public override void EmitRunParticle ()

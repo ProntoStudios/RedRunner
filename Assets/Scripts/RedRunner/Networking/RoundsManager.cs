@@ -50,10 +50,22 @@ namespace RedRunner.Networking
             GameManager.Singleton.StartGame();
             if (!Application.isBatchMode) {
                 GameManager.Singleton.RespawnMainCharacter();
+                GameManager.Singleton.LockCharacterToStart();
             }
             UI.ScoreScreen scoreScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SCORE_SCREEN) as UI.ScoreScreen;
             UIManager.Singleton.OpenScreen(scoreScreen);
             scoreScreen.SetVisible(true);
+        }
+
+        // received on client to unblock character when choosing phase is over
+        [Mirror.ClientRpc]
+        public void RpcStartRound()
+        {
+            if (!Application.isBatchMode)
+            {
+                GameManager.Singleton.UnlockCharacterFromStart();
+                GameManager.Singleton.RespawnMainCharacter();
+            }
         }
     }
 }

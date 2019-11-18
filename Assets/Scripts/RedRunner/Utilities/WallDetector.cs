@@ -43,7 +43,10 @@ namespace RedRunner.Utilities
 		{
 			if (collider.gameObject.tag == WALL_TAG_NAME)
 			{
-				m_ClippedWalls--;
+				if (m_ClippedWalls > 0)
+				{
+					m_ClippedWalls--;
+				}
 				UpdateWallStatus();
 			}
 		}

@@ -60,6 +60,7 @@ namespace RedRunner.Networking
         // connectionId: id of player that reached the end
         public void PlayerFinished(int connectionId, bool reachedEnd)
         {
+			Debug.Log("finished  " + reachedEnd);
             if (!reachedEnd) return;
             RpcAddScore(connectionId, 20);
         }

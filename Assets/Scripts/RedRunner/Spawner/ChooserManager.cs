@@ -129,6 +129,7 @@ namespace RedRunner.Networking
         void CmdSubmitPosition(int objectId, Vector3 pos)
         {
             ServerSpawner.Instance.SpawnBlock(objectId, pos);
+            ServerRounds.Instance.DecrementChooser();
         }
     }
 }
