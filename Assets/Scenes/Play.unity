@@ -60453,6 +60453,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 2377188571768085375, guid: b268dd1b4998a4c02b82f3ab2800d698,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2377188571768085372, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -60560,10 +60565,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7215738628303225132, guid: b268dd1b4998a4c02b82f3ab2800d698,
         type: 3}
-      propertyPath: sliderPrefab
-      value: 
-      objectReference: {fileID: 4558672165183121339, guid: 9061515a325894d70a28f66e93ae7c57,
-        type: 3}
+      propertyPath: ScreenInfo
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 526304129, guid: b268dd1b4998a4c02b82f3ab2800d698, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b268dd1b4998a4c02b82f3ab2800d698, type: 3}
 --- !u!1001 &2840980196178759001

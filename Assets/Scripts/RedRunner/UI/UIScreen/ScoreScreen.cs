@@ -1,47 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ScoreScreen : MonoBehaviour
+namespace RedRunner.UI
 {
-
-    private static ScoreScreen _instance;
-    [SerializeField]
-    private GameObject sliderPrefab;
-    private Dictionary<int, UIScoreBar> scoreBars = new Dictionary<int, UIScoreBar>();
-    private int curSpawnY;
-    private int deltaY;
-
-    public static ScoreScreen Instance { get { return _instance; } }
-
-    public void Awake()
+    public class ScoreScreen : UIScreen
     {
-        if (_instance == null)
+
+        private static ScoreScreen _instance;
+        [SerializeField]
+        private VerticalLayoutGroup layout = default;
+        [SerializeField]
+        private GameObject sliderPrefab;
+        private Dictionary<int, UIScoreBar> scoreBars = new Dictionary<int, UIScoreBar>();
+
+        public static ScoreScreen Instance { get { return _instance; } }
+
+        public void Awake()
         {
-            _instance = this;
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                CreateScoreBar(i);
+                UpdateScore(i, i / 5f);
+            }
         }
-        curSpawnY = -Screen.height / 10;
-        deltaY = Screen.height / 10;
-        for(int i = 0; i < 5; i++)
+
+        // newPercentage: range [0,1]
+        public void UpdateScore(int id, float newPercentage)
         {
-            CreateScoreBar(i);
-            UpdateScore(i, i / 5f);
+            scoreBars[id].SetPercentage(newPercentage);
         }
+
+        public void CreateScoreBar(int id)
+        {
+            GameObject scoreObject = Instantiate(sliderPrefab, layout.transform);
+
+            scoreBars[id] = scoreObject.GetComponent<UIScoreBar>();
+        }
+
     }
-
-    // newPercentage: range [0,1]
-    public void UpdateScore(int id, float newPercentage)
-    {
-        scoreBars[id].SetPercentage(newPercentage);
-    }
-
-    public void CreateScoreBar(int id)
-    {
-        GameObject scoreObject = Instantiate(sliderPrefab, new Vector3(0,curSpawnY-deltaY,0), Quaternion.identity);
-        scoreObject.transform.SetParent(gameObject.transform, false);
-
-        curSpawnY -= deltaY;
-        scoreBars[id] = scoreObject.GetComponent<UIScoreBar>();
-    }
-
 }

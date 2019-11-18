@@ -13,7 +13,8 @@ namespace RedRunner
         END_SCREEN,
         PAUSE_SCREEN,
         IN_GAME_SCREEN,
-        SPAWNER_SCREEN
+        SPAWNER_SCREEN,
+        SCORE_SCREEN
     }
 
     public class UIManager : MonoBehaviour
