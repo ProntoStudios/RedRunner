@@ -7,6 +7,8 @@ namespace RedRunner.Networking
     {
         int round = 0;
         int activePlayers = 0;
+        private int choosingPlayers = 0;
+        private bool choosing;
 
         public static ServerRounds _instance;
         public static ServerRounds Instance
@@ -28,7 +30,7 @@ namespace RedRunner.Networking
         {
             if (Application.isBatchMode && round <= 0 && NetworkManager.ClientCount > 0)
             {
-                Debug.Log("Player joined game,starting game");
+                Debug.Log("Player joined game, starting game");
                 ResetRound();
             }
         }
@@ -41,7 +43,26 @@ namespace RedRunner.Networking
             if (activePlayers == 0)
             {
                 ResetRound();
+            } else if (choosing)
+            {
+                DecrementChooser();
             }
+        }
+
+        public void DecrementChooser()
+        {
+            --choosingPlayers;
+            if (choosingPlayers <= 0)
+            {
+                StartRound();
+                choosingPlayers = 0;
+            }
+        }
+
+        public void StartRound()
+        {
+            RoundsManager.Instance.RpcStartRound();
+            choosing = false;
         }
 
         public void ResetRound()
@@ -50,9 +71,10 @@ namespace RedRunner.Networking
             round++;
             activePlayers = NetworkManager.ClientCount;
             if (activePlayers > 0) {
+                choosing = true;
+                choosingPlayers = activePlayers;
                 RoundsManager.Instance.RpcResetRound();
-				ServerSpawner.Instance.InitiateChoosing();
-			}
+            }
         }
 
     }

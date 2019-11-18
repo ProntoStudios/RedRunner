@@ -48,6 +48,19 @@ namespace RedRunner.Networking
             GameManager.Singleton.StartGame();
             if (!Application.isBatchMode) {
                 GameManager.Singleton.RespawnMainCharacter();
+                GameManager.Singleton.LockCharacterToStart();
+                ServerSpawner.Instance.InitiateChoosing();
+            }
+        }
+
+        // received on client to unblock character when choosing phase is over
+        [Mirror.ClientRpc]
+        public void RpcStartRound()
+        {
+            if (!Application.isBatchMode)
+            {
+                GameManager.Singleton.UnlockCharacterFromStart();
+                GameManager.Singleton.RespawnMainCharacter();
             }
         }
     }

@@ -59,6 +59,9 @@ namespace RedRunner
 
 		[SerializeField]
 		private CameraController m_CameraController;
+        [SerializeField]
+        private SpawnLock spawnLockPrefab = default;
+        private SpawnLock spawnLock;
 
 		/// <summary>
 		/// This is my developed callbacks compoents, because callbacks are so dangerous to use we need something that automate the sub/unsub to functions
@@ -300,6 +303,25 @@ namespace RedRunner
             PutCharacterOnStart(character);
             m_StartScoreX = character.transform.position.x;
             character.Reset();
+        }
+
+        public void LockCharacterToStart()
+        {
+            GameObject respawn = SpawnSingleton.instance;
+            Vector3 position = respawn.transform.position;
+            Debug.Log("Text: " + position);
+            position.y += 2.56f;
+            float diameter = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
+            spawnLock = Instantiate(spawnLockPrefab, position, Quaternion.identity);
+            spawnLock.SetDiameter(diameter);
+        }
+
+        public void UnlockCharacterFromStart()
+        {
+            if (null != spawnLock)
+            {
+                spawnLock.Unlock();
+            }
         }
 
         private void PutCharacterOnStart(Character character)
