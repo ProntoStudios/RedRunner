@@ -53,7 +53,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c898ca25f2a554afcb3442c80f03cc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScreenInfo: 0
+  ScreenInfo: 6
   m_Animator: {fileID: 1908636447}
   m_CanvasGroup: {fileID: 1908636448}
   layout: {fileID: 526304129}
