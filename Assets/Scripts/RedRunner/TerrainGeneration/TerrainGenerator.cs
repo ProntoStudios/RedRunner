@@ -135,8 +135,17 @@ namespace RedRunner.TerrainGeneration
 				m_RemoveTime = Time.time + 5f;
 				Remove ();
 			}
-			Generate ();
+
+            Generate();
 		}
+        public void GenerateLobby()
+        {
+            Block block = ChooseFrom(m_Settings.LobbyBlocks);
+            if (m_Blocks.Count == 0)
+            {
+                CreateBlock(block, new Vector3(0f, 0f, 0f));
+            }
+        }
         public void GenerateForeground()
         {
             if(m_CurrentX >= m_Settings.LevelLength && m_Settings.LevelLength > 0)
@@ -225,11 +234,19 @@ namespace RedRunner.TerrainGeneration
                 }
             }
         }
+
 		public virtual void Generate ()
 		{
-            GenerateForeground();
+            if (GameManager.Singleton.gameStarted)
+            {
+                GenerateForeground();
+            }
+            else
+            {
+                GenerateLobby();
+            }
             GenerateBackground();
-		}
+        }
 
 		public virtual void Remove ()
 		{
@@ -388,7 +405,12 @@ namespace RedRunner.TerrainGeneration
 				NetworkManager.RegisterSpawnablePrefab(block.gameObject);
 			}
 
-			foreach (var layer in m_BackgroundLayers)
+            foreach (var block in m_Settings.LobbyBlocks)
+            {
+                NetworkManager.RegisterSpawnablePrefab(block.gameObject);
+            }
+
+            foreach (var layer in m_BackgroundLayers)
 			{
 				foreach (var block in layer.Blocks)
 				{
