@@ -17,6 +17,8 @@ namespace RedRunner.Characters
 
 		#region Fields
 
+		private static float FURTHEST_PLAYER_OVERSHOOT = 5f;
+
 		[Header ( "Character Details" )]
 		[Space]
 		[SerializeField]
@@ -78,6 +80,8 @@ namespace RedRunner.Characters
 
 		public static event PlayerEvent LocalPlayerSpawned;
 
+		public static event PlayerEvent OnTargetChanged;
+
         #endregion
 
         #region Private Variables
@@ -101,6 +105,23 @@ namespace RedRunner.Characters
 		#region Properties
 
 		public static RedCharacter Local { get; private set; }
+
+		private static RedCharacter m_Target = null;
+		public static RedCharacter Target
+		{
+			get
+			{
+				return m_Target;
+			}
+
+			private set
+			{
+				if (m_Target != value) {
+					m_Target = value;
+					OnTargetChanged();
+				}
+			}
+		}
 
 		public override float MaxRunSpeed
 		{
@@ -410,6 +431,8 @@ namespace RedRunner.Characters
 
         void Update ()
 		{
+			ComputeTarget();
+
 			if (Local != this)
 			{
 				return;
@@ -484,6 +507,22 @@ namespace RedRunner.Characters
 		#endregion
 
 		#region Private Methods
+
+		private void ComputeTarget() {
+			if (!Local.IsDead.Value && !Local.IsFinished.Value)
+			{
+				Target = Local;
+			} else if (!IsDead.Value && !IsFinished.Value)
+			{
+				if (Target == null ||
+					Target.IsDead.Value ||
+					Target.IsFinished.Value ||
+					transform.position.x > Target.transform.position.x + FURTHEST_PLAYER_OVERSHOOT)
+				{
+					Target = this;
+				}
+			}
+		}
 
 		IEnumerator CloseEye ()
 		{
