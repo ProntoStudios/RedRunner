@@ -33,7 +33,7 @@ public class Colourer : MonoBehaviour
 
     #region Public Methods
 
-    public RunnerColours RndRunnerColor(int id)
+    public RunnerColours RndRunnerColor(uint id)
     {
         var colours = RunnerColours.GetValues(typeof(RunnerColours));
         return (RunnerColours) colours.GetValue(id % colours.Length);

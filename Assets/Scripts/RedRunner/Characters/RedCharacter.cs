@@ -306,7 +306,6 @@ namespace RedRunner.Characters
 
 		void Awake ()
 		{
-            m_Colourer.SetColor(m_Colourer.RndRunnerColor((int)Local.netId)); // TODO: have server assign color
             m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
 			m_WallDetector.OnWallEnter += StartWallSlide;
@@ -328,10 +327,15 @@ namespace RedRunner.Characters
 			{
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-				m_RightEvent.RegisterAction(RightEvent);
+                m_RightEvent.RegisterAction(RightEvent);
 				m_LeftEvent.RegisterAction(LeftEvent);
 			};
 		}
+
+        void Start()
+        {
+            m_Colourer.SetColor(m_Colourer.RndRunnerColor(netId)); // TODO: have server assign color
+        }
         
         private void LeftEvent()
         {
