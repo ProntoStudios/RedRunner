@@ -9,6 +9,8 @@ public class BombExplosion : MonoBehaviour
     [SerializeField]
     protected float m_ExplodeRadius = 10.0f;
 
+    public float ExplodeRadius { get { return m_ExplodeRadius; } }
+
     // boom goes the dynamite
     public void Explode()
     {
