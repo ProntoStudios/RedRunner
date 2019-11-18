@@ -32,6 +32,9 @@ MonoBehaviour:
   - {fileID: 6614234219820641674, guid: 8a99d8a967b9e41a2b1e8a76d99cb96c, type: 3}
   - {fileID: 4680044566254337785, guid: 6ec93aee2ed614089885a868779da7b0, type: 3}
   - {fileID: 4680044566254337785, guid: a6373d7a6591af54fa41dd72176f4ec4, type: 3}
+  - {fileID: 5384380331259051304, guid: cecbb40c56b89ec4f9bf03adb26eb7cf, type: 3}
+  - {fileID: 5384380331259051304, guid: f87e992abc4da6244b7dcb172f975864, type: 3}
+  - {fileID: 4680044566254337785, guid: 2e55a390cc5eb104284e06df5e3ce05b, type: 3}
   m_BackgroundLayers:
   - name: Far
     Blocks:
