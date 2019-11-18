@@ -30,14 +30,15 @@ namespace RedRunner.TerrainGeneration
 		protected int m_GeneratedStartBlocksCount;
 		protected int m_GeneratedMiddleBlocksCount;
 		protected int m_GeneratedEndBlocksCount;
-		[SerializeField]
+        protected int m_GeneratedLobbyBlocksCount;
+        [SerializeField]
 		protected float m_DestroyRange = 100f;
 		[SerializeField]
 		protected float m_GenerateRange = 100f;
 		[SerializeField]
 		protected float m_BackgroundGenerateRange = 200f;
         [SerializeField]
-        protected bool m_RegenerateEachReset = false;
+        protected bool m_RegenerateOnReset = false;
         protected Block m_LastBlock;
 		protected BackgroundBlock m_LastBackgroundBlock;
 		protected float m_RemoveTime = 0f;
@@ -92,12 +93,13 @@ namespace RedRunner.TerrainGeneration
 
 		protected virtual void Reset ()
 		{
-			if (!NetworkManager.IsServer || !m_RegenerateEachReset)
+			if (!NetworkManager.IsServer || !m_RegenerateOnReset)
 			{
 				return;
 			}
 
-			m_Reset = true;
+            m_RegenerateOnReset = false;
+            m_Reset = true;
 			RemoveAll ();
 			m_CurrentX = 0f;
 			m_LastBlock = null;
@@ -112,7 +114,8 @@ namespace RedRunner.TerrainGeneration
 			m_GeneratedStartBlocksCount = 0;
 			m_GeneratedMiddleBlocksCount = 0;
 			m_GeneratedEndBlocksCount = 0;
-			m_Reset = false;
+            m_GeneratedLobbyBlocksCount = 0;
+            m_Reset = false;
 		}
 
 		protected virtual void OnDestroy ()
@@ -125,12 +128,11 @@ namespace RedRunner.TerrainGeneration
 			{
 				return;
             }
-
             if ( m_Reset )
 			{
 				return;
 			}
-			if ( m_RemoveTime < Time.time )
+            if ( m_RemoveTime < Time.time )
 			{
 				m_RemoveTime = Time.time + 5f;
 				Remove ();
@@ -140,10 +142,11 @@ namespace RedRunner.TerrainGeneration
 		}
         public void GenerateLobby()
         {
-            Block block = ChooseFrom(m_Settings.LobbyBlocks);
-            if (m_Blocks.Count == 0)
+            if (m_GeneratedLobbyBlocksCount == 0)
             {
+                Block block = ChooseFrom(m_Settings.LobbyBlocks);
                 CreateBlock(block, new Vector3(0f, 0f, 0f));
+                m_GeneratedLobbyBlocksCount++;
             }
         }
         public void GenerateForeground()
@@ -239,6 +242,11 @@ namespace RedRunner.TerrainGeneration
 		{
             if (GameManager.Singleton.gameStarted)
             {
+                if (m_GeneratedLobbyBlocksCount > 0)
+                {
+                    m_RegenerateOnReset = true;
+                    Reset();
+                }
                 GenerateForeground();
             }
             else
@@ -308,7 +316,7 @@ namespace RedRunner.TerrainGeneration
 			block.OnRemove ( this );
 			Destroy ( m_Blocks [ block.transform.position ].gameObject );
 			m_Blocks.Remove ( block.transform.position );
-		}
+        }
 
 		public virtual void RemoveBackgroundBlock ( BackgroundBlock block )
 		{
