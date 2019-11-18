@@ -14,10 +14,11 @@ namespace RedRunner.Networking
         private string m_HostAddress = "localhost";
         private static int m_ClientCount = 0;
 
-					get {
-						return m_ClientCount;
-					}
-				}
+		public static int ClientCount {
+			get {
+				return m_ClientCount;
+			}
+		}
 
         private static bool m_ShouldInstantiatePlayer = false;
         private static Mirror.NetworkConnection m_ConnectionForPlayer = null;
