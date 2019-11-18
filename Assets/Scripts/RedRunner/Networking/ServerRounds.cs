@@ -30,7 +30,7 @@ namespace RedRunner.Networking
         {
             if (Application.isBatchMode && round <= 0 && NetworkManager.ClientCount > 0)
             {
-                Debug.Log("Player joined game,starting game");
+                Debug.Log("Player joined game, starting game");
                 ResetRound();
             }
         }
@@ -61,6 +61,7 @@ namespace RedRunner.Networking
         public void StartRound()
         {
             GameManager.Singleton.UnlockCharacterFromStart();
+            GameManager.Singleton.RespawnMainCharacter();
             choosing = false;
         }
 
