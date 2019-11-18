@@ -13,7 +13,7 @@ namespace RedRunner.UI {
         public void SetId(int id)
         {
             string text = "Player " + id;
-            if (RedRunner.Networking.NetworkManager.connectionId == id)
+            if (RedRunner.Networking.NetworkManager.ConnectionId == id)
             {
                 text = "YOU";
             }
