@@ -4,6 +4,7 @@ using UnityEngine;
 using RedRunner.UI;
 namespace RedRunner.Networking
 {
+    [RequireComponent(typeof(Mirror.NetworkIdentity))]
     public class ScoreManager : Mirror.NetworkBehaviour
     {
 
@@ -11,9 +12,24 @@ namespace RedRunner.Networking
         public static ScoreManager Instance {get{return _instance;}}
 
         Dictionary<int, int> score = new Dictionary<int, int>();
+        List<int> players = new List<int>();
         [SerializeField]
         int _scoreCap = 100;
         public int ScoreCap { get { return _scoreCap; } }
+
+        [Mirror.ClientRpc]
+        private void RpcGetPlayers(int[] ids)
+        {
+            foreach(int id in ids)
+            {
+                AddPlayer(id);
+            }
+        }
+
+        public void SendPlayers()
+        {
+            RpcGetPlayers(players.ToArray());
+        }
 
         public void Awake()
         {
@@ -23,7 +39,7 @@ namespace RedRunner.Networking
             }
             NetworkManager.OnClientConnected += (Mirror.NetworkConnection conn) =>
             {
-                AddPlayer(conn.connectionId);
+                players.Add(conn.connectionId);
             };
         }
 
@@ -34,23 +50,24 @@ namespace RedRunner.Networking
         }
 
         // assumes connection id already exists in score
-        private void AddScore(int connectionId, int points)
+        [Mirror.ClientRpc]
+        private void RpcAddScore(int connectionId, int points)
         {
             score[connectionId] += points;
-            ScoreScreen.Instance.UpdateScore(connectionId, points * 1f / ScoreCap);
+            ScoreScreen.Instance.UpdateScore(connectionId, score[connectionId] * 1f / ScoreCap);
         }
 
         // connectionId: id of player that reached the end
         public void PlayerFinished(int connectionId, bool reachedEnd)
         {
             if (!reachedEnd) return;
-            AddScore(connectionId, 20);
+            RpcAddScore(connectionId, 20);
         }
 
         // killerId: id of player that placed obstacle that killed the current player.
         public void PlayerDied(int killerId)
         {
-            AddScore(killerId, 5);
+            RpcAddScore(killerId, 5);
         }
 
         public void ResetScore()

@@ -29,7 +29,7 @@ namespace RedRunner.Networking
             if (Application.isBatchMode && round <= 0 && NetworkManager.ClientCount > 0)
             {
                 Debug.Log("Player joined game,starting game");
-                ResetRound();
+                StartGame();
             }
         }
 
@@ -46,6 +46,7 @@ namespace RedRunner.Networking
 
         public void StartGame()
         {
+            ScoreManager.Instance.SendPlayers();
             ResetRound();
         }
 
@@ -56,19 +57,13 @@ namespace RedRunner.Networking
             activePlayers = NetworkManager.ClientCount;
             if (activePlayers > 0) {
                 RoundsManager.Instance.RpcResetRound();
-                UI.ScoreScreen scoreScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SCORE_SCREEN) as UI.ScoreScreen;
-                UIManager.Singleton.OpenScreen(scoreScreen);
-                scoreScreen.SetVisible(true);
-                StartCoroutine(CloseScoreOpenChoosing(5f));
+                StartCoroutine(OpenChoosing(3f));
 			}
         }
 
-        private IEnumerator CloseScoreOpenChoosing(float delay)
+        private IEnumerator OpenChoosing(float delay)
         {
             yield return new WaitForSeconds(delay);
-            UI.ScoreScreen scoreScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SCORE_SCREEN) as UI.ScoreScreen;
-            UIManager.Singleton.CloseScreen(scoreScreen);
-            scoreScreen.SetVisible(false);
             ServerSpawner.Instance.InitiateChoosing();
         }
 

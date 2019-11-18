@@ -51,6 +51,9 @@ namespace RedRunner.Networking
             if (!Application.isBatchMode) {
                 GameManager.Singleton.RespawnMainCharacter();
             }
+            UI.ScoreScreen scoreScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SCORE_SCREEN) as UI.ScoreScreen;
+            UIManager.Singleton.OpenScreen(scoreScreen);
+            scoreScreen.SetVisible(true);
         }
     }
 }
