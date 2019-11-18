@@ -49995,7 +49995,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 115
+  m_Text: x 0
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -51317,7 +51317,7 @@ PrefabInstance:
     - target: {fileID: 7946815444654683795, guid: f7fb38d6a0256d348bffbb1b80655283,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7946815444654683795, guid: f7fb38d6a0256d348bffbb1b80655283,
         type: 3}
@@ -51713,7 +51713,7 @@ PrefabInstance:
     - target: {fileID: 6455399851606697704, guid: cc3d8fc7337c8dd449b67cc2307d9b19,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6455399851606697704, guid: cc3d8fc7337c8dd449b67cc2307d9b19,
         type: 3}
@@ -59007,7 +59007,7 @@ PrefabInstance:
     - target: {fileID: 561938980463352420, guid: f1eb0488833f94425a6d14df7e177810,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 561938980463352420, guid: f1eb0488833f94425a6d14df7e177810,
         type: 3}
@@ -60555,7 +60555,7 @@ PrefabInstance:
     - target: {fileID: 6464420153159654743, guid: a558e622f67684918b5a20c9632db060,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6464420153159654743, guid: a558e622f67684918b5a20c9632db060,
         type: 3}

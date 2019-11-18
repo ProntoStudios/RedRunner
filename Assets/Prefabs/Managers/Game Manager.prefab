@@ -48,3 +48,6 @@ MonoBehaviour:
   m_ShareUrl: https://www.google.com/
   leftEvent: {fileID: 11400000, guid: 963c8bfb7bceb4245bbef649f7f63849, type: 2}
   rightEvent: {fileID: 11400000, guid: 79e7196f0e5b7774ebac655b6cba07f5, type: 2}
+  m_CameraController: {fileID: 0}
+  spawnLockPrefab: {fileID: 3919535691027090308, guid: c418f7f205ad2144091ad1587b474f14,
+    type: 3}

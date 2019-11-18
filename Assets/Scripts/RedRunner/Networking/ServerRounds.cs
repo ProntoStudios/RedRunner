@@ -54,7 +54,6 @@ namespace RedRunner.Networking
             --choosingPlayers;
             if (choosingPlayers <= 0)
             {
-                Debug.LogWarning("ALL PLAYERS CHOOSEN");
                 StartRound();
             }
         }
