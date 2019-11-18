@@ -9,22 +9,15 @@ public class BombExplosion : MonoBehaviour
     [SerializeField]
     protected float m_ExplodeRadius = 10.0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // boom goes the dynamite
     public void Explode()
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, m_ExplodeRadius);
-        for (int i = 0; i < hitColliders.Length; i++)
+        foreach (Collider2D collider in hitColliders)
         {
-
-            if (hitColliders[i].gameObject.GetComponent(typeof(Deletable)) as Deletable != null)
+            if (collider.gameObject.GetComponent(typeof(Deletable)) as Deletable != null)
             {
-                Transform curr = hitColliders[i].gameObject.transform;
+                Transform curr = collider.gameObject.transform;
                 while(curr.gameObject.GetComponent<ServerSpawnable>() == null)
                 {
                     curr = curr.parent;
@@ -33,11 +26,5 @@ public class BombExplosion : MonoBehaviour
             }
         }
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
