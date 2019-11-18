@@ -1,4 +1,5 @@
-﻿using RedRunner.TerrainGeneration;
+﻿using RedRunner.Networking;
+using RedRunner.TerrainGeneration;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,12 @@ public class BombExplosion : MonoBehaviour
 
             if (hitColliders[i].gameObject.GetComponent(typeof(Deletable)) as Deletable != null)
             {
-                Destroy(hitColliders[i].gameObject);
+                Transform curr = hitColliders[i].gameObject.transform;
+                while(curr.gameObject.GetComponent<ServerSpawnable>() == null)
+                {
+                    curr = curr.parent;
+                }
+                Destroy(curr.gameObject);
             }
         }
 
