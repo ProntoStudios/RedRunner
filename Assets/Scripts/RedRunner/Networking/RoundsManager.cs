@@ -53,7 +53,7 @@ namespace RedRunner.Networking
             }
         }
 
-        // receive on client to reset round
+        // received on client to unblock character when choosing phase is over
         [Mirror.ClientRpc]
         public void RpcStartRound()
         {

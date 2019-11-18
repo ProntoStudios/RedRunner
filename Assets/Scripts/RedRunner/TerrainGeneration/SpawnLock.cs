@@ -33,9 +33,9 @@ public class SpawnLock : MonoBehaviour
         destroySpawnLock.UnregisterAction(finishAction);
     }
 
-    public void SetWidth(float width)
+    public void SetDiameter(float diameter)
     {
-        float scale = width / 2.56f;
+        float scale = diameter / 2.56f;
         transform.localScale = new Vector3(scale, scale, scale);
     }
 }

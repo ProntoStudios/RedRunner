@@ -311,9 +311,9 @@ namespace RedRunner
             Vector3 position = respawn.transform.position;
             Debug.Log("Text: " + position);
             position.y += 2.56f;
-            float width = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
+            float diameter = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
             spawnLock = Instantiate(spawnLockPrefab, position, Quaternion.identity);
-            spawnLock.SetWidth(width);
+            spawnLock.SetDiameter(diameter);
         }
 
         public void UnlockCharacterFromStart()
