@@ -146,7 +146,7 @@ namespace RedRunner
 
 			RedCharacter.OnTargetChanged += () =>
 			{
-				m_CameraController?.Follow(RedCharacter.Target.transform);
+				StartCoroutine("UpdateTracking");
 			};
 		}
 
@@ -177,8 +177,16 @@ namespace RedRunner
 			yield return new WaitForSecondsRealtime(1.5f);
 
 			EndGame();
-			//var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
-			//UIManager.Singleton.OpenScreen(endScreen);
+		}
+
+		IEnumerator UpdateTracking()
+		{
+			// Wait bit if we are switching away from the local player.
+			if (RedCharacter.Target != RedCharacter.Local) {
+				yield return new WaitForSecondsRealtime(1.5f);
+			}
+
+			m_CameraController?.Follow(RedCharacter.Target.transform);
 		}
 
 		private void Start()
