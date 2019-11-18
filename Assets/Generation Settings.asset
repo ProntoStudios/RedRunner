@@ -32,7 +32,7 @@ MonoBehaviour:
   - {fileID: 6614234219820641674, guid: 8a99d8a967b9e41a2b1e8a76d99cb96c, type: 3}
   - {fileID: 4680044566254337785, guid: 6ec93aee2ed614089885a868779da7b0, type: 3}
   m_LobbyBlocks:
-  - {fileID: 7417393375122387425, guid: 233fcc5260e8f4c46b48430e6b76ffff, type: 3}
+  - {fileID: 8681903731444199623, guid: 9ae0a8610777b4b38b00c2784fa5d529, type: 3}
   m_BackgroundLayers:
   - name: Far
     Blocks:
