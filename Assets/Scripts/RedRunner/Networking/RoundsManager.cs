@@ -48,6 +48,19 @@ namespace RedRunner.Networking
             GameManager.Singleton.StartGame();
             if (!Application.isBatchMode) {
                 GameManager.Singleton.RespawnMainCharacter();
+                GameManager.Singleton.LockCharacterToStart();
+                ServerSpawner.Instance.InitiateChoosing();
+            }
+        }
+
+        // receive on client to reset round
+        [Mirror.ClientRpc]
+        public void RpcStartRound()
+        {
+            if (!Application.isBatchMode)
+            {
+                GameManager.Singleton.UnlockCharacterFromStart();
+                GameManager.Singleton.RespawnMainCharacter();
             }
         }
     }

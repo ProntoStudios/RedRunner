@@ -55,13 +55,13 @@ namespace RedRunner.Networking
             if (choosingPlayers <= 0)
             {
                 StartRound();
+                choosingPlayers = 0;
             }
         }
 
         public void StartRound()
         {
-            GameManager.Singleton.UnlockCharacterFromStart();
-            GameManager.Singleton.RespawnMainCharacter();
+            RoundsManager.Instance.RpcStartRound();
             choosing = false;
         }
 
@@ -71,11 +71,9 @@ namespace RedRunner.Networking
             round++;
             activePlayers = NetworkManager.ClientCount;
             if (activePlayers > 0) {
-                RoundsManager.Instance.RpcResetRound();
                 choosing = true;
                 choosingPlayers = activePlayers;
-                GameManager.Singleton.LockCharacterToStart();
-				ServerSpawner.Instance.InitiateChoosing();
+                RoundsManager.Instance.RpcResetRound();
             }
         }
 
