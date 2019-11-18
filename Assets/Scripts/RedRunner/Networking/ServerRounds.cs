@@ -56,8 +56,20 @@ namespace RedRunner.Networking
             activePlayers = NetworkManager.ClientCount;
             if (activePlayers > 0) {
                 RoundsManager.Instance.RpcResetRound();
-				ServerSpawner.Instance.InitiateChoosing();
+                UI.ScoreScreen scoreScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SCORE_SCREEN) as UI.ScoreScreen;
+                UIManager.Singleton.OpenScreen(scoreScreen);
+                scoreScreen.SetVisible(true);
+                StartCoroutine(CloseScoreOpenChoosing(5f));
 			}
+        }
+
+        private IEnumerator CloseScoreOpenChoosing(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            UI.ScoreScreen scoreScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SCORE_SCREEN) as UI.ScoreScreen;
+            UIManager.Singleton.CloseScreen(scoreScreen);
+            scoreScreen.SetVisible(false);
+            ServerSpawner.Instance.InitiateChoosing();
         }
 
     }

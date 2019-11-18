@@ -68,7 +68,6 @@ namespace RedRunner.Networking
             CmdSubmitChoice(objectId, type);
         }
 
-
         // send choice to server
         [Mirror.Command]
         void CmdSubmitChoice(int objectId, int type)

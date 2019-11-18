@@ -15,6 +15,11 @@ namespace RedRunner.UI
         private GameObject sliderPrefab;
         private Dictionary<int, UIScoreBar> scoreBars = new Dictionary<int, UIScoreBar>();
 
+        public void SetVisible(bool visible)
+        {
+            layout.gameObject.SetActive(visible);
+        }
+
         public static ScoreScreen Instance { get { return _instance; } }
 
         public void Awake()
@@ -22,14 +27,6 @@ namespace RedRunner.UI
             if (_instance == null)
             {
                 _instance = this;
-            }
-        }
-        public void Temp()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                CreateScoreBar(i);
-                UpdateScore(i, i / 5f);
             }
         }
 
@@ -46,16 +43,6 @@ namespace RedRunner.UI
             score.SetId(id);
             scoreBars[id] = score;
         }
-
-
-        /*
-        public void StartRound()
-        {
-            RedRunner.UI.ScoreScreen scoreScreen = RedRunner.UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == RedRunner.UIScreenInfo.SCORE_SCREEN) as RedRunner.UI.ScoreScreen;
-            RedRunner.UIManager.Singleton.OpenScreen(scoreScreen);
-            scoreScreen.Temp();
-        }
-        */
 
     }
 }
