@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RedRunner.UI;
+using RedRunner.Characters;
 namespace RedRunner.Networking
 {
     [RequireComponent(typeof(Mirror.NetworkIdentity))]
@@ -12,7 +13,6 @@ namespace RedRunner.Networking
         public static ScoreManager Instance {get{return _instance;}}
 
         Dictionary<int, int> score = new Dictionary<int, int>();
-        List<int> players = new List<int>();
         [SerializeField]
         int _scoreCap = 100;
         public int ScoreCap { get { return _scoreCap; } }
@@ -28,7 +28,13 @@ namespace RedRunner.Networking
 
         public void SendPlayers()
         {
-            RpcGetPlayers(players.ToArray());
+            var redCharacters = FindObjectsOfType<RedCharacter>();
+            int[] players = new int[redCharacters.Length];
+            for(int i = 0; i < redCharacters.Length; i++)
+            {
+                players[i] = (int)redCharacters[i].netId;
+            }
+            RpcGetPlayers(players);
         }
 
         public void Awake()
@@ -37,32 +43,28 @@ namespace RedRunner.Networking
             {
                 _instance = this;
             }
-            NetworkManager.OnClientConnected += (Mirror.NetworkConnection conn) =>
-            {
-                players.Add(conn.connectionId);
-            };
         }
 
-        public void AddPlayer(int connectionId)
+        public void AddPlayer(int id)
         {
-            score[connectionId] = 0;
-            ScoreScreen.Instance.CreateScoreBar(connectionId);
+            score[id] = 0;
+            ScoreScreen.Instance.CreateScoreBar(id);
         }
 
         // assumes connection id already exists in score
         [Mirror.ClientRpc]
-        private void RpcAddScore(int connectionId, int points)
+        private void RpcAddScore(int id, int points)
         {
-            score[connectionId] += points;
-            ScoreScreen.Instance.UpdateScore(connectionId, score[connectionId] * 1f / ScoreCap);
+            score[id] += points;
+            ScoreScreen.Instance.UpdateScore(id, score[id] * 1f / ScoreCap);
         }
 
         // connectionId: id of player that reached the end
-        public void PlayerFinished(int connectionId, bool reachedEnd)
+        public void PlayerFinished(int id, bool reachedEnd)
         {
 			Debug.Log("finished  " + reachedEnd);
             if (!reachedEnd) return;
-            RpcAddScore(connectionId, 20);
+            RpcAddScore(id, 20);
         }
 
         // killerId: id of player that placed obstacle that killed the current player.

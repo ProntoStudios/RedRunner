@@ -680,7 +680,7 @@ namespace RedRunner.Characters
         private void OnInactive()
         {
 			if (Local == this) {
-				RoundsManager.Local.CmdDeactivateSelf(IsFinished.Value);
+				RoundsManager.Local.CmdDeactivateSelf((int)Local.netId, IsFinished.Value);
 			}
         }
 
