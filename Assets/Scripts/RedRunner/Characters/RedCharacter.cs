@@ -17,6 +17,8 @@ namespace RedRunner.Characters
 
 		#region Fields
 
+		private static float FURTHEST_PLAYER_OVERSHOOT = 5f;
+
 		[Header ( "Character Details" )]
 		[Space]
 		[SerializeField]
@@ -60,7 +62,9 @@ namespace RedRunner.Characters
 		protected ParticleSystem m_BloodParticleSystem;
 		[SerializeField]
 		protected Skeleton m_Skeleton;
-		[SerializeField]
+        [SerializeField]
+        protected Colourer m_Colourer;
+        [SerializeField]
 		protected float m_RollForce = 10f;
 
 		[Header ( "Character Audio" )]
@@ -75,6 +79,8 @@ namespace RedRunner.Characters
 		public delegate void PlayerEvent();
 
 		public static event PlayerEvent LocalPlayerSpawned;
+
+		public static event PlayerEvent OnTargetChanged;
 
         #endregion
 
@@ -99,6 +105,23 @@ namespace RedRunner.Characters
 		#region Properties
 
 		public static RedCharacter Local { get; private set; }
+
+		private static RedCharacter m_Target = null;
+		public static RedCharacter Target
+		{
+			get
+			{
+				return m_Target;
+			}
+
+			private set
+			{
+				if (m_Target != value) {
+					m_Target = value;
+					OnTargetChanged();
+				}
+			}
+		}
 
 		public override float MaxRunSpeed
 		{
@@ -282,7 +305,8 @@ namespace RedRunner.Characters
 
 		void Awake ()
 		{
-			m_InitialScale = transform.localScale;
+            m_Colourer.SetColor(m_Colourer.RndRunnerColor()); // TODO: have server assign color
+            m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
 			m_WallDetector.OnWallEnter += StartWallSlide;
 			m_WallDetector.OnWallExit += StopWallSlide;
@@ -303,10 +327,10 @@ namespace RedRunner.Characters
 			{
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-                m_RightEvent.RegisterAction(RightEvent);
-                m_LeftEvent.RegisterAction(LeftEvent);
-            };
-        }
+				m_RightEvent.RegisterAction(RightEvent);
+				m_LeftEvent.RegisterAction(LeftEvent);
+			};
+		}
         
         private void LeftEvent()
         {
@@ -407,6 +431,8 @@ namespace RedRunner.Characters
 
         void Update ()
 		{
+			ComputeTarget();
+
 			if (Local != this)
 			{
 				return;
@@ -481,6 +507,26 @@ namespace RedRunner.Characters
 		#endregion
 
 		#region Private Methods
+
+		private void ComputeTarget() {
+			if (Local == null) {
+				return;
+			}
+
+			if (!Local.IsDead.Value && !Local.IsFinished.Value)
+			{
+				Target = Local;
+			} else if (!IsDead.Value && !IsFinished.Value)
+			{
+				if (Target == null ||
+					Target.IsDead.Value ||
+					Target.IsFinished.Value ||
+					transform.position.x > Target.transform.position.x + FURTHEST_PLAYER_OVERSHOOT)
+				{
+					Target = this;
+				}
+			}
+		}
 
 		IEnumerator CloseEye ()
 		{
