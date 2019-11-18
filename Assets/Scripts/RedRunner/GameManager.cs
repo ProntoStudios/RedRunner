@@ -59,6 +59,9 @@ namespace RedRunner
 
 		[SerializeField]
 		private CameraController m_CameraController;
+        [SerializeField]
+        private SpawnLock spawnLockPrefab = default;
+        private SpawnLock spawnLock;
 
 		/// <summary>
 		/// This is my developed callbacks compoents, because callbacks are so dangerous to use we need something that automate the sub/unsub to functions
@@ -145,6 +148,10 @@ namespace RedRunner
                 RespawnMainCharacter();
             };
 
+			RedCharacter.OnTargetChanged += () =>
+			{
+				StartCoroutine("UpdateTracking");
+			};
 		}
 
 		void UpdateDeathEvent(bool isDead)
@@ -174,8 +181,16 @@ namespace RedRunner
 			yield return new WaitForSecondsRealtime(1.5f);
 
 			EndGame();
-			//var endScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.END_SCREEN);
-			//UIManager.Singleton.OpenScreen(endScreen);
+		}
+
+		IEnumerator UpdateTracking()
+		{
+			// Wait bit if we are switching away from the local player.
+			if (RedCharacter.Target != RedCharacter.Local) {
+				yield return new WaitForSecondsRealtime(1.5f);
+			}
+
+			m_CameraController?.Follow(RedCharacter.Target.transform);
 		}
 
 		private void Start()
@@ -289,6 +304,25 @@ namespace RedRunner
             PutCharacterOnStart(character);
             m_StartScoreX = character.transform.position.x;
             character.Reset();
+        }
+
+        public void LockCharacterToStart()
+        {
+            GameObject respawn = SpawnSingleton.instance;
+            Vector3 position = respawn.transform.position;
+            Debug.Log("Text: " + position);
+            position.y += 2.56f;
+            float diameter = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
+            spawnLock = Instantiate(spawnLockPrefab, position, Quaternion.identity);
+            spawnLock.SetDiameter(diameter);
+        }
+
+        public void UnlockCharacterFromStart()
+        {
+            if (null != spawnLock)
+            {
+                spawnLock.Unlock();
+            }
         }
 
         private void PutCharacterOnStart(Character character)

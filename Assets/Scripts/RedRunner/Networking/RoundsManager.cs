@@ -34,10 +34,12 @@ namespace RedRunner.Networking
         }
 
         // send command to server to mark player as inactive
+        // finished: true if player reached final flag
         [Mirror.Command]
-        public void CmdDeactivateSelf()
+        public void CmdDeactivateSelf(bool reachedEnd)
         {
             ServerRounds.Instance.DecrementPlayer();
+            ScoreManager.Instance.PlayerFinished(connectionToClient.connectionId, reachedEnd);
         }
 
         // receive on client to reset round
@@ -47,6 +49,21 @@ namespace RedRunner.Networking
             GameManager.Singleton.StartGame();
             GameManager.Singleton.Reset();
             if (!Application.isBatchMode) {
+                GameManager.Singleton.RespawnMainCharacter();
+                GameManager.Singleton.LockCharacterToStart();
+            }
+            UI.ScoreScreen scoreScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SCORE_SCREEN) as UI.ScoreScreen;
+            UIManager.Singleton.OpenScreen(scoreScreen);
+            scoreScreen.SetVisible(true);
+        }
+
+        // received on client to unblock character when choosing phase is over
+        [Mirror.ClientRpc]
+        public void RpcStartRound()
+        {
+            if (!Application.isBatchMode)
+            {
+                GameManager.Singleton.UnlockCharacterFromStart();
                 GameManager.Singleton.RespawnMainCharacter();
             }
         }

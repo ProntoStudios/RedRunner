@@ -39,6 +39,11 @@ namespace RedRunner.Networking
         [Mirror.ClientRpc]
         public void RpcGetChoices(int[] objects)
         {
+            // close the score screen if it's visible
+            UI.ScoreScreen scoreScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SCORE_SCREEN) as UI.ScoreScreen;
+            UIManager.Singleton.CloseScreen(scoreScreen);
+            scoreScreen.SetVisible(false);
+
             Debug.Log(objects.Length + " choices");
             SpawnerScreen spawnerScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.SPAWNER_SCREEN) as SpawnerScreen;
             UIManager.Singleton.OpenScreen(spawnerScreen);
@@ -67,7 +72,6 @@ namespace RedRunner.Networking
             }
             CmdSubmitChoice(objectId, type);
         }
-
 
         // send choice to server
         [Mirror.Command]
@@ -125,6 +129,7 @@ namespace RedRunner.Networking
         void CmdSubmitPosition(int objectId, Vector3 pos)
         {
             ServerSpawner.Instance.SpawnBlock(objectId, pos);
+            ServerRounds.Instance.DecrementChooser();
         }
     }
 }

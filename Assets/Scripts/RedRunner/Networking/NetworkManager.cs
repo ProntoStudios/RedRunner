@@ -32,6 +32,16 @@ namespace RedRunner.Networking
 
 		public static event NetworkEvent OnConnected;
 
+        public delegate void NetworkClientEvent(Mirror.NetworkConnection conn);
+        public static event NetworkClientEvent OnClientConnected;
+
+        public static int ConnectionId
+        {
+            get
+            {
+                return Mirror.NetworkClient.connection.connectionId;
+            }
+        }
 		public static bool IsConnected
 		{
 			get
@@ -153,10 +163,16 @@ namespace RedRunner.Networking
 			Mirror.NetworkServer.Spawn(gameObject);
         }
 
+		public static void Destroy(GameObject gameObject)
+		{
+			Mirror.NetworkServer.Destroy(gameObject);
+        }
+
         public override void OnServerConnect(Mirror.NetworkConnection conn)
         {
             base.OnServerConnect(conn);
             m_ClientCount++;
+            OnClientConnected?.Invoke(conn);
         }
 
         public override void OnServerDisconnect(Mirror.NetworkConnection conn)

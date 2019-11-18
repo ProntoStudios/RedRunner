@@ -4,8 +4,10 @@ using UnityEngine;
 using RedRunner.TerrainGeneration;
 public class BlockInstantiater : MonoBehaviour
 {
-    public void GenerateBlock(Block blockPrefab, Vector3 pos)
+    public Block GenerateBlock(Block blockPrefab, Vector3 pos)
     {
-        Block block = Instantiate(blockPrefab, pos, Quaternion.identity);
+        Debug.Log("place block");
+
+        return Instantiate(blockPrefab, pos, Quaternion.identity);
     }
 }

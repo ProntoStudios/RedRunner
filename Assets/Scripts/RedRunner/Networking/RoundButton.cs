@@ -14,9 +14,10 @@ public class RoundButton : MonoBehaviour
             }
         };
     }
-    public void StartRound()
+
+    public void StartGame()
     {
-        ServerRounds.Instance.ResetRound();
+        ServerRounds.Instance.StartGame();
         gameObject.SetActive(false);
     }
 }
