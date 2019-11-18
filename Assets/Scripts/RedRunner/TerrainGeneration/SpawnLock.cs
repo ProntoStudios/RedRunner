@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,10 +13,12 @@ public class SpawnLock : MonoBehaviour
     private InvertedCircleCollider circleCollider = default;
     [SerializeField]
     public GameEvent destroySpawnLock = default;
+    private Action finishAction;
 
     void Start()
     {
-        destroySpawnLock.RegisterAction(Finish);
+        finishAction = Finish;
+        destroySpawnLock.RegisterAction(finishAction);
     }
 
     public void Unlock()
@@ -27,6 +30,7 @@ public class SpawnLock : MonoBehaviour
     public void Finish()
     {
         Destroy(gameObject);
+        destroySpawnLock.UnregisterAction(finishAction);
     }
 
     public void SetWidth(float width)
