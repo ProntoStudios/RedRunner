@@ -34,7 +34,7 @@ namespace RedRunner.Characters
 		[SerializeField]
 		protected float m_DoubleJumpStrength = 8f;
 		[SerializeField]
-		protected float m_WallSlideDrag = 10f;
+		protected float m_WallSlideSlowdown = 0.75f;
 		[SerializeField]
 		protected string[] m_Actions = new string[0];
 		[SerializeField]
@@ -99,6 +99,7 @@ namespace RedRunner.Characters
         [SerializeField]
         private GameEvent m_RightEvent;
 		protected bool m_HasDoubleJump = false;
+		protected bool m_IsWallSliding = false;
 
 		#endregion
 
@@ -443,6 +444,13 @@ namespace RedRunner.Characters
 				Die ();
 			}
 
+			if ( m_Rigidbody2D.velocity.y < 0f && m_IsWallSliding)
+			{
+				Vector2 velocity = m_Rigidbody2D.velocity;
+				velocity.y *= m_WallSlideSlowdown;
+				m_Rigidbody2D.velocity = velocity;
+			}
+
             UpdateMovement();
 
 			if ( IsDead.Value && !m_ClosingEye )
@@ -624,12 +632,12 @@ namespace RedRunner.Characters
 
 		public void StartWallSlide()
 		{
-			m_Rigidbody2D.drag = m_WallSlideDrag;
+			m_IsWallSliding = true;
 		}
 
 		public void StopWallSlide()
 		{
-			m_Rigidbody2D.drag = 0;
+			m_IsWallSliding = false;
 		}
 
 		public override void Die ()
