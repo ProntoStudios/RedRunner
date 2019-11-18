@@ -1,7 +1,13 @@
 ---
 
-- name: Configure all hosts
+- name: Configure game servers
   gather_facts: false
-  hosts: all
+  hosts: game
   roles:
-    - configure
+    - configure-game
+
+- name: Configure matchmaking servers
+  gather_facts: false
+  hosts: matchmaker
+  roles:
+    - configure-matchmaker

@@ -1,0 +1,14 @@
+---
+# Server Deployment
+-
+
+- name: copy server executable
+  copy:
+    src: ../../Build/{{ matty_name }}
+    dest: /home/{{ server_user }}/{{ matty_name }}
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+    mode: '0700'
+  notify:
+    - reload systemctl daemon
+    - restart matty

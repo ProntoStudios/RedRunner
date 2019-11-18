@@ -1,0 +1,11 @@
+---
+# Configuration Handlers
+-
+
+- name: reload systemctl daemon
+  command: systemctl daemon-reload
+
+- name: restart matty
+  service:
+    name: matty
+    state: restarted

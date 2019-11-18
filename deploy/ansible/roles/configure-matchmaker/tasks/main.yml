@@ -1,0 +1,13 @@
+---
+# Server Configuration
+-
+
+- name: copy matty service
+  template:
+    src: matty.service
+    dest: /lib/systemd/system/matty.service
+    owner: "{{ server_user }}"
+    group: "{{ server_user }}"
+  notify:
+  - reload systemctl daemon
+  - restart matty
