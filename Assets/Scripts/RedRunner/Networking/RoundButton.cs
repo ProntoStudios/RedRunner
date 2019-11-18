@@ -8,7 +8,7 @@ public class RoundButton : MonoBehaviour
     {
         NetworkManager.OnConnected += () =>
         {
-            if (!NetworkManager.IsServer && NetworkManager.ClientCount > 1)
+            if (!NetworkManager.IsServer && NetworkManager.PlayerCount > 0)
             {
                 gameObject.SetActive(false);
             }

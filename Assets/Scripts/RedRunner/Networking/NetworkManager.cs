@@ -3,6 +3,7 @@ using RedRunner.Characters;
 using RedRunner.Utilities;
 using RedRunner.Target;
 
+
 namespace RedRunner.Networking
 {
     public class NetworkManager : Mirror.NetworkManager
@@ -13,7 +14,6 @@ namespace RedRunner.Networking
         private string m_HostAddress = "localhost";
         private static int m_ClientCount = 0;
 
-				public static int ClientCount {
 					get {
 						return m_ClientCount;
 					}
@@ -58,7 +58,15 @@ namespace RedRunner.Networking
 			}
 		}
 
-		public static RedCharacter LocalCharacter { get; private set; }
+        public static int PlayerCount
+        {
+            get
+            {
+                return Mirror.NetworkClient.allClients.Count;
+            }
+        }
+
+        public static RedCharacter LocalCharacter { get; private set; }
 
 		public static NetworkManager Instance { get; private set; }
 
