@@ -144,6 +144,10 @@ namespace RedRunner
 				m_CameraController?.Follow(RedCharacter.Local.transform);
 			};
 
+			RedCharacter.OnTargetChanged += () =>
+			{
+				m_CameraController?.Follow(RedCharacter.Target.transform);
+			};
 		}
 
 		void UpdateDeathEvent(bool isDead)
