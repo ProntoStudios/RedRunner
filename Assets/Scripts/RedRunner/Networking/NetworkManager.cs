@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using RedRunner.Characters;
 using RedRunner.Utilities;
+using RedRunner.Target;
 
 namespace RedRunner.Networking
 {
@@ -18,7 +19,10 @@ namespace RedRunner.Networking
 					}
 				}
 
-		private static bool m_IsHosting = false;
+        private static bool m_ShouldInstantiatePlayer = false;
+        private static Mirror.NetworkConnection m_ConnectionForPlayer = null;
+
+        private static bool m_IsHosting = false;
 
 #if DEBUG
 		private static bool m_ShouldHost = false;
@@ -50,7 +54,8 @@ namespace RedRunner.Networking
 
 		public override void Awake()
 		{
-			if (Instance != null)
+            SpawnSingleton.OnSpawnCreated += SpawnSingleton_OnSpawnCreated;
+            if (Instance != null)
 			{
 				Debug.LogError("Only a single NetworkManager should be active at a time");
 				return;
@@ -107,10 +112,36 @@ namespace RedRunner.Networking
 		{
 			if (!(Application.isBatchMode && conn.connectionId == 0))
 			{
-				GameObject player = Instantiate(playerPrefab, m_SpawnPoint.position, m_SpawnPoint.rotation);
-				Mirror.NetworkServer.AddPlayerForConnection(conn, player);
+                m_ConnectionForPlayer = conn;
+                m_ShouldInstantiatePlayer = true;
+                if (DoesSpawnExist())
+                {
+                    InstantiatePlayer();
+                }
 			}
 		}
+
+        private static bool DoesSpawnExist()
+        {
+            return SpawnSingleton.instance != null;
+        }
+
+        private void SpawnSingleton_OnSpawnCreated()
+        {
+            if (m_ShouldInstantiatePlayer)
+            {
+                InstantiatePlayer();
+            }
+        }
+
+
+        private void InstantiatePlayer()
+        {
+            GameObject player = Instantiate(playerPrefab, m_SpawnPoint.position, m_SpawnPoint.rotation);
+            Mirror.NetworkServer.AddPlayerForConnection(m_ConnectionForPlayer, player);
+            m_ConnectionForPlayer = null;
+            m_ShouldInstantiatePlayer = false;
+        }
 
         public static void RegisterSpawnablePrefab(GameObject prefab)
 		{
