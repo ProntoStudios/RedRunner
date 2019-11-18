@@ -31,7 +31,7 @@ namespace RedRunner.Networking
             if (Application.isBatchMode && round <= 0 && NetworkManager.ClientCount > 0)
             {
                 Debug.Log("Player joined game, starting game");
-                ResetRound();
+                StartGame();
             }
         }
 
@@ -59,6 +59,12 @@ namespace RedRunner.Networking
             }
         }
 
+        public void StartGame()
+        {
+            ScoreManager.Instance.SendPlayers();
+            ResetRound();
+        }
+
         public void StartRound()
         {
             RoundsManager.Instance.RpcStartRound();
@@ -74,7 +80,14 @@ namespace RedRunner.Networking
                 choosing = true;
                 choosingPlayers = activePlayers;
                 RoundsManager.Instance.RpcResetRound();
-            }
+                StartCoroutine(OpenChoosing(3f));
+			}
+        }
+
+        private IEnumerator OpenChoosing(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            ServerSpawner.Instance.InitiateChoosing();
         }
 
     }

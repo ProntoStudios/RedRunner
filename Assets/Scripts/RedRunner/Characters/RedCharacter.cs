@@ -646,40 +646,30 @@ namespace RedRunner.Characters
 		}
 
 		public override void Die ( bool blood )
-		{
-            if (IsActive())
+        {
+            if (IsDead.Value) return;
+            IsDead.Value = true;
+            m_Skeleton.SetActive(true, m_Rigidbody2D.velocity);
+            if (blood)
             {
-                OnInactive();
+                ParticleSystem particle = Instantiate<ParticleSystem>(
+                                                m_BloodParticleSystem,
+                                                transform.position,
+                                                Quaternion.identity);
+                Destroy(particle.gameObject, particle.main.duration);
             }
-            if ( !IsDead.Value )
-			{
-				IsDead.Value = true;
-				m_Skeleton.SetActive ( true, m_Rigidbody2D.velocity );
-				if ( blood )
-				{
-					ParticleSystem particle = Instantiate<ParticleSystem> ( 
-													m_BloodParticleSystem,
-													transform.position,
-													Quaternion.identity );
-					Destroy ( particle.gameObject, particle.main.duration );
-				}
-				CameraController.Singleton.fastMove = true;
-            }
-		}
+            CameraController.Singleton.fastMove = true;
+            OnInactive();
+        }
 
         public override void Finish()
         {
-            if (IsActive())
-            {
-                OnInactive();
-            }
-            if ( !IsFinished.Value )
-            {
-                IsFinished.Value = true;
-                m_Skeleton.SetActive( true, m_Rigidbody2D.velocity );
-                // TODO dance?
-                CameraController.Singleton.fastMove = true;
-            }
+            if (IsFinished.Value) return;
+            IsFinished.Value = true;
+            m_Skeleton.SetActive( true, m_Rigidbody2D.velocity );
+            // TODO dance?
+            CameraController.Singleton.fastMove = true;
+            OnInactive();
         }
 
         private bool IsActive()
@@ -689,9 +679,9 @@ namespace RedRunner.Characters
 
         private void OnInactive()
         {
-					if (Local == this) {
-						RoundsManager.Local.CmdDeactivateSelf();
-					}
+			if (Local == this) {
+				RoundsManager.Local.CmdDeactivateSelf(IsFinished.Value);
+			}
         }
 
         public override void EmitRunParticle ()
