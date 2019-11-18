@@ -509,6 +509,10 @@ namespace RedRunner.Characters
 		#region Private Methods
 
 		private void ComputeTarget() {
+			if (Local == null) {
+				return;
+			}
+
 			if (!Local.IsDead.Value && !Local.IsFinished.Value)
 			{
 				Target = Local;
