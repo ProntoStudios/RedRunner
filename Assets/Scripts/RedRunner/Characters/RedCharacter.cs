@@ -65,6 +65,8 @@ namespace RedRunner.Characters
         [SerializeField]
         protected Colourer m_Colourer;
         [SerializeField]
+        protected RoundLeaderManager m_RoundLeaderManager;
+        [SerializeField]
 		protected float m_RollForce = 10f;
 
 		[Header ( "Character Audio" )]
@@ -300,11 +302,19 @@ namespace RedRunner.Characters
 			}
 		}
 
-		#endregion
+        public override RoundLeaderManager LeaderManager
+        {
+            get
+            {
+                return m_RoundLeaderManager;
+            }
+        }
 
-		#region MonoBehaviour Messages
+        #endregion
 
-		void Awake ()
+        #region MonoBehaviour Messages
+
+        void Awake ()
 		{
             m_Colourer.SetColor(m_Colourer.RndRunnerColor()); // TODO: have server assign color
             m_InitialScale = transform.localScale;
