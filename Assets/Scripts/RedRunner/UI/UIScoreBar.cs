@@ -10,13 +10,17 @@ namespace RedRunner.UI {
         Slider slider;
         [SerializeField]
         Text textBox;
-
+        [SerializeField]
+        Color selfColor;
+        [SerializeField]
+        Image progressImage;
         public void SetId(int id)
         {
             string text = "Player " + id;
             if (RedCharacter.Local.netId == id)
             {
                 text = "YOU";
+                progressImage.color = selfColor;
             }
             textBox.text = text;
     }
