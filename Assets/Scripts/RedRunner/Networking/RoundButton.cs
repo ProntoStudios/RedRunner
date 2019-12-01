@@ -6,19 +6,6 @@ using RedRunner.Characters;
 
 public class RoundButton : MonoBehaviour
 {
-    public void Start()
-    {
-        NetworkManager.OnConnected += () =>
-        {
-            Debug.Log("read client count" + RoundsManager.Instance.playersConnected);
-            if (RoundsManager.Instance.playersConnected > 1)
-            {//!NetworkManager.IsServer && NetworkManager.PlayerCount > 0)
-                {
-                    gameObject.SetActive(false);
-                }
-            }
-        };
-    }
 
     public void StartGame()
     {

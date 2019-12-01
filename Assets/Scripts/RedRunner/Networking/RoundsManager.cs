@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RedRunner.Characters;
-using Mirror;
-
 namespace RedRunner.Networking
 {
     public class RoundsManager : Mirror.NetworkBehaviour
@@ -18,17 +16,6 @@ namespace RedRunner.Networking
             {
                 if (_local != null) return _local;
                 return _instance;
-            }
-        }
-
-        [SyncVar]
-        public int playersConnected;
-
-        void Update()
-        {
-            if (NetworkManager.IsServer)
-            {
-                playersConnected = NetworkServer.connections.Count;
             }
         }
 
@@ -82,9 +69,9 @@ namespace RedRunner.Networking
         }
 
         [Mirror.Command]
-            public void CmdStartGame()
-            {
-                ServerRounds.Instance.StartGame();
-            }
+        public void CmdStartGame()
+        {
+            ServerRounds.Instance.StartGame();
+        }
     }
 }

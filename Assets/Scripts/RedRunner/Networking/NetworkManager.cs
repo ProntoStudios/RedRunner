@@ -59,14 +59,6 @@ namespace RedRunner.Networking
 			}
 		}
 
-        public static int PlayerCount
-        {
-            get
-            {
-                return Mirror.NetworkClient.allClients.Count;
-            }
-        }
-
         public static RedCharacter LocalCharacter { get; private set; }
 
 		public static NetworkManager Instance { get; private set; }
