@@ -36,16 +36,24 @@ namespace RedRunner.Networking
         // send command to server to mark player as inactive
         // finished: true if player reached final flag
         [Mirror.Command]
-        public void CmdDeactivateSelf(bool reachedEnd)
+        public void CmdDeactivateSelf(uint netId, bool reachedEnd)
         {
+            Mirror.ClientScene.FindLocalObject(netId).GetComponent<RedCharacter>().IsActiveSync = false;
             ServerRounds.Instance.DecrementPlayer();
-            ScoreManager.Instance.PlayerFinished(connectionToClient.connectionId, reachedEnd);
+            ScoreManager.Instance.PlayerFinished((int)netId, reachedEnd);
         }
 
         // receive on client to reset round
         [Mirror.ClientRpc]
         public void RpcResetRound()
         {
+            if (NetworkManager.IsServer) {
+                foreach (var player in Object.FindObjectsOfType<RedCharacter>()) {
+                    if (player != RedCharacter.Local) {
+                        player.IsActiveSync = true;
+                    }
+                }
+            }
             GameManager.Singleton.StartGame();
             GameManager.Singleton.Reset();
             StartCoroutine(StartBuildPhase(0.2f));//leave time for terrain to transition fro lobby to map

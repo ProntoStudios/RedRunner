@@ -101,6 +101,9 @@ namespace RedRunner.Characters
 		protected bool m_HasDoubleJump = false;
 		protected bool m_IsWallSliding = false;
 
+		[Mirror.SyncVar]
+		public bool IsActiveSync = true;
+
 		#endregion
 
 		#region Properties
@@ -306,7 +309,6 @@ namespace RedRunner.Characters
 
         void Awake ()
 		{
-            m_Colourer.SetColor(m_Colourer.RndRunnerColor()); // TODO: have server assign color
             m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;
 			m_WallDetector.OnWallEnter += StartWallSlide;
@@ -328,10 +330,27 @@ namespace RedRunner.Characters
 			{
 				// Once we find out we are the local player, simulate our rigidbody.
 				Local.m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-				m_RightEvent.RegisterAction(RightEvent);
+                m_RightEvent.RegisterAction(RightEvent);
 				m_LeftEvent.RegisterAction(LeftEvent);
+
+				Local.IsDead.AddEventAndFire((_) => {
+					IsActiveSync = !IsDead.Value && !IsFinished.Value;
+				}, this);
+
+				Local.IsFinished.AddEventAndFire((_) => {
+					IsActiveSync = !IsDead.Value && !IsFinished.Value;
+				}, this);
 			};
 		}
+
+		void OnDestroy() {
+			GameManager.OnReset -= GameManager_OnReset;
+		}
+
+        void Start()
+        {
+            m_Colourer.SetColor(m_Colourer.RndRunnerColor(netId)); // TODO: have server assign color
+        }
         
         private void LeftEvent()
         {
@@ -430,7 +449,16 @@ namespace RedRunner.Characters
             m_Speed = new Vector2(Mathf.Abs(m_Rigidbody2D.velocity.x), Mathf.Abs(m_Rigidbody2D.velocity.y));
         }
 
-        void Update ()
+		private void FixedUpdate()
+		{
+			if (m_Rigidbody2D.velocity.y < 0f && m_IsWallSliding)
+			{
+				Vector2 velocity = m_Rigidbody2D.velocity;
+				velocity.y *= m_WallSlideSlowdown;
+				m_Rigidbody2D.velocity = velocity;
+			}
+		}
+		void Update ()
 		{
 			ComputeTarget();
 
@@ -442,13 +470,6 @@ namespace RedRunner.Characters
 			if ( transform.position.y < 0f )
 			{
 				Die ();
-			}
-
-			if ( m_Rigidbody2D.velocity.y < 0f && m_IsWallSliding)
-			{
-				Vector2 velocity = m_Rigidbody2D.velocity;
-				velocity.y *= m_WallSlideSlowdown;
-				m_Rigidbody2D.velocity = velocity;
 			}
 
             UpdateMovement();
@@ -521,15 +542,15 @@ namespace RedRunner.Characters
 				return;
 			}
 
-			if (!Local.IsDead.Value && !Local.IsFinished.Value)
+			if (Local.IsActive())
 			{
 				Target = Local;
-			} else if (!IsDead.Value && !IsFinished.Value)
+			}
+			else if (IsActiveSync)
 			{
 				if (Target == null ||
-					Target.IsDead.Value ||
-					Target.IsFinished.Value ||
-					transform.position.x > Target.transform.position.x + FURTHEST_PLAYER_OVERSHOOT)
+						!Target.IsActiveSync ||
+						transform.position.x > Target.transform.position.x + FURTHEST_PLAYER_OVERSHOOT)
 				{
 					Target = this;
 				}
@@ -680,7 +701,7 @@ namespace RedRunner.Characters
         private void OnInactive()
         {
 			if (Local == this) {
-				RoundsManager.Local.CmdDeactivateSelf(IsFinished.Value);
+				RoundsManager.Local.CmdDeactivateSelf(netId, IsFinished.Value);
 			}
         }
 

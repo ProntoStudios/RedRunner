@@ -1582,7 +1582,7 @@ GameObject:
   - component: {fileID: 3601754102528383778}
   m_Layer: 9
   m_Name: DirtLeftCorner 1 (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15470,6 +15470,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3546353156975011692}
     m_Modifications:
+    - target: {fileID: 3460546676496165985, guid: 04717f973e597594ea3ff3c5352cfb19,
+        type: 3}
+      propertyPath: m_Name
+      value: bird
+      objectReference: {fileID: 0}
     - target: {fileID: 3463151459253234067, guid: 04717f973e597594ea3ff3c5352cfb19,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15524,11 +15529,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3460546676496165985, guid: 04717f973e597594ea3ff3c5352cfb19,
-        type: 3}
-      propertyPath: m_Name
-      value: bird
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04717f973e597594ea3ff3c5352cfb19, type: 3}
