@@ -34,7 +34,7 @@ namespace RedRunner.Networking
             activePlayers--;
             if (activePlayers == 0)
             {
-                ResetRound();
+                ResetRound(false);
             } else if (choosing)
             {
                 DecrementChooser();
@@ -54,7 +54,7 @@ namespace RedRunner.Networking
         public void StartGame()
         {
             ScoreManager.Instance.SendPlayers();
-            ResetRound();
+            ResetRound(true);
         }
 
         public void StartRound()
@@ -63,7 +63,7 @@ namespace RedRunner.Networking
             choosing = false;
         }
 
-        public void ResetRound()
+        public void ResetRound(bool isFirstRound)
         {
             Debug.Log("resetting round");
             round++;
@@ -71,7 +71,7 @@ namespace RedRunner.Networking
             if (activePlayers > 0) {
                 choosing = true;
                 choosingPlayers = activePlayers;
-                RoundsManager.Instance.RpcResetRound();
+                RoundsManager.Instance.RpcResetRound(isFirstRound);
                 StartCoroutine(OpenChoosing(3f));
 			}
         }
