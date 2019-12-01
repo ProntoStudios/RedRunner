@@ -36,6 +36,8 @@ MonoBehaviour:
   - {fileID: 5384380331259051304, guid: f87e992abc4da6244b7dcb172f975864, type: 3}
   - {fileID: 4680044566254337785, guid: 2e55a390cc5eb104284e06df5e3ce05b, type: 3}
   - {fileID: 8174141573513202826, guid: 2e252d22a80fac5498791a6e049e3afc, type: 3}
+  m_LobbyBlocks:
+  - {fileID: 8681903731444199623, guid: 9ae0a8610777b4b38b00c2784fa5d529, type: 3}
   m_BackgroundLayers:
   - name: Far
     Blocks:

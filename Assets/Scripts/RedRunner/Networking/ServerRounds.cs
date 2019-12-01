@@ -26,14 +26,6 @@ namespace RedRunner.Networking
                 _instance = this;
             }
         }
-        private void Update()
-        {
-            if (Application.isBatchMode && round <= 0 && NetworkManager.ClientCount > 0)
-            {
-                Debug.Log("Player joined game, starting game");
-                StartGame();
-            }
-        }
 
         // trigers round reset if not round 0 and no players alive
         public void DecrementPlayer()

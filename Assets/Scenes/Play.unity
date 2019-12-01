@@ -919,7 +919,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &56
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50777,7 +50777,7 @@ MonoBehaviour:
   m_DestroyRange: 100
   m_GenerateRange: 400
   m_BackgroundGenerateRange: 600
-  m_RegenerateEachReset: 0
+  m_RegenerateOnReset: 0
 --- !u!114 &290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60599,6 +60599,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4270761045340973903, guid: a4f985363ce7845d7addf7ab99002a8d,
+        type: 3}
+      propertyPath: m_Screens.Array.data[0]
+      value: 
+      objectReference: {fileID: 521407042}
+    - target: {fileID: 4270761045340973903, guid: a4f985363ce7845d7addf7ab99002a8d,
+        type: 3}
+      propertyPath: m_Screens.Array.data[1]
+      value: 
+      objectReference: {fileID: 41}
+    - target: {fileID: 4270761045340973903, guid: a4f985363ce7845d7addf7ab99002a8d,
+        type: 3}
+      propertyPath: m_Screens.Array.data[2]
+      value: 
+      objectReference: {fileID: 30}
+    - target: {fileID: 4270761045340973903, guid: a4f985363ce7845d7addf7ab99002a8d,
+        type: 3}
+      propertyPath: m_Screens.Array.data[3]
+      value: 
+      objectReference: {fileID: 60}
+    - target: {fileID: 4270761045340973903, guid: a4f985363ce7845d7addf7ab99002a8d,
+        type: 3}
+      propertyPath: m_Screens.Array.data[4]
+      value: 
+      objectReference: {fileID: 13}
+    - target: {fileID: 4270761045340973903, guid: a4f985363ce7845d7addf7ab99002a8d,
+        type: 3}
+      propertyPath: m_Screens.Array.data[5]
+      value: 
+      objectReference: {fileID: 1213296046}
+    - target: {fileID: 4270761045340973903, guid: a4f985363ce7845d7addf7ab99002a8d,
+        type: 3}
+      propertyPath: m_Screens.Array.data[6]
+      value: 
+      objectReference: {fileID: 2377188571520540771}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a558e622f67684918b5a20c9632db060, type: 3}
 --- !u!1001 &7596125236243278942

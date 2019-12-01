@@ -303,11 +303,11 @@ namespace RedRunner.Characters
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region MonoBehaviour Messages
+        #region MonoBehaviour Messages
 
-		void Awake ()
+        void Awake ()
 		{
             m_InitialScale = transform.localScale;
 			m_GroundCheck.OnGrounded += GroundCheck_OnGrounded;

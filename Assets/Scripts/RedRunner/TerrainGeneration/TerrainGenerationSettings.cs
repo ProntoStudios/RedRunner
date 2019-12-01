@@ -26,6 +26,8 @@ namespace RedRunner.TerrainGeneration
         [SerializeField]
         protected Block[] m_SpawnBlocks;
         [SerializeField]
+        protected Block[] m_LobbyBlocks;
+        [SerializeField]
 		protected BackgroundLayer[] m_BackgroundLayers;
 
 		public float LevelLength {
@@ -75,6 +77,14 @@ namespace RedRunner.TerrainGeneration
             get
             {
                 return m_SpawnBlocks;
+            }
+        }
+
+        public Block[] LobbyBlocks
+        {
+            get
+            {
+                return m_LobbyBlocks;
             }
         }
 

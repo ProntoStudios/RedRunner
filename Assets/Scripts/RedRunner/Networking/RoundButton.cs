@@ -2,25 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RedRunner.Networking;
+using RedRunner.Characters;
+
 public class RoundButton : MonoBehaviour
 {
-    public void Start()
-    {
-        NetworkManager.OnConnected += () =>
-        {
-            if (!NetworkManager.IsServer)
-            {
-                gameObject.SetActive(false);
-            }
-        };
-    }
 
     public void StartGame()
     {
-        if (NetworkManager.IsServer)
-        {
-            ServerRounds.Instance.StartGame();
-        }
+        RoundsManager.Instance.CmdStartGame();
         gameObject.SetActive(false);
     }
 }
+  

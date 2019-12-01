@@ -145,7 +145,8 @@ namespace RedRunner
 				RedCharacter.Local.IsDead.AddEventAndFire(UpdateDeathEvent, this);
 
 				m_CameraController?.Follow(RedCharacter.Local.transform);
-			};
+                RespawnMainCharacter();
+            };
 
 			RedCharacter.OnTargetChanged += () =>
 			{
@@ -289,9 +290,9 @@ namespace RedRunner
 
 		public void EndGame()
 		{
-			m_GameStarted = false;
-			//StopGame();
-		}
+			//m_GameStarted = false;
+            //StopGame();
+        }
 
 		public void RespawnMainCharacter()
 		{
@@ -330,7 +331,6 @@ namespace RedRunner
             if (respawn != null)
             {
                 Vector3 position = respawn.transform.position;
-                Debug.Log("Text: " + position);
                 position.y += 2.56f;
                 float width = respawn.GetComponent<SpriteRenderer>().bounds.size.x;
                 position.x -= width / 2;
