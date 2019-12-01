@@ -343,6 +343,10 @@ namespace RedRunner.Characters
 			};
 		}
 
+		void OnDestroy() {
+			GameManager.OnReset -= GameManager_OnReset;
+		}
+
         void Start()
         {
             m_Colourer.SetColor(m_Colourer.RndRunnerColor(netId)); // TODO: have server assign color
