@@ -48,7 +48,14 @@ namespace RedRunner.Networking
         {
             GameManager.Singleton.StartGame();
             GameManager.Singleton.Reset();
-            if (!Application.isBatchMode) {
+            StartCoroutine(StartBuildPhase(0.2f));//leave time for terrain to transition fro lobby to map
+        }
+
+        private IEnumerator StartBuildPhase(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            if (!Application.isBatchMode)
+            {
                 GameManager.Singleton.RespawnMainCharacter();
                 GameManager.Singleton.LockCharacterToStart();
             }
@@ -56,6 +63,7 @@ namespace RedRunner.Networking
             UIManager.Singleton.OpenScreen(scoreScreen);
             scoreScreen.SetVisible(true);
         }
+
 
         // received on client to unblock character when choosing phase is over
         [Mirror.ClientRpc]
