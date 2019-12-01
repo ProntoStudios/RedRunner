@@ -104,7 +104,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 50}
+  m_Size: {x: 81.93781, y: 14.70919}
   m_EdgeRadius: 0
 --- !u!61 &1064004882860762917
 BoxCollider2D:
@@ -130,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 50}
+  m_Size: {x: 20.48, y: 61.03574}
   m_EdgeRadius: 0
 --- !u!1 &2436275448220453233
 GameObject:
@@ -801,7 +801,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 50}
+  m_Size: {x: 20.48, y: 60.89267}
   m_EdgeRadius: 0
 --- !u!1001 &1064004882860762923
 PrefabInstance:
@@ -810,6 +810,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1064004883023347652}
     m_Modifications:
+    - target: {fileID: 1207765255136154, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
+      propertyPath: m_Name
+      value: DirtRight (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 4157354307600492, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 66.34
@@ -854,10 +858,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1207765255136154, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
-      propertyPath: m_Name
-      value: DirtRight (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 212176698882557372, guid: 434b3318787d78c40a80a0d957476cc3,
         type: 3}
       propertyPath: m_DrawMode
@@ -900,6 +900,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1064004883023347652}
     m_Modifications:
+    - target: {fileID: 1207765255136154, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
+      propertyPath: m_Name
+      value: DirtRight (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 4157354307600492, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.673
@@ -943,10 +947,6 @@ PrefabInstance:
     - target: {fileID: 4157354307600492, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1207765255136154, guid: 434b3318787d78c40a80a0d957476cc3, type: 3}
-      propertyPath: m_Name
-      value: DirtRight (1)
       objectReference: {fileID: 0}
     - target: {fileID: 212176698882557372, guid: 434b3318787d78c40a80a0d957476cc3,
         type: 3}
