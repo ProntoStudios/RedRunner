@@ -45,7 +45,7 @@ namespace RedRunner.Networking
 
         // receive on client to reset round
         [Mirror.ClientRpc]
-        public void RpcResetRound()
+        public void RpcResetRound(bool firstRound)
         {
             if (NetworkManager.IsServer) {
                 foreach (var player in Object.FindObjectsOfType<RedCharacter>()) {
@@ -56,12 +56,24 @@ namespace RedRunner.Networking
             }
             GameManager.Singleton.StartGame();
             GameManager.Singleton.Reset();
-            StartCoroutine(StartBuildPhase(0.2f));//leave time for terrain to transition fro lobby to map
+            if (firstRound)
+            {
+                //leave time for terrain to transition fro lobby to map
+                StartCoroutine(StartBuildPhaseEnumerator(0.2f));
+            } else
+            {
+                StartBuildPhase();
+            }
         }
 
-        private IEnumerator StartBuildPhase(float delay)
+        private IEnumerator StartBuildPhaseEnumerator(float delay)
         {
             yield return new WaitForSeconds(delay);
+            StartBuildPhase();
+        }
+
+        private void StartBuildPhase()
+        {
             if (!Application.isBatchMode)
             {
                 GameManager.Singleton.RespawnMainCharacter();
