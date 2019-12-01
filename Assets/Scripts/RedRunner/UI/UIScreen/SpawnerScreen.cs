@@ -80,6 +80,13 @@ namespace RedRunner.UI
 
             if (null != button)
             {
+                // this check is hacky; only necessary to prevent faulty round logic from causing a crash
+                // clear out old items in the UI if the next batch has arrived, but the old ones are still there
+                Button temp;
+                if (buttons.TryGetValue(id, out temp))
+                {
+                    DestroyBlocks();
+                }
                 button.onClick.AddListener(callback);
                 buttons.Add(id, button);
             } else
