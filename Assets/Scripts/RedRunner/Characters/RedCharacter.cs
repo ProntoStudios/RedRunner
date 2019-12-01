@@ -445,7 +445,16 @@ namespace RedRunner.Characters
             m_Speed = new Vector2(Mathf.Abs(m_Rigidbody2D.velocity.x), Mathf.Abs(m_Rigidbody2D.velocity.y));
         }
 
-        void Update ()
+		private void FixedUpdate()
+		{
+			if (m_Rigidbody2D.velocity.y < 0f && m_IsWallSliding)
+			{
+				Vector2 velocity = m_Rigidbody2D.velocity;
+				velocity.y *= m_WallSlideSlowdown;
+				m_Rigidbody2D.velocity = velocity;
+			}
+		}
+		void Update ()
 		{
 			ComputeTarget();
 
@@ -457,13 +466,6 @@ namespace RedRunner.Characters
 			if ( transform.position.y < 0f )
 			{
 				Die ();
-			}
-
-			if ( m_Rigidbody2D.velocity.y < 0f && m_IsWallSliding)
-			{
-				Vector2 velocity = m_Rigidbody2D.velocity;
-				velocity.y *= m_WallSlideSlowdown;
-				m_Rigidbody2D.velocity = velocity;
 			}
 
             UpdateMovement();
