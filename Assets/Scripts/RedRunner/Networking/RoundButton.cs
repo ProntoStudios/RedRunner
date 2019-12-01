@@ -10,16 +10,20 @@ public class RoundButton : MonoBehaviour
     {
         NetworkManager.OnConnected += () =>
         {
-            if (false) {//!NetworkManager.IsServer && NetworkManager.PlayerCount > 0)
-            {
-                gameObject.SetActive(false);
+            Debug.Log("read client count" + RoundsManager.Instance.playersConnected);
+            if (RoundsManager.Instance.playersConnected > 1)
+            {//!NetworkManager.IsServer && NetworkManager.PlayerCount > 0)
+                {
+                    gameObject.SetActive(false);
+                }
             }
         };
     }
 
     public void StartGame()
     {
-        RedCharacter.Local.LeaderManager.CmdS
+        RoundsManager.Instance.CmdStartGame();
         gameObject.SetActive(false);
     }
 }
+  

@@ -65,8 +65,6 @@ namespace RedRunner.Characters
         [SerializeField]
         protected Colourer m_Colourer;
         [SerializeField]
-        protected RoundLeaderManager m_RoundLeaderManager;
-        [SerializeField]
 		protected float m_RollForce = 10f;
 
 		[Header ( "Character Audio" )]
@@ -301,14 +299,6 @@ namespace RedRunner.Characters
 				return m_MainAudioSource;
 			}
 		}
-
-        public override RoundLeaderManager LeaderManager
-        {
-            get
-            {
-                return m_RoundLeaderManager;
-            }
-        }
 
         #endregion
 
