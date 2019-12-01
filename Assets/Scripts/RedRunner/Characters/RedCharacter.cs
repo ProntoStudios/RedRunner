@@ -452,7 +452,6 @@ namespace RedRunner.Characters
 				Vector2 velocity = m_Rigidbody2D.velocity;
 				velocity.y *= m_WallSlideSlowdown;
 				m_Rigidbody2D.velocity = velocity;
-				Debug.Log("U: " + m_Rigidbody2D.velocity);
 			}
 		}
 		void Update ()
