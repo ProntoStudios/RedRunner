@@ -71,8 +71,6 @@ namespace RedRunner.Networking
                 return;
             }
 
-            UIScreen inGameScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.IN_GAME_SCREEN) as UIScreen;
-            UIManager.Singleton.OpenScreen(inGameScreen);
             CmdSubmitChoice(objectId, type);
         }
 
@@ -123,6 +121,9 @@ namespace RedRunner.Networking
                 Debug.LogError("can only submit choice from local player");
                 return;
             }
+
+            UIScreen inGameScreen = UIManager.Singleton.UISCREENS.Find(el => el.ScreenInfo == UIScreenInfo.IN_GAME_SCREEN) as UIScreen;
+            UIManager.Singleton.OpenScreen(inGameScreen);
             CmdSubmitPosition(objectId, pos);
         }
 
