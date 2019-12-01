@@ -49996,7 +49996,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 3
+  m_Text: x 7
   m_CoinTextFormat: x {0}
 --- !u!114 &254
 MonoBehaviour:
@@ -60633,7 +60633,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Screens.Array.data[6]
       value: 
-      objectReference: {fileID: 2377188571520540771}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a558e622f67684918b5a20c9632db060, type: 3}
 --- !u!1001 &7596125236243278942
