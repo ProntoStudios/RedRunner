@@ -1,7 +1,13 @@
 ---
 
-- name: Deploy all hosts
+- name: Deploy game servers
   gather_facts: false
-  hosts: all
+  hosts: game
   roles:
-    - deploy
+    - deploy-game
+
+- name: Deploy matchmaking servers
+  gather_facts: false
+  hosts: matchmaker
+  roles:
+    - deploy-matchmaker
